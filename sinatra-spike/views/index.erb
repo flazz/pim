@@ -1,25 +1,36 @@
 <% @title = "Index" %>
 
-<h2>Validate by URI</h2>
-<form method="get" action="validate">
-  <label for="uuu">Address:</label>
-  <input name="uuu" type="text"/>
-</form>
+<div class="span-24">
+  <ul class="menu">
+    <li id="uri" class="active">uri</li>
+    <li id="upload">upload</li>
+    <li id="input">input</li>
+  </ul>
+</div>
 
-<hr/>
+<div class="content uri span-24">
+  <h2>Validate by URI</h2>
+  <form method="get" action="validate">
+    <label for="uuu">Address:</label>
+    <input name="uuu" type="text"/>
+  </form>
+</div>
 
-<h2>Validate by File Upload</h2>
-<form method="post" action="validate">
-  <label for="fff">File:</label>
-  <input name="fff" type="file"/>
-</form>
+<div class="content upload">
+  <h2>Validate by File Upload</h2>
+  <form method="post" action="validate">
+    <label for="fff">File:</label>
+    <input name="fff" type="file"/>
+  </form>
+</div>
 
-<hr/>
+<div class="content input">
+  <h2>Validate by Direct Input</h2>
+  <form method="post" action="validate">
+    <label for="ttt">Enter PiM:</label>
+    <br/>
+    <textarea name="ttt"></textarea>
+  </form>
+</div>
 
-<h2>Validate by Direct Input</h2>
-<form method="post" action="validate">
-  <label for="ttt">Enter PiM:</label>
-  <br/>
-  <textarea name="ttt"></textarea>
-</form>
-
+<a id="submit-button" href="#">submit</a>

@@ -1,18 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<html xmlns="http://www.w3.org/1999/xhtml" version="XHTML 1.2" xml:lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 
   <head>
     <script type="text/javascript" src="js/jquery.js"></script>
-    <script type="text/javascript">
-      $(document).ready(function(){
-       $("a").click(function(event){
-         alert("As you can see, the link no longer took you to jquery.com");
-         event.preventDefault();
-       });
-     });
-    </script>
+    <script type="text/javascript" src="js/local.js"></script>
     <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection"/>
     <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print"/>
+    <link rel="stylesheet" href="css/local.css" type="text/css" media="screen, projection"/>
     <!--[if IE]><link rel="stylesheet" href="css/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
     <title><%= @title || "App Title" %></title>
   </head>

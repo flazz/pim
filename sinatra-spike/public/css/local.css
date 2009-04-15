@@ -1,0 +1,35 @@
+ ul{  
+    list-style: none;  
+    list-style-position: outside;  
+} 
+
+ul.menu li{  
+    float: left;  
+    margin-right: 5px;  
+    margin-bottom: -1px;  
+}  
+
+ul.menu li{
+    font-weight: 700;
+    display: block;
+    padding: 5px 10px 5px 10px;
+    background: #efefef;
+    margin-bottom: -1px;
+    border: 1px solid #d0ccc9;
+    border-width: 1px 1px 1px 1px;
+    position: relative;
+    color: #898989;
+    cursor: pointer;
+}
+
+.content.uri{  
+    display: block;  
+}  
+
+.content.upload{  
+    display: none;  
+}
+
+.content.input{  
+    display: none;  
+}  
