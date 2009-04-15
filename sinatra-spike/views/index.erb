@@ -1,0 +1,25 @@
+<% @title = "Index" %>
+
+<h2>Validate by URI</h2>
+<form method="get" action="validate">
+  <label for="uuu">Address:</label>
+  <input name="uuu" type="text"/>
+</form>
+
+<hr/>
+
+<h2>Validate by File Upload</h2>
+<form method="post" action="validate">
+  <label for="fff">File:</label>
+  <input name="fff" type="file"/>
+</form>
+
+<hr/>
+
+<h2>Validate by Direct Input</h2>
+<form method="post" action="validate">
+  <label for="ttt">Enter PiM:</label>
+  <br/>
+  <textarea name="ttt"></textarea>
+</form>
+
