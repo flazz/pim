@@ -25,7 +25,7 @@ $(document).ready(function(){
         $("div.upload").fadeIn();
         $("div.input").css("display", "none");
         break;
-        
+
       case "input":
         $("#uri").removeClass("active");
         $("#upload").removeClass("active");
@@ -38,7 +38,7 @@ $(document).ready(function(){
         break;
       }
 
-      alert(e.target.id);
+      // alert(e.target.id);
       return false;
     });
   });
