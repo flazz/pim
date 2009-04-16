@@ -13,19 +13,16 @@
 	zoom: 1;	
 }
 
-.fg-button span {
-	font-size:1.6em;
-}
+a.fg-button { float:left; }
 
+.fg-button .ui-icon { position: absolute; top: 50%; margin-top: -8px; left: 50%; margin-left: -8px; }
+.fg-button-icon-left { padding-left: 2.1em; }
+.fg-button-icon-right { padding-right: 2.1em; }
+.fg-button-icon-left .ui-icon { right: auto; left: .2em; margin-left: 0; }
+.fg-button-icon-right .ui-icon { left: auto; right: .2em; margin-left: 0; }
+	
 .moreoptions {
 	margin-top: 2em;
-	margin-bottom:1em;
-}
-
-.moreoptions .head {
-	font-size:1.6em;
-	color:#1c94c4;
-	text-decoration: none;
 }
 
 .moreoptions .body { display: none; }
