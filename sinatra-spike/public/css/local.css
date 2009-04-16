@@ -1,17 +1,3 @@
-ul.menu li{
-    display: inline;
-    list-style-type: none;
-    cursor: pointer;
-}
-
-.content.uri{
-    display: block;
-}
-
-.content.upload{
-    display: none;
-}
-
-.content.input{
+.ui-tabs .ui-tabs-hide {
     display: none;
 }
