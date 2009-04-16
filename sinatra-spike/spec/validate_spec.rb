@@ -32,10 +32,10 @@ describe 'PiM validation' do
 
   describe "output formats" do
 
-    it "should provide HTML, text, XML, JSON" do
+    it "should provide HTML, XML, JSON" do
 
-      %w{text/html text/plain text/xml application/json}.each do |mtype|
-        post "/validate", :document => @pim_url, :accept => mtype
+      %w{text/html application/xml application/json}.each do |mtype|
+        post "/validate", {:document => @pim_url}, {:accept => mtype}
         headers['Content-Type'].should == mtype
       end
       
