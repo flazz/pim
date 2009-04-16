@@ -39,7 +39,7 @@ end
 
 post '/validate' do
   # get from the params or body
-  validate nil
+  "echo: " + params[:document]
 end
 
 def validate(raw)
