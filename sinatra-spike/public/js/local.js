@@ -1,5 +1,6 @@
 $(document).ready(function() {
-  $("#tabs").tabs();
+
+  $("#tabs").tabs({ fx: {opacity: 'toggle', duration: 'fast'} });
 
   $("button[type='submit']").hover(
     function(){$(this).addClass("ui-state-hover"); },
