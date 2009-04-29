@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+	METS v1.7 (using PREMIS v2.0) Document describing a TIFF image migrated to jp2 but had a limitation normalizing to jpg.
+	C. Chou, F. Lazzarino
+-->
+<mets xmlns="http://www.loc.gov/METS/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/version17/mets.xsd 
+	info:lc/xmlns/premis-v2 http://www.loc.gov/standards/premis/draft-schemas-2-0/premis-v2-0.xsd 
+	http://www.loc.gov/mix/v10 http://www.loc.gov/standards/mix/mix10/mix10.xsd">
+	<amdSec>
+		
+		<!-- PREMIS object (file) -->
+		<techMD ID="object-1">
+			<mdWrap MDTYPE="PREMIS">
+				<xmlData>
+					<file xmlns="info:lc/xmlns/premis-v2">
+						
+						<!-- 
+							File is identified by a hypothetical DAITSS v2 url:
+							scheme: daitss (says this is a DAITSS2 URL)
+							authority: archive.fcla.edu (instance of DAITSS2 installed at fcla)
+							path: p926/f0 (package 926, file 0)
+						-->
+						<objectIdentifier>
+							<objectIdentifierType>DAITSS2</objectIdentifierType>
+							<objectIdentifierValue>daitss://archive.fcla.edu/p926/f0</objectIdentifierValue>
+						</objectIdentifier>
+						
+						<!-- 
+							fixity, size, format & mix extension
+						-->
+						<objectCharacteristics>
+							<compositionLevel>0</compositionLevel> 
+							<fixity>
+								<messageDigestAlgorithm>MD5</messageDigestAlgorithm>
+								<messageDigest>2de9ef79df730f93e40819625cf7bcb2</messageDigest>
+							</fixity>
+							<size>3001452</size>
+							<format>
+								<formatDesignation>
+									<formatName>TIFF</formatName>
+									<formatVersion>4.0</formatVersion>
+								</formatDesignation>
+								<formatRegistry>
+									<formatRegistryName>http://www.nationalarchives.gov.uk/pronom</formatRegistryName>
+									<formatRegistryKey>fmt/8</formatRegistryKey>
+								</formatRegistry>								
+							</format>
+							<objectCharacteristicsExtension>
+								<BasicImageInformation xmlns="http://www.loc.gov/mix/v10" >
+									<BasicImageCharacteristics>
+										<imageWidth>1000</imageWidth>
+										<imageHeight>1000</imageHeight>
+										<ByteOrder>little-endian</ByteOrder>
+										<Compression>
+											<CompressionScheme>1</CompressionScheme>
+										</Compression>
+										<PhotometricInterpretation>
+											<ColorSpace>2</ColorSpace>
+											<ReferenceBlackWhite>0.0 255.0 0.0 255.0 0.0 255.0</ReferenceBlackWhite>
+										</PhotometricInterpretation>
+										<PlanarConfiguration>1</PlanarConfiguration>
+									</BasicImageCharacteristics>
+									<ImageCaptureMetadata>
+										<orientation>1</orientation>
+									</ImageCaptureMetadata> 
+								</BasicImageInformation>
+							</objectCharacteristicsExtension>
+						</objectCharacteristics>
+						
+						<!-- Three master copies: two in Gainesville, one in Tallahassee -->
+						<storage>
+							<contentLocation>
+								<contentLocationType>URL</contentLocationType>
+								<contentLocationValue>http://archive.fcla.edu:5000/silos/gainesville-1/p926</contentLocationValue>
+							</contentLocation>
+							<storageMedium>Hard disk</storageMedium>
+						</storage>
+						<storage>
+							<contentLocation>
+								<contentLocationType>URL</contentLocationType>
+								<contentLocationValue>http://archive.fcla.edu:5000/silos/gainesville-2/p926</contentLocationValue>
+							</contentLocation>
+							<storageMedium>Hard disk</storageMedium>
+						</storage>
+						<storage>
+							<contentLocation>
+								<contentLocationType>URL</contentLocationType>
+								<contentLocationValue>http://archive.fcla.edu:5000/silos/tallahassee-1/p926</contentLocationValue>
+							</contentLocation>
+							<storageMedium>Hard disk</storageMedium>
+						</storage>
+					</file>
+				</xmlData>
+			</mdWrap>
+		</techMD>
+
+		<!-- PREMIS object (file) -->
+		<techMD ID="object-2">
+			<mdWrap MDTYPE="PREMIS">
+				<xmlData>
+					<file xmlns="info:lc/xmlns/premis-v2">
+						
+						<!-- 
+							File is identified by a hypothetical DAITSS v2 url:
+							scheme: daitss (says this is a DAITSS2 URL)
+							authority: archive.fcla.edu (instance of DAITSS2 installed at fcla)
+							path: p926/f1 (package 926, file 1)
+						-->
+						<objectIdentifier>
+							<objectIdentifierType>DAITSS2</objectIdentifierType>
+							<objectIdentifierValue>daitss://archive.fcla.edu/p926/f1</objectIdentifierValue>
+						</objectIdentifier>
+						
+						<!-- fixity, size, format & mix extension -->
+						<objectCharacteristics>
+							<compositionLevel>0</compositionLevel> 
+							<fixity>
+								<messageDigestAlgorithm>MD5</messageDigestAlgorithm>
+								<messageDigest>8c975de69a9419b8a02dc985839ea851</messageDigest>
+							</fixity>
+							<size>3001452</size>
+							<format>
+								<formatDesignation>
+									<formatName>JPEG2000</formatName>
+								</formatDesignation>
+								<formatRegistry>
+									<formatRegistryName>http://www.nationalarchives.gov.uk/pronom</formatRegistryName>
+									<formatRegistryKey>x-fmt/392</formatRegistryKey>
+								</formatRegistry>								
+							</format>
+							<objectCharacteristicsExtension>
+								<BasicImageInformation xmlns="http://www.loc.gov/mix/v10" >
+									<BasicImageCharacteristics>
+										<imageWidth>1000</imageWidth>
+										<imageHeight>1000</imageHeight>
+										<ByteOrder>little-endian</ByteOrder>
+										<Compression>
+											<CompressionScheme>1</CompressionScheme>
+										</Compression>
+										<PhotometricInterpretation>
+											<ColorSpace>2</ColorSpace>
+											<ReferenceBlackWhite>0.0 255.0 0.0 255.0 0.0 255.0</ReferenceBlackWhite>
+										</PhotometricInterpretation>
+										<PlanarConfiguration>1</PlanarConfiguration>
+									</BasicImageCharacteristics>
+									<ImageCaptureMetadata>
+										<orientation>1</orientation>
+									</ImageCaptureMetadata> 
+								</BasicImageInformation>
+							</objectCharacteristicsExtension>
+						</objectCharacteristics>
+						
+						<!-- Three master copies: two in Gainesville, one in Tallahassee -->
+						<storage>
+							<contentLocation>
+								<contentLocationType>URL</contentLocationType>
+								<contentLocationValue>http://archive.fcla.edu:5000/silos/gainesville-1/p926</contentLocationValue>
+							</contentLocation>
+							<storageMedium>Hard disk</storageMedium>
+						</storage>
+						<storage>
+							<contentLocation>
+								<contentLocationType>URL</contentLocationType>
+								<contentLocationValue>http://archive.fcla.edu:5000/silos/gainesville-2/p926</contentLocationValue>
+							</contentLocation>
+							<storageMedium>Hard disk</storageMedium>
+						</storage>
+						<storage>
+							<contentLocation>
+								<contentLocationType>URL</contentLocationType>
+								<contentLocationValue>http://archive.fcla.edu:5000/silos/tallahassee-1/p926</contentLocationValue>
+							</contentLocation>
+							<storageMedium>Hard disk</storageMedium>
+						</storage>
+					</file>
+				</xmlData>
+			</mdWrap>
+		</techMD>
+
+		<!-- PREMIS agent (format description service) -->
+		<digiprovMD ID="agent-1">
+			<mdWrap MDTYPE="PREMIS">
+				<xmlData>
+					<agent xmlns="info:lc/xmlns/premis-v2">
+						<agentIdentifier>
+							<agentIdentifierType>URI</agentIdentifierType>
+							<agentIdentifierValue>http://archive.fcla.edu/format-description</agentIdentifierValue>
+						</agentIdentifier>
+						<agentName>Format Description Service</agentName>
+						<agentType>Web Service</agentType>
+					</agent>
+				</xmlData>
+			</mdWrap>
+		</digiprovMD>
+
+		<!-- PREMIS agent (action plan service) -->
+		<digiprovMD ID="agent-2">
+			<mdWrap MDTYPE="PREMIS">
+				<xmlData>
+					<agent xmlns="info:lc/xmlns/premis-v2">
+						<agentIdentifier>
+							<agentIdentifierType>URI</agentIdentifierType>
+							<agentIdentifierValue>http://archive.fcla.edu/action-plan</agentIdentifierValue>
+						</agentIdentifier>
+						<agentName>Action Plan Service</agentName>
+						<agentType>Web Service</agentType>
+					</agent>
+				</xmlData>
+			</mdWrap>
+		</digiprovMD>
+
+		<!-- PREMIS agent (transformation service) -->
+		<digiprovMD ID="agent-3">
+			<mdWrap MDTYPE="PREMIS">
+				<xmlData>
+					<agent xmlns="info:lc/xmlns/premis-v2">
+						<agentIdentifier>
+							<agentIdentifierType>URI</agentIdentifierType>
+							<agentIdentifierValue>http://archive.fcla.edu/xform/tiff/jp2</agentIdentifierValue>
+						</agentIdentifier>
+						<agentName>Tiff to JP2 conversion Service</agentName>
+						<agentType>Web Service</agentType>						
+					</agent>
+				</xmlData>
+			</mdWrap>
+		</digiprovMD>
+
+		<!-- PREMIS event (format description) -->
+		<digiprovMD ID="event-1" ADMID="object-1 agent-1">
+			<mdWrap MDTYPE="PREMIS">
+				<xmlData>
+					<event xmlns="info:lc/xmlns/premis-v2">
+						<eventIdentifier>
+							<eventIdentifierType>DAITSS</eventIdentifierType>
+							<eventIdentifierValue>1</eventIdentifierValue>
+						</eventIdentifier>
+						<eventType>Format Validation</eventType>
+						<eventDateTime>2008-05-06T10:40:22-04:00</eventDateTime>
+						<eventOutcomeInformation>
+							<eventOutcome>Invalid</eventOutcome>
+							<eventOutcomeDetail>
+								<eventOutcomeDetailExtension>
+									<anomaly>ill-formed DateTime value</anomaly>
+								</eventOutcomeDetailExtension>
+							</eventOutcomeDetail>
+						</eventOutcomeInformation>
+					</event>
+				</xmlData>
+			</mdWrap>
+		</digiprovMD>
+
+		<!-- PREMIS event (action plan) -->
+		<digiprovMD ID="event-2" ADMID="object-1 agent-2">
+			<mdWrap MDTYPE="PREMIS">
+				<xmlData>
+					<event xmlns="info:lc/xmlns/premis-v2">
+						<eventIdentifier>
+							<eventIdentifierType>DAITSS</eventIdentifierType>
+							<eventIdentifierValue>2</eventIdentifierValue>
+						</eventIdentifier>
+						<eventType>Action Plan</eventType>
+						<eventDateTime>2008-05-06T10:40:22-04:00</eventDateTime>
+						<eventOutcomeInformation>
+							<eventOutcome>Migrate to jp2, Limitation preventing normalization to jpg</eventOutcome>
+							<eventOutcomeDetail>
+								<eventOutcomeDetailExtension>
+									<transformer type="migrate">http://archive.fcla.edu/xform/tiff/jp2</transformer>
+									<limitation type="normalize">Unsupported palette value</limitation>									
+								</eventOutcomeDetailExtension>
+							</eventOutcomeDetail>
+						</eventOutcomeInformation>
+					</event>
+				</xmlData>
+			</mdWrap>
+		</digiprovMD>
+
+		<!-- PREMIS event (migration) -->
+		<digiprovMD ID="event-3" ADMID="object-1 object-2 agent-3">
+			<mdWrap MDTYPE="PREMIS">
+				<xmlData>
+					<event xmlns="info:lc/xmlns/premis-v2">
+						<eventIdentifier>
+							<eventIdentifierType>DAITSS</eventIdentifierType>
+							<eventIdentifierValue>3</eventIdentifierValue>
+						</eventIdentifier>
+						<eventType>Migrate</eventType>
+						<eventDateTime>2008-05-06T10:40:22-04:00</eventDateTime>
+						<eventOutcomeInformation>
+							<eventOutcome>Success</eventOutcome>
+						</eventOutcomeInformation>
+					</event>
+				</xmlData>
+			</mdWrap>
+		</digiprovMD>
+		
+	</amdSec>
+	<fileSec>
+		<fileGrp>
+			<file ID="file-1" ADMID="object-1"/>
+			<file ID="file-2" ADMID="object-2"/>
+		</fileGrp>
+	</fileSec>
+	<structMap>
+		<div>
+			<fptr FILEID="file-1"/>
+			<fptr FILEID="file-2"/>
+		</div>
+	</structMap>
+</mets>

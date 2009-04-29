@@ -1,8 +1,9 @@
-require 'app'  # <-- your sinatra app
 require 'spec'
 require 'spec/interop/test'
 require 'sinatra/test'
 require 'cgi'
+
+require 'app'
 
 set :environment, :test
 
