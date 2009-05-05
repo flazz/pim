@@ -53,7 +53,8 @@ helpers do
       erb :validate_xml, :layout => false
     when "application/json"
       content_type :json
-      @results.to_json
+      results = @results.empty? ? ["VALID"] : ["INVALID", @results]
+      results.to_json
     end
   
   end
@@ -88,7 +89,6 @@ post '/validate' do
   
   case raw.class.name
   when 'Hash'
-    puts raw[:tempfile].class
     raw = raw[:tempfile]
   when 'String'
     raw = StringIO.new(raw)
