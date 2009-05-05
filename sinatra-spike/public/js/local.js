@@ -1,5 +1,13 @@
 $(document).ready(function() {
 
+    // Align options button '+' correctly in FF
+	jQuery.each(jQuery.browser, function(i) {		
+		if($.browser.mozilla){
+			$("#options").css("left","-2em");
+		}
+	});
+    
+	
 	// more options
 	$(".moreoptions .head").click(function(){
 		$(this).next().toggle('fast');
