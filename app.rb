@@ -3,10 +3,6 @@ require 'open-uri'
 require 'libxml'
 require 'cgi'
 require 'schematron'
-require 'json'
-
-mime :xml, 'application/xml'
-mime :json, 'application/json'
 
 include LibXML
 
@@ -15,87 +11,44 @@ configure do
   schema = File.join(File.dirname(__FILE__), "schema", "pim.stron")
   stron_parser = XML::Parser.file schema
   stron_doc = stron_parser.parse
-  
   XML.default_line_numbers = true
   set :stron, Schematron::Schema.new(stron_doc)
 end
 
-# The Sinatra way
-helpers do
+class Pim < Sinatra::Default
 
-  # Validate PiM
-  def validate(raw_io, stron)
-
-    # TODO catch errors for well formedness
-    instance_parser = XML::Parser.io raw_io
-    instance_doc = instance_parser.parse
-
-    # TODO validate the xml against the xml schema
-  
-    # validate against schematron PiM
-    stron.validate instance_doc
+  get '/' do
+    @title = "PREMIS in METS Validator"
+    puts options.stron
+    erb :index
   end
 
-  # call this when we support multiple formats
-  def render_requested_format
-    
-    compatible = request.accept.select do |mt|
-      [ "text/html",
-        "application/xml",
-        "application/json" ].include? mt
+  get '/validate' do
+    halt 400, "query parameter document is required" unless params['document']
+    url = CGI::unescape params['document']
+
+    @results = open(url) do |f|
+      parser = XML::Parser.io io
+      doc = parser.parse
+      stron.validate doc
     end
-  
-    case compatible.first
-    when "text/html"
-      erb :validate_html
-    when "application/xml"
-      content_type :xml
-      erb :validate_xml, :layout => false
-    when "application/json"
-      content_type :json
-      results = @results.empty? ? ["VALID"] : ["INVALID", @results]
-      results.to_json
-    end
-  
+
+    erb :validate
   end
 
-end
+  post '/validate' do
+    halt 400, "POST variable document is required" unless params['document']
 
+    doc = case params['document']
+          when Hash
+            XML::Parser.io params['document'][:tempfile]
+          when String
+            XML::Parser.string params['document']
+          end.parse
 
-# Routes
-get '/' do
-  @title = "PiM"
-  puts options.stron
-  erb :index
-end
-
-get '/validate' do
-  raw_url = params['document']
-  halt 400, "query parameter document is required" if raw_url.nil?
-
-  url = CGI::unescape raw_url
-  
-  @results = open(url) do |f|
-    validate f, options.stron
+    @results = stron.validate doc
+    erb :validate
   end
 
-  render_requested_format
-
-end
-
-post '/validate' do
-  raw = params['document']
-  halt 400, "POST variable document is required" if raw.nil?
-  
-  case raw.class.name
-  when 'Hash'
-    raw = raw[:tempfile]
-  when 'String'
-    raw = StringIO.new(raw)
-  end
-  
-  @results = validate raw, options.stron
-  render_requested_format
-  
 end
 

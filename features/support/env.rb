@@ -1,23 +1,25 @@
-# Sinatra
-app_file = File.join(File.dirname(__FILE__), *%w[.. .. app.rb])
-require app_file
+gem 'rack-test', '~>0.3.0'
+require 'rack/test'
 
-# Force the application name because polyglot breaks the
-# auto-detection logic.
-Sinatra::Application.app_file = app_file
+gem 'webrat', '~>0.4.2'
+require 'webrat/sinatra'
 
-# RSpec matchers
-require 'spec/expectations'
+$:.unshift File.dirname(__FILE__)
+require 'app'
 
-# Webrat
-require 'webrat'
-Webrat.configure do |config|
-  config.mode = :sinatra
-end
+# require File.expand_path(File.dirname(__FILE__)+'/../../spec_helper')
+
+Pim.set :environment, :development
 
 World do
-  session = Webrat::SinatraSession.new
-  session.extend(Webrat::Matchers)
-  session.extend(Webrat::HaveTagMatcher)
-  session
+  
+  def app
+    @app = Rack::Builder.new do
+      run Pim
+    end
+  end
+  
+  include Rack::Test::Methods
+  include Webrat::Methods
+  include Webrat::Matchers
 end
