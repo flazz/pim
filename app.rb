@@ -19,7 +19,6 @@ module Pim
 
     get '/' do
       @title = "PREMIS in METS Validator"
-      puts options.stron
       erb :index
     end
 
@@ -39,17 +38,20 @@ module Pim
     post '/validate' do
       halt 400, "POST variable document is required" unless params['document']
 
-      @results = begin
-                   doc = case params['document']
-                         when Hash
-                           XML::Parser.io params['document'][:tempfile]
-                         when String
-                           XML::Parser.string params['document']
-                         end.parse
-                   PIM_STRON.validate doc
-                 rescue => e
-                   [e.message]
-                 end
+      # TODO get libxml to not write to stdout/err
+      parser = case params['document']
+               when Hash
+                 XML::Parser.io params['document'][:tempfile]
+               when String
+                 XML::Parser.string params['document']
+               end
+
+      begin
+        doc = parser.parse
+        @results = PIM_STRON.validate doc
+      rescue => e
+        @formedness_error = e.message
+      end
 
       erb :validate
     end

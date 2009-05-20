@@ -1,26 +1,8 @@
 <h1>Validation Results</h1>
 
-
-<h2>Formedness</h2>
-<% if @results.empty? %>
-<p>document is well-formed</p>
+<% if @formedness_error %>
+<h2>document is ill-formed</h2>
+<code><%= @formedness_error %></code>
 <% else %>
-<p>document is ill-formed</p>
-<table>
-
-  <tr>
-    <th>line</th>
-    <th>message</th>
-  </tr>
-
-  <% @results.each do |e| %>
-
-  <tr>
-    <td><%= e[:line] %></td>
-    <td><%= e[:message] %></td>
-  </tr>
-
-  <% end %>
-
-</table>
+<h2>document is well-formed</h2>
 <% end %>

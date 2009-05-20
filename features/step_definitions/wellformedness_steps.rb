@@ -15,7 +15,7 @@ Then /^a result document should be returned$/ do
   last_response.status.should == 200
 
   last_response.should have_selector('h1') do |tag|
-    tag.text.should =~ /Validation Results/i
+    tag.text.should =~ /Validation Results/
   end
 end
 
@@ -24,16 +24,17 @@ Then /^it should contain (no|some) formedness errors$/ do |quantity|
   case quantity
   when 'no'
 
-    last_response.body.should have_selector('p') do |tag|
+    last_response.body.should have_selector('h2') do |tag|
       tag.text.should == 'document is well-formed'
     end
 
   when 'some'
-    
-    last_response.body.should have_selector('p') do |tag|
+
+    last_response.body.should have_selector('h2') do |tag|
       tag.text.should == 'document is ill-formed'
     end
-
+    
+    last_response.body.should contain("Fatal error:")
   end
 
 end
