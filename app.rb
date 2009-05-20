@@ -39,14 +39,18 @@ module Pim
     post '/validate' do
       halt 400, "POST variable document is required" unless params['document']
 
-      doc = case params['document']
-            when Hash
-              XML::Parser.io params['document'][:tempfile]
-            when String
-              XML::Parser.string params['document']
-            end.parse
+      @results = begin
+                   doc = case params['document']
+                         when Hash
+                           XML::Parser.io params['document'][:tempfile]
+                         when String
+                           XML::Parser.string params['document']
+                         end.parse
+                   PIM_STRON.validate doc
+                 rescue => e
+                   [e.message]
+                 end
 
-      @results = PIM_STRON.validate doc
       erb :validate
     end
 
