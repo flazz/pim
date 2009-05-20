@@ -6,49 +6,54 @@ require 'schematron'
 
 include LibXML
 
-# Load the PiM schematron
-configure do
+module Pim
+
+  # load the PREMIS in METS schematron
   schema = File.join(File.dirname(__FILE__), "schema", "pim.stron")
-  stron_parser = XML::Parser.file schema
-  stron_doc = stron_parser.parse
   XML.default_line_numbers = true
-  set :stron, Schematron::Schema.new(stron_doc)
-end
+  stron_doc = XML::Parser.file(schema).parse
+  PIM_STRON = Schematron::Schema.new stron_doc
 
-class Pim < Sinatra::Default
+  # The Sinatra App
+  class App < Sinatra::Default
 
-  get '/' do
-    @title = "PREMIS in METS Validator"
-    puts options.stron
-    erb :index
-  end
-
-  get '/validate' do
-    halt 400, "query parameter document is required" unless params['document']
-    url = CGI::unescape params['document']
-
-    @results = open(url) do |f|
-      parser = XML::Parser.io io
-      doc = parser.parse
-      stron.validate doc
+    get '/' do
+      @title = "PREMIS in METS Validator"
+      puts options.stron
+      erb :index
     end
 
-    erb :validate
-  end
+    get '/validate' do
+      halt 400, "query parameter document is required" unless params['document']
+      url = CGI::unescape params['document']
 
-  post '/validate' do
-    halt 400, "POST variable document is required" unless params['document']
+      @results = open(url) do |f|
+        parser = XML::Parser.io io
+        doc = parser.parse
+        PIM_STRON.validate doc
+      end
 
-    doc = case params['document']
-          when Hash
-            XML::Parser.io params['document'][:tempfile]
-          when String
-            XML::Parser.string params['document']
-          end.parse
+      erb :validate
+    end
 
-    @results = stron.validate doc
-    erb :validate
+    post '/validate' do
+      halt 400, "POST variable document is required" unless params['document']
+
+      doc = case params['document']
+            when Hash
+              XML::Parser.io params['document'][:tempfile]
+            when String
+              XML::Parser.string params['document']
+            end.parse
+
+      @results = PIM_STRON.validate doc
+      erb :validate
+    end
+
   end
 
 end
 
+if __FILE__ == $0
+  Pim::App.run!
+end

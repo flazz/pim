@@ -1,33 +1,34 @@
+require 'pp'
+
 Given /^I submit an? (well|ill)-formed document$/ do |state|
 
   @doc = case state
          when 'well'
-           <<WELL
-<root><element>Text Node</element></root>
-WELL
+           "<root><element>Text Node</element></root>"
          when 'ill'
-           <<ILL
-<root><element>Text Node</element></root>
-ILL
+           "<root><element>Text Node</element>"
          end
-  
 end
 
 When /^I press validate$/ do
-  post 'validate', :document => @doc
+  post '/validate', :document => @doc
 end
 
 Then /^a result document should be returned$/ do
-  pending
-end
+  last_response.status.should == 200
 
-Then /^it should contain (no|some) formedness errors$/ do |amount|
-  
-  case amount
-  when 'no'
-    last_request.should_not have_xpath ''
-  when 'some'
-    last_request.should_not have_xpath ''
+  last_response.should have_selector('h1') do |tag|
+    tag.text.should == 'Validation Results'
   end
 
+end
+
+Then /^it should contain (no|some) formedness errors$/ do |quantity|
+
+  last_response.should have_selector('h2') do |tag|
+    tag.text.should == 'Formedness'
+  end
+
+  # TODO errors after formedness
+  
 end
