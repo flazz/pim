@@ -1,7 +1,4 @@
-require 'pp'
-
 Given /^I submit an? (well|ill)-formed document$/ do |state|
-
   @doc = case state
          when 'well'
            "<root><element>Text Node</element></root>"
@@ -20,7 +17,6 @@ Then /^a result document should be returned$/ do
   last_response.should have_selector('h1') do |tag|
     tag.text.should == 'Validation Results'
   end
-
 end
 
 Then /^it should contain (no|some) formedness errors$/ do |quantity|
@@ -30,5 +26,4 @@ Then /^it should contain (no|some) formedness errors$/ do |quantity|
   end
 
   # TODO errors after formedness
-  
 end

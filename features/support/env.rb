@@ -7,25 +7,23 @@ require 'webrat/sinatra'
 # path to schematron
 $:.unshift File.join(File.dirname(__FILE__), '../../../schematron/lib')
 
-$:.unshift File.dirname(__FILE__)
-require 'app'
+# setup the app
+
+app_file = File.join(File.dirname(__FILE__), '../../app.rb')
+require app_file
+Pim::App.app_file = app_file
 
 require 'spec/expectations'
 
-# require File.expand_path(File.dirname(__FILE__)+'/../../spec_helper')
-
-Pim::App.set :environment, :development
+Pim::App.set :environment, :test
 
 World do
   
   def app
-    @app = Rack::Builder.new do
-      run Pim::App
-    end
+    Pim::App
   end
   
-  include Rack::Test::Methods
+  include Rack::Test::Methods  
   include Webrat::Methods
   include Webrat::Matchers
-  
 end
