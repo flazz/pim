@@ -1,0 +1,26 @@
+<h2>PiM Validity</h2>
+
+<% if @results.empty? %>
+<h3>Document is PREMIS-in-METS compliant.</h3>
+<% else %>
+<h3>Document is not PREMIS-in-METS compliant:</h3>
+<table>
+
+  <tr>
+    <th>line</th>
+    <th>message</th>
+    <th>schema reference</th>
+  </tr>
+
+  <% @results.each do |e| %>
+
+  <tr>
+    <td><%= e[:line] %></td>
+    <td><%= e[:message] %></td>
+    <td><%= e[:schema_note] %></td>
+  </tr>
+
+  <% end %>
+
+</table>
+<% end %>

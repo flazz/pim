@@ -26,12 +26,15 @@ module Pim
       halt 400, "query parameter document is required" unless params['document']
       url = CGI::unescape params['document']
 
-      @results = open(url) do |f|
+      @results = open(url) do |io|
         parser = XML::Parser.io io
         doc = parser.parse
         PIM_STRON.validate doc
       end
 
+      @pim_errors = {}
+      @schema_errors = {}
+      
       erb :validate
     end
 
@@ -49,6 +52,10 @@ module Pim
       begin
         doc = parser.parse
         @results = PIM_STRON.validate doc
+        
+        # placeholders
+        @schema_errors = {}
+        @pim_errors = {}
       rescue => e
         @formedness_error = e.message
       end

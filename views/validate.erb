@@ -6,3 +6,19 @@
 <% else %>
 <h2>document is well-formed</h2>
 <% end %>
+
+<br/>
+<hr/>
+
+<% unless @schema_errors.nil? %>
+<br/>
+<%= erb(:schema_validity, :layout => false) %>
+<hr/>
+<% end %>
+
+<% unless @pim_errors.nil? %>
+<br/>
+<%= erb(:pim_validity, :layout => false) %>
+<hr/>
+<% end %>
+
