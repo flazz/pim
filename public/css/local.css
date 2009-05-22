@@ -30,7 +30,14 @@ a.fg-button { float:left; }
 
 img.logo { height:30px;}
 
-body {font-size:75%;color:#222;background:#fff;font-family:"Helvetica Neue", Arial, Helvetica, sans-serif;}
+body {
+    font-size:75%;
+    color:#222;
+    //background:#fff;
+    background-image: url("/images/wip.png");
+    font-family:"Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+
 h1, h2, h3, h4, h5, h6 {font-weight:normal;color:#111;}
 h1 {font-size:3em;line-height:1;margin-bottom:0.5em;}
 h2 {font-size:2em;margin-bottom:0.75em;}
@@ -41,7 +48,6 @@ h6 {font-size:1em;font-weight:bold;}
 h1 img, h2 img, h3 img, h4 img, h5 img, h6 img {margin:0;}
 
 .container {width:950px;margin:0 auto;}
-
 
 #uri {width:85%;}
 #uploadfile {width:85%;}
