@@ -5,12 +5,10 @@
 <code><%= @formedness_error %></code>
 <% else %>
 <h2>document is well-formed</h2>
-<% end %>
-
 <br/>
 <hr/>
 
-<% unless @schema_errors.nil? %>
+<% unless @schema_errors.empty? %>
 <br/>
 <%= erb(:schema_validity, :layout => false) %>
 <hr/>
@@ -21,4 +19,7 @@
 <%= erb(:pim_validity, :layout => false) %>
 <hr/>
 <% end %>
+
+<% end %>
+
 

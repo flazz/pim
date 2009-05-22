@@ -26,6 +26,7 @@ module Pim
       halt 400, "query parameter document is required" unless params['document']
       url = CGI::unescape params['document']
 
+      @title = "Validation Results"
       @results = open(url) do |io|
         parser = XML::Parser.io io
         doc = parser.parse
@@ -41,6 +42,7 @@ module Pim
     post '/validate' do
       halt 400, "POST variable document is required" unless params['document']
 
+      @title = "Validation Results"
       # TODO get libxml to not write to stdout/err
       parser = case params['document']
                when Hash

@@ -94,7 +94,21 @@
 				  </premis>
 				</xmlData>
 			</mdWrap>
-		</techMD>	
+		</techMD>
+		<rightsMD>
+			<mdWrap MDTYPE="PREMIS">
+				<xmlData>
+					<agent xmlns="info:lc/xmlns/premis-v2">
+						<agentIdentifier>
+							<agentIdentifierType>URI</agentIdentifierType>
+							<agentIdentifierValue>http://archive.fcla.edu/format-description</agentIdentifierValue>
+						</agentIdentifier>
+						<agentName>Format Description Service</agentName>
+						<agentType>Web Service</agentType>
+					</agent>
+				</xmlData>
+			</mdWrap>
+		</rightsMD>
 	</amdSec>
 	
 	<fileSec>

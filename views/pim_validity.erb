@@ -7,9 +7,8 @@
 <table>
 
   <tr>
-    <th>line</th>
-    <th>message</th>
-    <th>schema reference</th>
+    <th>Line</th>
+    <th>Message</th>
   </tr>
 
   <% @results.each do |e| %>
@@ -17,7 +16,6 @@
   <tr>
     <td><%= e[:line] %></td>
     <td><%= e[:message] %></td>
-    <td><%= e[:schema_note] %></td>
   </tr>
 
   <% end %>

@@ -3,7 +3,7 @@ Given /^I submit a\(n\) (valid|invalid) PiM document$/ do |type|
   # Choose the correct document
   fp = File.join(File.dirname(__FILE__), '..', '..', 'spec/fixtures/pim')
   
-  file = type == 'valid' ? "case1.xml" : "case4.xml"
+  file = type == 'valid' ? "case1.xml" : "invalid_case1.xml"
   doc = File.join(fp, file)
   @doc = Rack::Test::UploadedFile.new(doc)
 
