@@ -21,7 +21,7 @@
 							path: p926/f0 (package 926, file 0)
 						-->
 						<objectIdentifier>
-							<objectIdentifierType>DAITSS2</objectIdentifierType>
+							<!-- <objectIdentifierType>DAITSS2</objectIdentifierType> -->
 							<objectIdentifierValue>daitss://archive.fcla.edu/p926/f0</objectIdentifierValue>
 						</objectIdentifier>
 						

@@ -1,8 +1,29 @@
-<h1>Validation Results</h1>
+<h1>Results</h1>
+<%= @results.inspect%>
+<% if @results[:formedness] %>
 
-<% if @formedness_error %>
 <h2>document is ill-formed</h2>
-<code><%= @formedness_error %></code>
+<%= @results[:formnedness] %>
+
+
 <% else %>
-<h2>document is well-formed</h2>
+
+  <h2>document is well-formed</h2>
+
+  <% if @results[:validity] %>
+  <h2>document is invalid</h2>
+  
+  <ul>
+    <% @results[:validity].each do |e| %>
+    <li>
+      <%= "line %s: %s " % [ e[:line], e[:message] ]%>
+    </li>
+    <% end %>
+  </ul>
+  
+  <% else %>
+  <h2>document is valid</h2>
+  <% end %>
+
 <% end %>
+
