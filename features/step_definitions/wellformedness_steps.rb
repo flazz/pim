@@ -34,7 +34,10 @@ Then /^it should contain (no|some) formedness errors$/ do |quantity|
       tag.should contain('document is ill-formed')
     end
     
-    last_response.body.should contain("Fatal error:")
+    last_response.body.should have_selector('code') do |tag|
+      tag.should contain("Fatal error:")
+    end
+    
   end
 
 end
