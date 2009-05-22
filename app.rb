@@ -26,7 +26,12 @@ module Pim
       halt 400, "query parameter document is required" unless params['document']
       @title = "Validation Results"
       url = CGI::unescape params['document']
-      src = open(url) { |f| f.read }
+      
+      src = begin
+              open(url) { |f| f.read }
+            rescue => e
+              halt 400, "cannot get url: #{url}, #{e.message}"
+            end
       @results =Validation.new(src).results
       erb :validate
     end
