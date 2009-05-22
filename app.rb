@@ -9,15 +9,25 @@ module Pim
   class App < Sinatra::Default
 
     get '/' do
+      redirect 'ajax'
+    end
+    
+    get '/ajax' do
       @title = "PREMIS in METS Validator"
-      erb :index
+      erb :ajax_index
+    end
+
+    get '/plain' do
+      @title = "PREMIS in METS Validator"
+      erb :plain_index
     end
 
     get '/validate' do
       halt 400, "query parameter document is required" unless params['document']
       @title = "Validation Results"
       url = CGI::unescape params['document']
-      @results = open(url) { |f| Validation.new(f).results }
+      src = open(url) { |f| f.read }
+      @results =Validation.new(src).results
       erb :validate
     end
 

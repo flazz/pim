@@ -16,7 +16,9 @@
 <ul>
   <% @results[:validity].each do |e| %>
   <li>
-    <%= "line %s: %s " % [ e[:line], e[:message] ]%>
+    <code>
+      <%= "line %s: %s " % [ e[:line], e[:message] ]%>
+    </code>
   </li>
   <% end %>
 </ul>
@@ -30,7 +32,9 @@
 <ul>
   <% @results[:conforms_to_bp].each do |e| %>
   <li>
-    <%= "line %s: %s " % [ e[:line], e[:message] ]%>
+    <code>
+      <%= "line %s: %s " % [ e[:line], e[:message] ]%>
+    </code>
   </li>
   <% end %>
 </ul>
