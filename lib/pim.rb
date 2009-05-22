@@ -1,3 +1,7 @@
+require 'rubygems'
+gem 'schematron', '>= 0.0.2'
+gem 'libxml-ruby', '>= 1.1.3'
+
 require 'libxml'
 require 'schematron'
 

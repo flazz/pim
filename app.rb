@@ -1,6 +1,8 @@
 require 'sinatra'
 require 'open-uri'
 require 'cgi'
+
+$:.unshift File.join(File.dirname(__FILE__), 'lib')
 require 'pim'
 
 module Pim
@@ -32,13 +34,15 @@ module Pim
             rescue => e
               halt 400, "cannot get url: #{url}, #{e.message}"
             end
-      @results =Validation.new(src).results
+      
+      @results = Validation.new(src).results
       erb :validate
     end
 
     post '/validate' do
       halt 400, "query parameter idocument is required" unless params['document']
       @title = "Validation Results"
+      
       src = case params['document']
             when Hash
               params['document'][:tempfile].read # XXX could be a ram hog
@@ -54,4 +58,6 @@ module Pim
 
 end
 
-Pim::App.run! if __FILE__ == $0
+if __FILE__ == $0
+  Pim::App.run!
+end
