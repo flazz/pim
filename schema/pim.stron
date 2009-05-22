@@ -8,15 +8,59 @@
   <ns prefix="pre" uri="info:lc/xmlns/premis-v2"/>
   <ns prefix="dts" uri="http://www.fcla.edu/dls/md/daitss/"/>
 
-  <pattern name="PREMIS object should bein the proper buckets">
+
+  <pattern name="bp-1: Report PREMIS container or PREMIS buckets">
+    <rule context="mets:mets">
+      <assert test="(count(//pre:premis) = 1) or 
+                    (count(//mets:xmlData/pre:object) + 
+                     count(//mets:xmlData/pre:agent) + 
+                     count(//mets:xmlData/pre:rights) + 
+                     count(//mets:xmlData/pre:events) > 0)">
+        There must be either one PREMIS container or PREMIS buckets
+      </assert>
+      
+      <report test="//pre:premis">
+        This document has a PREMIS container
+      </report>
+      <report test="(count(mets:xmlData/pre:object) + 
+                     count(mets:xmlData/pre:agent) + 
+                     count(mets:xmlData/pre:rights) + 
+                     count(mets:xmlData/pre:events) > 0)">
+        This document has PREMIS buckets
+      </report>
+    </rule>
+  </pattern>
+
+  <pattern name="bp-1b: PREMIS should be in one container">
+    <rule context="//pre:premis">
+      <assert test="count(//mets:xmlData/pre:object)=0">
+        All PREMIS objects must be inside the PREMIS container
+      </assert>
+      <assert test="count(//mets:xmlData/pre:event)=0">
+        All PREMIS events must be inside the PREMIS container
+      </assert>
+      <assert test="count(//mets:xmlData/pre:agent)=0">
+        All PREMIS agents must be inside the PREMIS container
+      </assert>
+      <assert test="count(//mets:xmlData/pre:rights)=0">
+        All PREMIS rights must be inside the PREMIS container
+      </assert>
+      
+      <assert test="parent::mets:xmlData/parent::mets:mdWrap/parent::mets:digiprovMD">
+        PREMIS root element must be in a METS digiprovMD
+      </assert>
+    </rule>
+  </pattern>
+
+  <pattern name="bp-1a: PREMIS object(s) should be in the proper buckets">
     
-    <rule context="//pre:event">
+    <rule context="//mets:xmlData/pre:event">
       <assert test="parent::mets:xmlData/parent::mets:mdWrap/parent::mets:digiprovMD">
 	PREMIS events must be contained in a METS digiprovMD
       </assert>
     </rule>
 
-    <rule context="//pre:object">
+    <rule context="//mets:xmlData/pre:object">
       <assert test="parent::mets:xmlData/parent::mets:mdWrap/parent::mets:techMD">
 	PREMIS objects must be contained in a METS techMD
       </assert> 

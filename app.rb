@@ -99,7 +99,6 @@ module Pim
     post '/validate' do
       halt 400, "query parameter document is required" unless params['document']
       @title = "Validation Results"
-
       src = case params['document']
             when Hash
               params['document'][:tempfile].read # XXX could be a ram hog

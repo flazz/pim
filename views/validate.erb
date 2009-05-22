@@ -3,27 +3,43 @@
 <% if @results[:formedness] %>
 
 <h2>document is ill-formed</h2>
-<%= @results[:formnedness] %>
+<code><%= @results[:formnedness] %></code>
 
 
 <% else %>
 
-  <h2>document is well-formed</h2>
+<h2>document is well-formed</h2>
 
-  <% if @results[:validity] %>
-  <h2>document is invalid</h2>
-  
-  <ul>
-    <% @results[:validity].each do |e| %>
-    <li>
-      <%= "line %s: %s " % [ e[:line], e[:message] ]%>
-    </li>
-    <% end %>
-  </ul>
-  
-  <% else %>
-  <h2>document is valid</h2>
+<% if @results[:validity] %>
+<h2>document is invalid</h2>
+
+<ul>
+  <% @results[:validity].each do |e| %>
+  <li>
+    <%= "line %s: %s " % [ e[:line], e[:message] ]%>
+  </li>
   <% end %>
+</ul>
 
+<% else %>
+<h2>document is valid</h2>
+
+<% if !@results[:conforms_to_bp].empty? %>
+<h2>document violates PREMIS in METS best practice</h2>
+
+<ul>
+  <% @results[:conforms_to_bp].each do |e| %>
+  <li>
+    <%= "line %s: %s " % [ e[:line], e[:message] ]%>
+  </li>
+  <% end %>
+</ul>
+
+<% else %>
+<h2>document conforms to PREMIS in METS best practice</h2>
+<% end %>
+
+<% end %>
+e
 <% end %>
 

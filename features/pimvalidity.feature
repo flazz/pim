@@ -3,7 +3,7 @@ Feature: PREMIS in METS conformance
   Each violation should cite the section in question of the best practice.
 
   Scenario Outline: PiM validation
-    Given I submit a <state> document
+    Given I submit a(n) <state> PiM document
     When I press validate
     Then a result document should be returned
     And it should contain <quantity> pim best practices violations

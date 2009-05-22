@@ -2,7 +2,7 @@ gem 'rack-test', '~>0.3.0'
 require 'rack/test'
 
 gem 'webrat', '~>0.4.2'
-require 'webrat/sinatra'
+require 'webrat'
 
 # path to schematron
 $:.unshift File.join(File.dirname(__FILE__), '../../../schematron/lib')
@@ -12,6 +12,10 @@ $:.unshift File.join(File.dirname(__FILE__), '../../../schematron/lib')
 app_file = File.join(File.dirname(__FILE__), '../../app.rb')
 require app_file
 Pim::App.app_file = app_file
+
+Webrat.configure do |config|
+  config.mode = :sinatra
+end
 
 require 'spec/expectations'
 
