@@ -24,6 +24,7 @@ module Pim
       erb :plain_index
     end
 
+    # validation
     get '/validate' do
       halt 400, "query parameter document is required" unless params['document']
       @title = "Validation Results"
@@ -54,6 +55,8 @@ module Pim
       erb :validate
     end
 
+    # convert premis to pim
+    
   end
 
 end
