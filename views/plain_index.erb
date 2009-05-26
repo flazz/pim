@@ -1,37 +1,16 @@
 <h2>Validate by URI</h2>
-<form method="get" action="validate">
-  <label for="document">Address:</label>
-  <input name="document" id="uri" type="text" size="45"/>
-  <br/><br/>
-  <button class="fg-button ui-state-default ui-corner-all" type="submit">Validate!</button>
-</form>
+<%= erb :'forms/uri', :layout => false %>
 
 <br/>
 <hr/>
 
 <h2>Validate by File Upload</h2>
-<form method="post" action="validate" enctype="multipart/form-data">
-  <label for="document">File:</label>
-  <input name="document" id="uploadfile" size="30" type="file"/>
-  <br/><br/>
-  <button class="fg-button ui-state-default ui-corner-all" type="submit">Validate!</button>
-</form>
+<%= erb :'forms/file_upload', :layout => false %>
 
 <br/>
 <hr/>
 
 <h2>Validate by Direct Input</h2>
-<form method="post" action="validate">
-  <label for="document">Enter PiM:</label>
-  <br/>
-  <textarea id="directinput" rows="12" cols="80" name="document" title="..."></textarea>
-  <br/>
+<%= erb :'forms/direct_input', :layout => false %>
 
-  <br/>
-  <button class="fg-button ui-state-default ui-corner-all" type="submit">Validate!</button>
-  <br/>
-</form>
-
-<br/>
-<hr/>
 <br/>
