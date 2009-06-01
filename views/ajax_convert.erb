@@ -1,0 +1,25 @@
+<div id="tabs">
+
+  <ul>
+    <li><a href="#tab-1"><span>URI</span></a></li>
+    <li><a href="#tab-2"><span>File Upload</span></a></li>
+    <li><a href="#tab-3"><span>Direct Input</span></a></li>
+  </ul>
+
+  <div id="tab-1">
+    <h2>Convert by URI</h2>
+    <%= erb :'forms/uri', :layout => false %>
+  </div>
+
+  <div id="tab-2">
+    <h2>Convert by File Upload</h2>
+    <%= erb :'forms/file_upload', :layout => false %>
+  </div>
+
+  <div id="tab-3">
+    <h2>Convert by Direct Input</h2>
+    <%= erb :'forms/direct_input', :layout => false %>
+  </div>
+
+</div>
+
