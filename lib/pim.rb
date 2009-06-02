@@ -1,13 +1,24 @@
 require 'rubygems'
 gem 'schematron', '>= 0.0.2'
 gem 'libxml-ruby', '>= 1.1.3'
+gem 'nokogiri', '>=1.2.3'
+gem 'syntax', '>=1.0.0'
 
 require 'libxml'
 require 'schematron'
+require 'syntax/convertors/html'
+require 'nokogiri'
 
 include LibXML
 
 module Pim
+
+  NS = {
+         'mets' => 'http://www.loc.gov/METS/',
+         'premis' => 'info:lc/xmlns/premis-v2',
+         'xlink' => 'http://www.w3.org/1999/xlink',
+         'xsi' => 'http://www.w3.org/2001/XMLSchema-instance'
+       }
 
   def load_stron name
     schema = File.join(File.dirname(__FILE__), '..', 'schema', name)
@@ -16,6 +27,39 @@ module Pim
     Schematron::Schema.new stron_doc
   end
   module_function :load_stron
+
+  def self.generate_pim(premis, embedding)
+    case embedding
+      when 'container'
+
+        # Validate PREMIS
+        
+        # Build list of warnings (if any)
+        
+        # Transform to PiM
+        @premis = Nokogiri::XML.parse(premis)
+        @files = @premis.xpath('//premis:object[@xsi:type="file"]', NS).map do |f|
+                   {}
+                 end
+        pim = File.join(File.dirname(__FILE__), '..', 'views', 'pim.xml.erb')
+        
+        t = open pim do |io|
+              string = io.read
+              ERB.new(string, nil, '<>')
+            end
+
+        mets = t.result binding
+
+        # Make it pretty
+        convertor = Syntax::Convertors::HTML.for_syntax "xml"
+        convertor.convert(mets, false)
+        
+      when 'buckets'
+        "TODO"
+      else
+        "query parameter embed_as must be 'container' or 'buckets'"
+    end
+  end
 
   PIM_STRON = load_stron "pim.stron"
 

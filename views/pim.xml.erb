@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mets xmlns="http://www.loc.gov/METS/" 
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <amdSec>
+    <digiprovMD ID="premis-dpmd">
+      <mdWrap MDTYPE="PREMIS">
+        <xmlData>
+          <%= @premis.root.to_xml %>
+        </xmlData>
+      </mdWrap>
+    </digiprovMD>
+  </amdSec>
+
+  <fileSec>
+    <fileGrp>
+<% @files.each_with_index do |f, i| %>
+      <file ID="file-<%= i %>"
+<% if f[:sum] %> 
+            CHECKSUM="<%= f[:sum] %>" '
+            CHECKSUMTYPE="<%= f[:sumtype] %>"
+<% end %>>
+      <% if f[:link] %><FLocat LOCTYPE="<%= f[:loc_type] %>" xlink:href="<%= f[:link] %>"/><% end %>
+      </file>
+<% end %>
+    </fileGrp>
+  </fileSec>
+
+  <structMap>
+    <div ADMID="premis-dpmd">
+      <div>
+<% @files.each_index do |i| %>
+        <fptr FILEID="file-<%= i %>"/>
+<% end %>
+      </div>
+    </div>
+  </structMap>
+  
+</mets>
