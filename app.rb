@@ -10,40 +10,81 @@ module Pim
   # The Sinatra App
   class App < Sinatra::Default
 
+    # index
     get '/' do
-      redirect 'ajax'
+      erb :index
     end
-    
-    get '/ajax' do
-      @title = "PREMIS in METS Validator"
-      erb :ajax_index
-    end
-    
-    get '/plain' do
-      @title = "PREMIS in METS Validator"
-      erb :plain_index
-    end
-    
-    # validation
+
+    # validate PiM
     get '/validate' do
+      @title = "PREMIS in METS Validator"
+      erb :'validate/index'
+    end
+
+    get '/validate/results' do
       halt 400, "query parameter document is required" unless params['document']
       @title = "Validation Results"
       url = CGI::unescape params['document']
-      
+
+      src = begin
+              open(url) { |f| f.read }
+            rescue => e
+              halt 400, "cannot get url: #{url}, #{e.message}"
+            end
+
+      @results = Validation.new(src).results
+      erb :'validate/results'
+    end
+
+    post '/validate/results' do
+      halt 400, "query parameter document is required" unless params['document']
+      @title = "Validation Results"
+
+      src = case params['document']
+            when Hash
+              params['document'][:tempfile].read # XXX could be a ram hog
+            when String
+              params['document']
+            end
+
+      @results = Validation.new(src).results
+      erb :'validate/results'
+    end
+
+    # convert PREMIS to PiM
+    get '/convert' do
+      @title = "PREMIS in METS Converter"
+      erb :'convert/index'
+    end
+
+    get '/convert/results' do
+      halt 400, "query parameter document is required" unless params['document']
+      halt 400, "query parameter convert is required" unless params['convert']
+
+      url = CGI::unescape params['document']
+
       src = begin
               open(url) { |f| f.read }
             rescue => e
               halt 400, "cannot get url: #{url}, #{e.message}"
             end
       
-      @results = Validation.new(src).results
-      erb :validate
+      case params['convert']
+      when 'p2pim'
+        PREMIS_TO_PIM_CONTAINER_XSLT.apply doc
+      when 'pim2p'
+        halt 501, "Under Construction"
+      else
+        halt 400, 'parameter convert must be "p2pim" or "pim2p"'
+      end
+
     end
 
-    post '/validate' do
+    post '/convert/results' do
       halt 400, "query parameter document is required" unless params['document']
-      @title = "Validation Results"
-      
+      halt 400, "query parameter convert is required" unless params['convert']
+      @title = "Conversion Results"
+
       src = case params['document']
             when Hash
               params['document'][:tempfile].read # XXX could be a ram hog
@@ -51,80 +92,19 @@ module Pim
               params['document']
             end
 
-      @results = Validation.new(src).results
-      erb :validate
+      doc = XML::Parser.string(src).parse
+
+      case params['convert']
+      when 'p2pim'
+        PREMIS_TO_PIM_CONTAINER_XSLT.apply doc
+      when 'pim2p'
+        halt 501, "Under Construction"
+      else
+        halt 400, 'parameter convert must be "p2pim" or "pim2p"'
+      end
+      
     end
 
-
-
-    # convert premis to pim   
-    get '/premis2pim' do
-      redirect '/premis2pim/ajax'
-    end
-
-    # Index display
-    get '/premis2pim/:type' do
-
-      @title = "PREMIS-in-METS Converter"
-      @heading = "PREMIS to PREMIS-in-METS Conversion Service"
-      @convert = "p2pim"
-
-      template =  case params['type']
-                    when 'plain' then "plain_convert"
-                    when 'ajax' then "ajax_convert"
-                    else status 404
-                  end
-
-      erb :"#{template}"
-
-    end
-    
-    get '/convert' do
-      halt 400, "query parameter document is required" unless params['document']
-      halt 400, "query parameter convert is required" unless params['convert']
-      
-      @title = "Conversion Results"
-      
-      @results = case params['convert']
-                   when 'p2pim'
-                     Pim.generate_pim params['document'], params['embed_as']
-                   when 'pim2p'
-                     "Under Construction"
-                   else
-                     halt 400, 'parameter convert must be "p2pim" or "pim2p"'
-                 end
-      
-      erb :conversion_results
- 
-    end
-    
-    post '/convert' do
-      halt 400, "query parameter document is required" unless params['document']
-      halt 400, "query parameter convert is required" unless params['convert']
-      
-      @title = "Conversion Results"
-      
-      src = case params['document']
-            when Hash
-              params['document'][:tempfile].read # XXX could be a ram hog
-            when String
-              params['document']
-            end
-      
-      @results = case params['convert']
-                   when 'p2pim'
-                     Pim.generate_pim src, params['embed_as']
-                   when 'pim2p'
-                     "Under Construction"
-                   else
-                     halt 400, 'parameter convert must be "p2pim" or "pim2p"'
-                 end
-      erb :conversion_results
-    end
-
-
-
-    # can this be factored out?
   end
 
 end

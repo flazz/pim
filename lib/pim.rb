@@ -1,67 +1,38 @@
 require 'rubygems'
+
 gem 'schematron', '>= 0.0.2'
 gem 'libxml-ruby', '>= 1.1.3'
-gem 'nokogiri', '>=1.2.3'
-gem 'syntax', '>=1.0.0'
+gem 'libxslt-ruby', '>= 0.9.1'
 
 require 'libxml'
+require 'libxslt'
 require 'schematron'
-require 'syntax/convertors/html'
-require 'nokogiri'
 
 include LibXML
+include LibXSLT
 
 module Pim
 
-  NS = {
-         'mets' => 'http://www.loc.gov/METS/',
-         'premis' => 'info:lc/xmlns/premis-v2',
-         'xlink' => 'http://www.w3.org/1999/xlink',
-         'xsi' => 'http://www.w3.org/2001/XMLSchema-instance'
-       }
-
+  # schematron
   def load_stron name
     schema = File.join(File.dirname(__FILE__), '..', 'schema', name)
     XML.default_line_numbers = true
-    stron_doc = XML::Parser.file(schema).parse
-    Schematron::Schema.new stron_doc
+    doc = XML::Parser.file(schema).parse
+    Schematron::Schema.new doc
   end
   module_function :load_stron
-
-  def self.generate_pim(premis, embedding)
-    case embedding
-      when 'container'
-
-        # Validate PREMIS
-        
-        # Build list of warnings (if any)
-        
-        # Transform to PiM
-        @premis = Nokogiri::XML.parse(premis)
-        @files = @premis.xpath('//premis:object[@xsi:type="file"]', NS).map do |f|
-                   {}
-                 end
-        pim = File.join(File.dirname(__FILE__), '..', 'views', 'pim.xml.erb')
-        
-        t = open pim do |io|
-              string = io.read
-              ERB.new(string, nil, '<>')
-            end
-
-        mets = t.result binding
-
-        # Make it pretty
-        convertor = Syntax::Convertors::HTML.for_syntax "xml"
-        convertor.convert(mets, false)
-        
-      when 'buckets'
-        "TODO"
-      else
-        "query parameter embed_as must be 'container' or 'buckets'"
-    end
-  end
-
+  
   PIM_STRON = load_stron "pim.stron"
+  
+  # transformations
+  def load_xslt name
+    transform = File.join(File.dirname(__FILE__), '..', 'xsl', name)
+    doc = XML::Parser.file(transform).parse
+    XSLT::Stylesheet.new doc
+  end
+  module_function :load_xslt
+  
+  PREMIS_TO_PIM_CONTAINER_XSLT = load_xslt "pim_container.xsl"
 
   class Validation
 
@@ -86,7 +57,8 @@ module Pim
       Tempfile.open 'xml' do |tio|
         tio.write @src
         tio.flush
-        output = `java -Dfile=#{tio.path} -jar xmlvalidator.jar`
+        jarfile = File.join(File.dirname(__FILE__), '..', 'ext', 'xmlvalidator.jar')
+        output = `java -Dfile=#{tio.path} -jar #{jarfile}`
       end
 
       if output =~ /Warnings: \d+\n.*?Errors: \d+\n(.*?)Fatal Errors: \d+\n.*?/m

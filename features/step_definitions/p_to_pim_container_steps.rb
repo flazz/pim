@@ -1,9 +1,9 @@
 require 'nokogiri'
 
 XMLNS = {
-       'mets' => 'http://www.loc.gov/METS/',
-       'premis' => 'info:lc/xmlns/premis-v2'
-        }
+  'mets' => 'http://www.loc.gov/METS/',
+  'premis' => 'info:lc/xmlns/premis-v2'
+}
 
 Given /^a PREMIS document$/ do
   @doc = <<XML

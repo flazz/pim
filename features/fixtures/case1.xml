@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+	PREMIS v2.0 Document describing a single TIFF image with no transformations.
+	C. Chou, F. Lazzarino
+-->
+<premis xmlns="info:lc/xmlns/premis-v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="info:lc/xmlns/premis-v2 http://www.loc.gov/standards/premis/draft-schemas-2-0/premis-v2-0.xsd http://www.loc.gov/mix/v10 http://www.loc.gov/standards/mix/mix10/mix10.xsd" version="2.0">
+	<object  xsi:type="file">
+		<objectIdentifier>
+			<objectIdentifierType>DAITSS2</objectIdentifierType>
+			<objectIdentifierValue>daitss://archive.fcla.edu/p926/f0</objectIdentifierValue>
+		</objectIdentifier>
+		<objectCharacteristics>
+			<compositionLevel>0</compositionLevel>
+			<fixity>
+				<messageDigestAlgorithm>MD5</messageDigestAlgorithm>
+				<messageDigest>2de9ef79df730f93e40819625cf7bcb2</messageDigest>
+			</fixity>
+			<size>3001452</size>
+			<format>
+				<formatDesignation>
+					<formatName>TIFF</formatName>
+					<formatVersion>4.0</formatVersion>
+				</formatDesignation>
+				<formatRegistry>
+					<formatRegistryName>http://www.nationalarchives.gov.uk/pronom</formatRegistryName>
+					<formatRegistryKey>fmt/8</formatRegistryKey>
+				</formatRegistry>
+			</format>
+			<objectCharacteristicsExtension>
+				<BasicImageInformation xmlns="http://www.loc.gov/mix/v10">
+					<BasicImageCharacteristics>
+						<imageWidth>1000</imageWidth>
+						<imageHeight>1000</imageHeight>
+						<ByteOrder>little-endian</ByteOrder>
+						<Compression>
+							<CompressionScheme>1</CompressionScheme>
+						</Compression>
+						<PhotometricInterpretation>
+							<ColorSpace>2</ColorSpace>
+							<ReferenceBlackWhite>0.0 255.0 0.0 255.0 0.0 255.0</ReferenceBlackWhite>
+						</PhotometricInterpretation>
+						<PlanarConfiguration>1</PlanarConfiguration>
+					</BasicImageCharacteristics>
+					<ImageCaptureMetadata>
+						<orientation>1</orientation>
+					</ImageCaptureMetadata>
+				</BasicImageInformation>
+			</objectCharacteristicsExtension>
+		</objectCharacteristics>
+		<!-- Three master copies: two in Gainesville, one in Tallahassee -->
+		<storage>
+			<contentLocation>
+				<contentLocationType>URL</contentLocationType>
+				<contentLocationValue>http://archive.fcla.edu:5000/silos/gainesville-1/p926</contentLocationValue>
+			</contentLocation>
+			<storageMedium>Hard disk</storageMedium>
+		</storage>
+		<storage>
+			<contentLocation>
+				<contentLocationType>URL</contentLocationType>
+				<contentLocationValue>http://archive.fcla.edu:5000/silos/gainesville-2/p926</contentLocationValue>
+			</contentLocation>
+			<storageMedium>Hard disk</storageMedium>
+		</storage>
+		<storage>
+			<contentLocation>
+				<contentLocationType>URL</contentLocationType>
+				<contentLocationValue>http://archive.fcla.edu:5000/silos/tallahassee-1/p926</contentLocationValue>
+			</contentLocation>
+			<storageMedium>Hard disk</storageMedium>
+		</storage>
+		
+		<!-- 		
+			<xs:element ref="signatureInformation" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="relationship" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="linkingEventIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="linkingIntellectualEntityIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="linkingRightsStatementIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+		-->
+	</object>
+	<object xsi:type="representation">
+		<objectIdentifier>
+			<objectIdentifierType>TBD</objectIdentifierType>
+			<objectIdentifierValue>R-0</objectIdentifierValue>
+		</objectIdentifier>
+		<relationship>
+			<relationshipType>Structural</relationshipType>
+			<relationshipSubType>Includes</relationshipSubType>
+			<relatedObjectIdentification>
+				<relatedObjectIdentifierType>DAITSS2</relatedObjectIdentifierType>
+				<relatedObjectIdentifierValue>daitss://archive.fcla.edu/p926/f0</relatedObjectIdentifierValue>
+			</relatedObjectIdentification>
+		</relationship>
+	</object>
+	<event>
+		<eventIdentifier>
+			<eventIdentifierType>DAITSS</eventIdentifierType>
+			<eventIdentifierValue>1</eventIdentifierValue>
+		</eventIdentifier>
+		<eventType>Format Validation</eventType>
+		<eventDateTime>2008-05-06T10:40:22-04:00</eventDateTime>
+		<eventOutcomeInformation>
+			<eventOutcome>Invalid</eventOutcome>
+			<eventOutcomeDetail>
+				<eventOutcomeDetailExtension>
+					<anomaly>ill-formed DateTime value</anomaly>
+				</eventOutcomeDetailExtension>
+			</eventOutcomeDetail>
+		</eventOutcomeInformation>
+		<!--
+			<xs:element name="linkingAgentIdentifier" type="eventLinkingAgentIdentifierComplexType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="linkingObjectIdentifier" type="eventLinkingObjectIdentifierComplexType" minOccurs="0" maxOccurs="unbounded"/> 
+		-->		
+	</event>
+	<event>
+		<eventIdentifier>
+			<eventIdentifierType>DAITSS</eventIdentifierType>
+			<eventIdentifierValue>2</eventIdentifierValue>
+		</eventIdentifier>
+		<eventType>Action Plan</eventType>
+		<eventDateTime>2008-05-06T10:40:22-04:00</eventDateTime>
+		<eventOutcomeInformation>
+			<eventOutcome>No transformations</eventOutcome>
+		</eventOutcomeInformation>
+	</event>
+	<agent>
+		<agentIdentifier>
+			<agentIdentifierType>URI</agentIdentifierType>
+			<agentIdentifierValue>http://archive.fcla.edu/format-description</agentIdentifierValue>
+		</agentIdentifier>
+		<agentName>Format Description Service</agentName>
+		<agentType>Web Service</agentType>
+	</agent>
+	<agent>
+		<agentIdentifier>
+			<agentIdentifierType>URI</agentIdentifierType>
+			<agentIdentifierValue>http://archive.fcla.edu/action-plan</agentIdentifierValue>
+		</agentIdentifier>
+		<agentName>Action Plan Service</agentName>
+		<agentType>Web Service</agentType>
+	</agent>
+</premis>

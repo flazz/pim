@@ -3,12 +3,12 @@ Given /^I submit an? (well|ill)-formed document$/ do |state|
          when 'well'
            "<root><element>Text Node</element></root>"
          when 'ill'
-           "<root><element>Text Node</element>"
+           "<root><element>Text Node</root>"
          end
 end
 
 When /^I press validate$/ do
-  post '/validate', :document => @doc 
+  post '/validate/results', :document => @doc 
 end
 
 Then /^a result document should be returned$/ do
