@@ -18,7 +18,7 @@ module Pim
       begin
         parser = XML::Parser.string @src
         parser.parse
-        nil
+        nil                     # XXX this is a little unconventional
       rescue => e
         e.message
       end
