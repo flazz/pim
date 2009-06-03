@@ -157,5 +157,6 @@ Then /^it should have a single PREMIS container within a METS digiprovMD section
 end
 
 Then /^it should have a stylesheet link$/ do
-  pending
+  doc = LibXML::XML::Parser.string(last_response.body).parse
+  doc.find_first("//processing-instruction()[name()='xml-stylesheet']").should_not be_nil
 end
