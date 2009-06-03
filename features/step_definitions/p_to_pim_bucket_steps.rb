@@ -18,9 +18,6 @@ Then /^it should have PREMIS rights in METS rightsMD section$/ do
   pending
 end
 
-Then /^it should have a stylesheet link$/ do
-  pending
-end
 
 Then /^a choice of potential representations will be returned$/ do
   pending

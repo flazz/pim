@@ -8,9 +8,9 @@ XMLNS = {
 Given /^a PREMIS document$/ do
   @doc = <<XML
 <?xml version="1.0" encoding="UTF-8"?>
-<premis xmlns="info:lc/xmlns/premis-v2" 
+<premis xmlns="info:lc/xmlns/premis-v2"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0">
-     
+
   <!-- Representation object -->
   <object xsi:type="representation">
     <objectIdentifier>
@@ -18,7 +18,7 @@ Given /^a PREMIS document$/ do
       <objectIdentifierValue>E20090127_AAAAAA/representation/1</objectIdentifierValue>
     </objectIdentifier>
   </object>
-  
+
   <!-- File objects -->
   <object xsi:type="file">
     <objectIdentifier>
@@ -34,7 +34,7 @@ Given /^a PREMIS document$/ do
       <size>49236</size>
       <format>
         <formatDesignation>
-	      <formatName>jpeg</formatName>
+              <formatName>jpeg</formatName>
         </formatDesignation>
       </format>
     </objectCharacteristics>
@@ -45,7 +45,7 @@ Given /^a PREMIS document$/ do
       </contentLocation>
     </storage>
   </object>
-  
+
   <object xsi:type="file">
     <objectIdentifier>
       <objectIdentifierType>URI</objectIdentifierType>
@@ -55,12 +55,12 @@ Given /^a PREMIS document$/ do
       <compositionLevel>0</compositionLevel>
       <format>
         <formatDesignation>
-	      <formatName>xml</formatName>
+              <formatName>xml</formatName>
           <formatVersion>1.0</formatVersion>
         </formatDesignation>
       </format>
     </objectCharacteristics>
-  </object>  
+  </object>
 
   <event>
     <eventIdentifier>
@@ -69,7 +69,7 @@ Given /^a PREMIS document$/ do
     </eventIdentifier>
     <eventType>virus check</eventType>
     <eventDateTime>2009-01-27T14:32:12-05:00</eventDateTime>
- 
+
     <eventDetail>Checked for virus during DataFile creation</eventDetail>
     <eventOutcomeInformation>
       <eventOutcome>SUCCESS</eventOutcome>
@@ -96,13 +96,13 @@ Given /^a PREMIS document$/ do
       <eventIdentifierValue>E20090127_AAAAAA/event/488373</eventIdentifierValue>
     </eventIdentifier>
 
- 
+
     <eventType>ingest</eventType>
- 
+
     <eventDateTime>2009-01-27T14:32:11-05:00</eventDateTime>
- 
+
     <eventDetail>Package ingested by FDA</eventDetail>
- 
+
     <eventOutcomeInformation>
       <eventOutcome>SUCCESS</eventOutcome>
       <eventOutcomeDetail>
@@ -133,6 +133,8 @@ Given /^a PREMIS document$/ do
 
 </premis>
 XML
+
+  @conversion = "p2pim"
 end
 
 Given /^I want a premis container$/ do
@@ -140,23 +142,20 @@ Given /^I want a premis container$/ do
 end
 
 When /^I convert it$/ do
-  post '/convert', { :document => @doc, :convert => "p2pim", 
-                     :embed_as => @embedding }
+  post '/convert/results', 'document' => @doc, 'convert' => @conversion, 'embed_as' => @embedding
 end
 
 Then /^a METS document should be returned$/ do
-  pending
   last_response.status.should == 200
-  last_response.body.should contain('</mets>')
+  doc = LibXML::XML::Parser.string(last_response.body).parse
+  doc.find_first('/mets:mets', XMLNS).should_not be_nil
 end
 
 Then /^it should have a single PREMIS container within a METS digiprovMD section$/ do
+  doc = LibXML::XML::Parser.string(last_response.body).parse
+  doc.find_first('//mets:digiprovMD//premis:premis', XMLNS).should_not be_nil
+end
+
+Then /^it should have a stylesheet link$/ do
   pending
-  mets_doc = last_response.body.match(/\<mets.*\<\/mets\>/m)
-  mets_doc.should_not be_nil
-  
-  mets = Nokogiri::XML::Document.parse(mets_doc[0])
-  mets.should have_xpath('//mets:digiprovMD//premis:premis', XMLNS)
-  mets.xpath('//premis:premis', XMLNS).length.should == 1
-  
 end

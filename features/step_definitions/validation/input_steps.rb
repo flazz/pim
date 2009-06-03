@@ -5,7 +5,7 @@ Given /^I enter a url to a PiM document$/ do
 end
 
 Given /^I select to upload a PiM document file$/ do
-  file = File.join(File.dirname(__FILE__), '..', 'fixtures', 'case1.xml')
+  file = File.join(File.dirname(__FILE__), '..', '..', 'fixtures', 'case1.xml')
   @doc = Rack::Test::UploadedFile.new(file)
 end
 

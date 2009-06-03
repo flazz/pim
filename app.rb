@@ -63,7 +63,8 @@ module Pim
     get '/convert/results' do
       halt 400, "query parameter document is required" unless params['document']
       halt 400, "query parameter convert is required" unless params['convert']
-
+      content_type 'application/xml', :charset => 'utf-8'
+      @title = "Conversion Results"
       url = CGI::unescape params['document']
 
       src = begin
@@ -72,9 +73,11 @@ module Pim
               halt 400, "cannot get url: #{url}, #{e.message}"
             end
       
+      doc = XML::Parser.string(src).parse
+      
       case params['convert']
       when 'p2pim'
-        PREMIS_TO_PIM_CONTAINER_XSLT.apply doc
+        PREMIS_TO_PIM_CONTAINER_XSLT.apply(doc).to_s
       when 'pim2p'
         halt 501, "Under Construction"
       else
@@ -86,6 +89,7 @@ module Pim
     post '/convert/results' do
       halt 400, "query parameter document is required" unless params['document']
       halt 400, "query parameter convert is required" unless params['convert']
+      content_type 'application/xml', :charset => 'utf-8'
       @title = "Conversion Results"
 
       src = case params['document']
@@ -99,13 +103,13 @@ module Pim
 
       case params['convert']
       when 'p2pim'
-        PREMIS_TO_PIM_CONTAINER_XSLT.apply doc
+        PREMIS_TO_PIM_CONTAINER_XSLT.apply(doc).to_s
       when 'pim2p'
         halt 501, "Under Construction"
       else
         halt 400, 'parameter convert must be "p2pim" or "pim2p"'
       end
-      
+
     end
 
   end
