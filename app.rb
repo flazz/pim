@@ -3,7 +3,10 @@ require 'open-uri'
 require 'cgi'
 
 $:.unshift File.join(File.dirname(__FILE__), 'lib')
-require 'pim'
+require 'validation'
+require 'xslt'
+
+XML::Error.set_handler(&XML::Error::QUIET_HANDLER)
 
 module Pim
 

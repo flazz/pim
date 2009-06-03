@@ -14,7 +14,8 @@ Given /^I enter PiM XML in the text area$/ do
 end
 
 When /^I validate (.*)$/ do |type|
-  pending 
+  pending
+  
   case type
     when 'the url'
       pending "Getting error: undefined method `initialize_http_header'. Seems to originate from app.rb"

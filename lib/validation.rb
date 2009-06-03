@@ -1,38 +1,11 @@
-require 'rubygems'
-
-gem 'schematron', '>= 0.0.2'
 gem 'libxml-ruby', '>= 1.1.3'
-gem 'libxslt-ruby', '>= 0.9.1'
 
 require 'libxml'
-require 'libxslt'
-require 'schematron'
+require 'stron'
 
 include LibXML
-include LibXSLT
 
 module Pim
-
-  # schematron
-  def load_stron name
-    schema = File.join(File.dirname(__FILE__), '..', 'schema', name)
-    XML.default_line_numbers = true
-    doc = XML::Parser.file(schema).parse
-    Schematron::Schema.new doc
-  end
-  module_function :load_stron
-  
-  PIM_STRON = load_stron "pim.stron"
-  
-  # transformations
-  def load_xslt name
-    transform = File.join(File.dirname(__FILE__), '..', 'xsl', name)
-    doc = XML::Parser.file(transform).parse
-    XSLT::Stylesheet.new doc
-  end
-  module_function :load_xslt
-  
-  PREMIS_TO_PIM_CONTAINER_XSLT = load_xslt "pim_container.xsl"
 
   class Validation
 
