@@ -73,22 +73,25 @@ module Pim
             rescue => e
               halt 400, "cannot get url: #{url}, #{e.message}"
             end
-      
-      doc = XML::Parser.string(src).parse
-      
-      case params['convert']
-      when 'p2pim'
-        if params['embed_as'] == "buckets"
-          PREMIS_TO_PIM_BUCKETS_XSLT.apply(doc).to_s
-        else
-          PREMIS_TO_PIM_CONTAINER_XSLT.apply(doc).to_s
-        end
-      when 'pim2p'
-        halt 501, "Under Construction"
-      else
-        halt 400, 'parameter convert must be "p2pim" or "pim2p"'
-      end
 
+      doc = XML::Parser.string(src).parse
+
+      xform = case params['convert']
+              when 'p2pim'
+
+                if params['embed_as'] == "buckets"
+                  PREMIS_TO_PIM_BUCKETS_XSLT
+                else
+                  PREMIS_TO_PIM_CONTAINER_XSLT
+                end
+
+              when 'pim2p'
+                halt 501, "Under Construction"
+              else
+                halt 400, 'parameter convert must be "p2pim" or "pim2p"'
+              end
+
+      xform.apply(doc).to_s
     end
 
     post '/convert/results' do
@@ -106,19 +109,22 @@ module Pim
 
       doc = XML::Parser.string(src).parse
 
-      case params['convert']
-      when 'p2pim'
-        if params['embed_as'] == "buckets"
-          PREMIS_TO_PIM_BUCKETS_XSLT.apply(doc).to_s
-        else
-          PREMIS_TO_PIM_CONTAINER_XSLT.apply(doc).to_s
-        end
-      when 'pim2p'
-        halt 501, "Under Construction"
-      else
-        halt 400, 'parameter convert must be "p2pim" or "pim2p"'
-      end
+      xform = case params['convert']
+              when 'p2pim'
 
+                if params['embed_as'] == "buckets"
+                  PREMIS_TO_PIM_BUCKETS_XSLT
+                else
+                  PREMIS_TO_PIM_CONTAINER_XSLT
+                end
+
+              when 'pim2p'
+                halt 501, "Under Construction"
+              else
+                halt 400, 'parameter convert must be "p2pim" or "pim2p"'
+              end
+
+      xform.apply(doc).to_s
     end
 
   end
