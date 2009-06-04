@@ -1,5 +1,4 @@
-<% action = @convert ? "convert" : "validate" %>
-<form method="post" action="/<%= action %>/results">
+<form method="post" action="<%= action %>">
 
   <% if @convert %>
   <%= erb :'forms/conversion_options', :layout => false %>
@@ -8,10 +7,14 @@
   <label for="document">Enter PiM<%= " or PREMIS" if @convert %>:</label>
   <br/>
   <textarea id="directinput" rows="12" cols="80" name="document" title="..."></textarea>
-  <br/>
 
   <br/>
-  <% button_text = @convert? "Convert!" : "Validate!" %>
-  <button class="fg-button ui-state-default ui-corner-all" type="submit"><%= button_text %></button>
   <br/>
+
+  <button class="fg-button ui-state-default ui-corner-all" type="submit">
+    <%= submit_text %>
+  </button>
+
+  <br/>
+
 </form>

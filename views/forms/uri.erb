@@ -1,5 +1,4 @@
-<% action = @convert ? "convert" : "validate" %>
-<form method="get" action="/<%= action %>/results">
+<form method="get" action="<%= action %>">
 
   <% if @convert == 'p2pim' %>
   <%= erb :'forms/conversion_options', :layout => false %>
@@ -7,8 +6,12 @@
 
   <label for="document">Address:</label>
   <input name="document" id="uri" type="text" size="45"/>
+
   <br/>
   <br/>
-  <% button_text = @convert? "Convert!" : "Validate!" %>
-  <button class="fg-button ui-state-default ui-corner-all" type="submit"><%= button_text %></button>
+
+  <button class="fg-button ui-state-default ui-corner-all" type="submit">
+    <%= submit_text %>
+  </button>
+
 </form>

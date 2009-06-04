@@ -13,6 +13,16 @@ module Pim
   # The Sinatra App
   class App < Sinatra::Default
 
+    helpers do
+
+      # common interface to the input forms
+      def input_form type, options={}
+        view = "forms/#{type.id2name}".intern
+        erb view, :layout => false, :locals => options
+      end
+      
+    end
+    
     # index
     get '/' do
       erb :index
