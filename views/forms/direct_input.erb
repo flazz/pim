@@ -1,5 +1,5 @@
-<% action = @convert ? "convert" : "validate/results" %>
-<form method="post" action="/<%= action %>">
+<% action = @convert ? "convert" : "validate" %>
+<form method="post" action="/<%= action %>/results">
 
   <% if @convert %>
   <%= erb :'forms/conversion_options', :layout => false %>

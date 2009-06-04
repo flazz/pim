@@ -1,5 +1,5 @@
-<% action = @convert ? "convert" : "validate/results" %>
-<form method="get" action="/<%= action %>">
+<% action = @convert ? "convert" : "validate" %>
+<form method="get" action="/<%= action %>/results">
 
   <% if @convert == 'p2pim' %>
   <%= erb :'forms/conversion_options', :layout => false %>

@@ -57,6 +57,7 @@ module Pim
     # convert PREMIS to PiM
     get '/convert' do
       @title = "PREMIS in METS Converter"
+      @convert = 'p2pim'
       erb :'convert/index'
     end
 
@@ -77,7 +78,11 @@ module Pim
       
       case params['convert']
       when 'p2pim'
-        PREMIS_TO_PIM_CONTAINER_XSLT.apply(doc).to_s
+        if params['embed_as'] == "buckets"
+          PREMIS_TO_PIM_BUCKETS_XSLT.apply(doc).to_s
+        else
+          PREMIS_TO_PIM_CONTAINER_XSLT.apply(doc).to_s
+        end
       when 'pim2p'
         halt 501, "Under Construction"
       else
@@ -103,7 +108,11 @@ module Pim
 
       case params['convert']
       when 'p2pim'
-        PREMIS_TO_PIM_CONTAINER_XSLT.apply(doc).to_s
+        if params['embed_as'] == "buckets"
+          PREMIS_TO_PIM_BUCKETS_XSLT.apply(doc).to_s
+        else
+          PREMIS_TO_PIM_CONTAINER_XSLT.apply(doc).to_s
+        end
       when 'pim2p'
         halt 501, "Under Construction"
       else

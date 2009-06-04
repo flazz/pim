@@ -129,7 +129,14 @@ Given /^a PREMIS document$/ do
     <agentType>organization</agentType>
   </agent>
 
-
+  <rights>
+    <rightsStatement>
+      <rightsStatementIdentifier>
+        <rightsStatementIdentifierType>URI</rightsStatementIdentifierType>
+        <rightsStatementIdentifierValue>info:fcla/rights/rights1</rightsStatementIdentifierValue>
+      </rightsStatementIdentifier>
+    </rightsStatement>
+  </rights>
 
 </premis>
 XML

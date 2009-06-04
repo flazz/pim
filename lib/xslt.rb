@@ -15,5 +15,5 @@ module Pim
   module_function :load_xslt
   
   PREMIS_TO_PIM_CONTAINER_XSLT = load_xslt "pim_container.xsl"
-  
+  PREMIS_TO_PIM_BUCKETS_XSLT = load_xslt "pim_buckets.xsl"
 end
