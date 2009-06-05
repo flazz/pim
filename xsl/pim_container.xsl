@@ -11,7 +11,7 @@
   <xsl:output method="xml" indent="yes"/>
 
   <xsl:template match="/">
-    <xsl:processing-instruction name="xml-stylesheet">href="pim2html.xsl" type="text/xsl"</xsl:processing-instruction>
+    <xsl:processing-instruction name="xml-stylesheet">href="/pim2html.xsl" type="text/xsl"</xsl:processing-instruction>
     
     <mets xmlns="http://www.loc.gov/METS/" xmlns:xlink="http://www.w3.org/1999/xlink"
           xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/version18/mets.xsd 
