@@ -30,12 +30,8 @@
       <xsl:if test="premis:premis/premis:object[@xsi:type='representation' and premis:relationship/premis:relationshipType='structural']">
       
       <!-- structural representations -->
-      <structMap LABEL="representation map">
-        <div>
-          <xsl:apply-templates select="premis:premis/premis:object[@xsi:type='representation' and 
-                                       premis:relationship/premis:relationshipType='structural']"/>
-        </div>
-      </structMap>
+      <xsl:apply-templates select="premis:premis/premis:object[@xsi:type='representation' and 
+                                   premis:relationship/premis:relationshipType='structural']"/>
       
       </xsl:if>
       

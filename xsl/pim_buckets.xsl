@@ -30,12 +30,9 @@
         </fileGrp>
       </fileSec>
       <xsl:if test="premis:premis/premis:object[@xsi:type='representation' and premis:relationship/premis:relationshipType='structural']">
-      <structMap LABEL="REPRESENTATION_MAP">
-        <div>
-          <xsl:apply-templates select="premis:premis/premis:object[@xsi:type='representation' and 
-                                       premis:relationship/premis:relationshipType='structural']"/>
-        </div>
-      </structMap>
+
+      <xsl:apply-templates select="premis:premis/premis:object[@xsi:type='representation' and 
+                                   premis:relationship/premis:relationshipType='structural']"/>
       </xsl:if>
       
       <structMap LABEL="FLAT">

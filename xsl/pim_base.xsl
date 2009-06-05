@@ -76,7 +76,7 @@
   </xsl:template>
 
 
-  <!-- make a div for every structural representation -->
+  <!-- make a structMap for every major representation -->
   <xsl:template match="premis:premis/premis:object[@xsi:type='representation' and 
                        premis:relationship/premis:relationshipType='structural']">
 
@@ -91,31 +91,32 @@
     <xsl:if test="not($ovalue = //premis:object[@xsi:type='representation' and
                                 premis:relationship/premis:relationshipType='structural' and
                                 premis:relationship/premis:relationshipSubType='has part']//premis:relatedObjectIdentifierValue)">
-    <div>
+    <structMap>
+      <div>
     
-      <!-- label the representation -->
-      <xsl:attribute name="LABEL">
-        <xsl:value-of select="$ovalue"/>
-      </xsl:attribute>
+        <!-- label the representation -->
+        <xsl:attribute name="LABEL">
+          <xsl:value-of select="$ovalue"/>
+        </xsl:attribute>
 
-      <!-- add embedded representations -->
-      <xsl:for-each select="premis:relationship[premis:relationshipSubType='has part']/premis:relatedObjectIdentification">
-        <xsl:call-template name="inner_representations">
-          <xsl:with-param name="rValue" select="premis:relatedObjectIdentifierValue"/>
-          <xsl:with-param name="rType" select="premis:relatedObjectIdentifierType"/>
-        </xsl:call-template>
-      </xsl:for-each>
+        <!-- add embedded representations -->
+        <xsl:for-each select="premis:relationship[premis:relationshipSubType='has part']/premis:relatedObjectIdentification">
+          <xsl:call-template name="inner_representations">
+            <xsl:with-param name="rValue" select="premis:relatedObjectIdentifierValue"/>
+            <xsl:with-param name="rType" select="premis:relatedObjectIdentifierType"/>
+          </xsl:call-template>
+        </xsl:for-each>
 
-      <!-- add files to a representation -->
-      <xsl:for-each select="premis:relationship[premis:relationshipSubType='includes']/premis:relatedObjectIdentification">
-        <xsl:call-template name="representation_files">
-          <xsl:with-param name="oValue" select="premis:relatedObjectIdentifierValue"/>
-          <xsl:with-param name="oType" select="premis:relatedObjectIdentifierType"/>
-        </xsl:call-template>   
-      </xsl:for-each>
+        <!-- add files to a representation -->
+        <xsl:for-each select="premis:relationship[premis:relationshipSubType='includes']/premis:relatedObjectIdentification">
+          <xsl:call-template name="representation_files">
+            <xsl:with-param name="oValue" select="premis:relatedObjectIdentifierValue"/>
+            <xsl:with-param name="oType" select="premis:relatedObjectIdentifierType"/>
+          </xsl:call-template>   
+        </xsl:for-each>
     
-    </div>
-    
+      </div>
+    </structMap>
     </xsl:if>
   </xsl:template>
 
