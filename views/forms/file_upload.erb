@@ -1,11 +1,13 @@
 <form method="post" action="<%= action %>" enctype="multipart/form-data">
 
-  <% if @convert %>
-  <%= erb :'forms/conversion_options', :layout => false %>
-  <% end %>
-
   <label for="document">File:</label>
   <input name="document" id="uploadfile" size="30" type="file"/>
+
+  <br/>
+
+  <% if locals[:use_premis_container] %>
+  <input type="checkbox" name="use-premis-container">Use PREMIS container</input>
+  <% end %>
 
   <br/>
   <br/>

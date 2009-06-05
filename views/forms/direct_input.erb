@@ -1,12 +1,12 @@
 <form method="post" action="<%= action %>">
 
-  <% if @convert %>
-  <%= erb :'forms/conversion_options', :layout => false %>
-  <% end %>
-
-  <label for="document">Enter PiM<%= " or PREMIS" if @convert %>:</label>
+  <label for="document">Enter XML Document:</label>
   <br/>
   <textarea id="directinput" rows="12" cols="80" name="document" title="..."></textarea>
+
+  <% if locals[:use_premis_container] %>
+  <input type="checkbox" name="use-premis-container">Use PREMIS container</input>
+  <% end %>
 
   <br/>
   <br/>

@@ -1,11 +1,13 @@
 <form method="get" action="<%= action %>">
 
-  <% if @convert == 'p2pim' %>
-  <%= erb :'forms/conversion_options', :layout => false %>
-  <% end %>
-
   <label for="document">Address:</label>
   <input name="document" id="uri" type="text" size="45"/>
+
+  <br/>
+
+  <% if locals[:use_premis_container] %>
+  <input type="checkbox" name="use-premis-container">Use PREMIS container</input>
+  <% end %>
 
   <br/>
   <br/>

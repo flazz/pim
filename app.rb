@@ -20,9 +20,32 @@ module Pim
         view = "forms/#{type.id2name}".intern
         erb view, :layout => false, :locals => options
       end
-      
+
+      def handle_conversion src
+        
+        @title = "Conversion Results"
+        doc = XML::Parser.string(src).parse
+        
+        case doc.root.namespaces.namespace.to_s
+        when 'info:lc/xmlns/premis-v2'
+          xform = if params['use-premis-container'] == "on"
+                    PREMIS_TO_PIM_CONTAINER_XSLT
+                  else
+                    PREMIS_TO_PIM_BUCKETS_XSLT
+                  end
+
+          content_type 'application/xml', :charset => 'utf-8'
+          xform.apply(doc).to_s
+        when 'http://www.loc.gov/METS/'
+          halt 501, "METS conversion is under construction"
+        else
+          halt 400, 'document must either be premis or mets'
+        end
+        
+      end
+
     end
-    
+
     # index
     get '/' do
       erb :index
@@ -73,10 +96,7 @@ module Pim
 
     get '/convert/results' do
       halt 400, "query parameter document is required" unless params['document']
-      halt 400, "query parameter convert is required" unless params['convert']
-      content_type 'application/xml', :charset => 'utf-8'
-      @title = "Conversion Results"
-      url = CGI::unescape params['document']
+      url = params['document']
 
       src = begin
               open(url) { |f| f.read }
@@ -84,32 +104,12 @@ module Pim
               halt 400, "cannot get url: #{url}, #{e.message}"
             end
 
-      doc = XML::Parser.string(src).parse
-
-      xform = case params['convert']
-              when 'p2pim'
-
-                if params['embed_as'] == "buckets"
-                  PREMIS_TO_PIM_BUCKETS_XSLT
-                else
-                  PREMIS_TO_PIM_CONTAINER_XSLT
-                end
-
-              when 'pim2p'
-                halt 501, "Under Construction"
-              else
-                halt 400, 'parameter convert must be "p2pim" or "pim2p"'
-              end
-
-      xform.apply(doc).to_s
+      handle_conversion src
     end
 
     post '/convert/results' do
       halt 400, "query parameter document is required" unless params['document']
-      halt 400, "query parameter convert is required" unless params['convert']
-      content_type 'application/xml', :charset => 'utf-8'
-      @title = "Conversion Results"
-
+      
       src = case params['document']
             when Hash
               params['document'][:tempfile].read # XXX could be a ram hog
@@ -117,24 +117,7 @@ module Pim
               params['document']
             end
 
-      doc = XML::Parser.string(src).parse
-
-      xform = case params['convert']
-              when 'p2pim'
-
-                if params['embed_as'] == "buckets"
-                  PREMIS_TO_PIM_BUCKETS_XSLT
-                else
-                  PREMIS_TO_PIM_CONTAINER_XSLT
-                end
-
-              when 'pim2p'
-                halt 501, "Under Construction"
-              else
-                halt 400, 'parameter convert must be "p2pim" or "pim2p"'
-              end
-
-      xform.apply(doc).to_s
+      handle_conversion src
     end
 
   end
