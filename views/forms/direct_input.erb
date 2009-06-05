@@ -1,10 +1,20 @@
-<form method="post" action="validate">
-  <label for="document">Enter PiM:</label>
+<form method="post" action="<%= action %>">
+
+  <label for="document">Enter XML Document:</label>
   <br/>
   <textarea id="directinput" rows="12" cols="80" name="document" title="..."></textarea>
-  <br/>
+
+  <% if locals[:use_premis_container] %>
+  <input type="checkbox" name="use-premis-container">Use PREMIS container</input>
+  <% end %>
 
   <br/>
-  <button class="fg-button ui-state-default ui-corner-all" type="submit">Validate!</button>
   <br/>
+
+  <button class="fg-button ui-state-default ui-corner-all" type="submit">
+    <%= submit_text %>
+  </button>
+
+  <br/>
+
 </form>

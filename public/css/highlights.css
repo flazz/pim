@@ -1,0 +1,6 @@
+pre { background: #eeeeee; padding: 10px; color: #228822; }
+.xml_highlight .normal { color: #fff000; }
+.xml_highlight .string { color: #005; font-style: italic; }
+.xml_highlight .punct { color: #005; font-style: italic; }
+.xml_highlight .attribute { color: #00f; }
+.xml_highlight .tag  { color: #0f0; }

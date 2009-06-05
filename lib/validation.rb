@@ -1,23 +1,11 @@
-require 'rubygems'
-gem 'schematron', '>= 0.0.2'
 gem 'libxml-ruby', '>= 1.1.3'
 
 require 'libxml'
-require 'schematron'
+require 'stron'
 
 include LibXML
 
 module Pim
-
-  def load_stron name
-    schema = File.join(File.dirname(__FILE__), '..', 'schema', name)
-    XML.default_line_numbers = true
-    stron_doc = XML::Parser.file(schema).parse
-    Schematron::Schema.new stron_doc
-  end
-  module_function :load_stron
-
-  PIM_STRON = load_stron "pim.stron"
 
   class Validation
 
@@ -30,7 +18,7 @@ module Pim
       begin
         parser = XML::Parser.string @src
         parser.parse
-        nil
+        nil                     # XXX this is a little unconventional
       rescue => e
         e.message
       end
@@ -42,7 +30,8 @@ module Pim
       Tempfile.open 'xml' do |tio|
         tio.write @src
         tio.flush
-        output = `java -Dfile=#{tio.path} -jar xmlvalidator.jar`
+        jarfile = File.join(File.dirname(__FILE__), '..', 'ext', 'xmlvalidator.jar')
+        output = `java -Dfile=#{tio.path} -jar #{jarfile}`
       end
 
       if output =~ /Warnings: \d+\n.*?Errors: \d+\n(.*?)Fatal Errors: \d+\n.*?/m
