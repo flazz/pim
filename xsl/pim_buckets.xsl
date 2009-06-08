@@ -18,6 +18,8 @@
                               http://www.loc.gov/mix/v10 http://www.loc.gov/standards/mix/mix10/mix10.xsd">
       <amdSec>
         <xsl:apply-templates select="premis:premis/premis:object[@xsi:type='file']" mode="bucket"/>
+        <xsl:apply-templates select="premis:premis/premis:object[@xsi:type='representation']" mode="bucket"/>
+        <xsl:apply-templates select="premis:premis/premis:object[@xsi:type='bitstream']" mode="bucket"/>
         <xsl:apply-templates select="premis:premis/premis:rights"/>
         <xsl:apply-templates select="premis:premis/premis:event"/>
         <xsl:apply-templates select="premis:premis/premis:agent"/>
@@ -54,6 +56,31 @@
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
+
+  <!-- techMD for premis representations -->
+  <xsl:template match="premis:premis/premis:object[@xsi:type='representation']" mode="bucket">
+    <xsl:call-template name="tech-bucket">
+      <xsl:with-param name="contents">
+        <xsl:copy-of select="."/>
+      </xsl:with-param>
+      <xsl:with-param name="identifier">
+        <xsl:text>representation-</xsl:text><xsl:value-of select="position()" />
+      </xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
+  <!-- techMD for premis bitstreams -->
+  <xsl:template match="premis:premis/premis:object[@xsi:type='bitstream']" mode="bucket">
+    <xsl:call-template name="tech-bucket">
+      <xsl:with-param name="contents">
+        <xsl:copy-of select="."/>
+      </xsl:with-param>
+      <xsl:with-param name="identifier">
+        <xsl:text>bitstream-</xsl:text><xsl:value-of select="position()" />
+      </xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
 
   <!-- rightsMD for premis rights -->
   <xsl:template match="premis:premis/premis:rights">
