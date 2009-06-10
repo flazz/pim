@@ -37,7 +37,8 @@ module Pim
           content_type 'application/xml', :charset => 'utf-8'
           xform.apply(doc).to_s
         when 'http://www.loc.gov/METS/'
-          halt 501, "METS conversion is under construction"
+          content_type 'application/xml', :charset => 'utf-8'
+          PIM_TO_PREMIS_XSLT.apply(doc).to_s
         else
           halt 400, 'document must either be premis or mets'
         end
@@ -90,7 +91,6 @@ module Pim
     # convert PREMIS to PiM
     get '/convert' do
       @title = "PREMIS in METS Converter"
-      @convert = 'p2pim'
       erb :'convert/index'
     end
 

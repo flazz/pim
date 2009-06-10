@@ -16,4 +16,5 @@ module Pim
   
   PREMIS_TO_PIM_CONTAINER_XSLT = load_xslt "pim_container.xsl"
   PREMIS_TO_PIM_BUCKETS_XSLT = load_xslt "pim_buckets.xsl"
+  PIM_TO_PREMIS_XSLT = load_xslt "pim_to_premis.xsl"
 end
