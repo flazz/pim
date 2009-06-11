@@ -37,11 +37,9 @@
                                    premis:relationship/premis:relationshipType='structural']"/>
       </xsl:if>
       
-      <structMap LABEL="FLAT">
-        <div>
-          <xsl:apply-templates select="premis:premis/premis:object[@xsi:type='file']" mode="filep"/>
-        </div>
-      </structMap>
+      
+      <xsl:call-template name="orphaned-file-map"/>
+      
     </mets>
   </xsl:template>
 	

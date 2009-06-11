@@ -76,9 +76,8 @@
   </xsl:template>
 
 
-  <!-- make a structMap for every major representation -->
-  <xsl:template match="premis:premis/premis:object[@xsi:type='representation' and 
-                       premis:relationship/premis:relationshipType='structural']">
+  <!-- make a structMap for every structural representation with files -->
+  <xsl:template match="premis:premis/premis:object[@xsi:type='representation']">
 
     <xsl:variable name="otype">
       <xsl:value-of select="premis:objectIdentifier/premis:objectIdentifierType"/>					
@@ -87,25 +86,16 @@
       <xsl:value-of select="premis:objectIdentifier/premis:objectIdentifierValue"/>
     </xsl:variable>
     
-    <!-- only make a div if this representation isn't part of something else -->
-    <xsl:if test="not($ovalue = //premis:object[@xsi:type='representation' and
-                                premis:relationship/premis:relationshipType='structural' and
-                                premis:relationship/premis:relationshipSubType='has part']//premis:relatedObjectIdentifierValue)">
+    <!-- only make a structMap if this representation has files -->
+    <xsl:if test="premis:relationship[premis:relationshipType='structural' and 
+                                      premis:relationshipSubType='includes']">
     <structMap>
-      <div>
+      
+      <xsl:attribute name="ADMID">
+        <xsl:text>representation-</xsl:text><xsl:value-of select="position()"/>
+      </xsl:attribute>    
     
-        <!-- label the representation -->
-        <xsl:attribute name="LABEL">
-          <xsl:value-of select="$ovalue"/>
-        </xsl:attribute>
-
-        <!-- add embedded representations -->
-        <xsl:for-each select="premis:relationship[premis:relationshipSubType='has part']/premis:relatedObjectIdentification">
-          <xsl:call-template name="inner_representations">
-            <xsl:with-param name="rValue" select="premis:relatedObjectIdentifierValue"/>
-            <xsl:with-param name="rType" select="premis:relatedObjectIdentifierType"/>
-          </xsl:call-template>
-        </xsl:for-each>
+      <div>
 
         <!-- add files to a representation -->
         <xsl:for-each select="premis:relationship[premis:relationshipSubType='includes']/premis:relatedObjectIdentification">
@@ -120,46 +110,6 @@
     </xsl:if>
   </xsl:template>
 
-
-  <!-- make a div for an internal representation -->
-  <xsl:template name="inner_representations">
-    <xsl:param name="rType"/>
-    <xsl:param name="rValue"/>
-    
-    <div>
-    
-      <!-- label the representation -->
-      <xsl:attribute name="LABEL">
-        <xsl:value-of select="$rValue"/>
-      </xsl:attribute>
-
-      <!-- add embedded representations -->
-      <xsl:for-each select="//premis:object[@xsi:type='representation' and
-                            premis:objectIdentifier/premis:objectIdentifierType=$rType and
-                            premis:objectIdentifier/premis:objectIdentifierValue=$rValue
-                            ]/premis:relationship[premis:relationshipSubType='has part']/premis:relatedObjectIdentification">
-        <xsl:call-template name="inner_representations">
-          <xsl:with-param name="rValue" select="premis:relatedObjectIdentifierValue"/>
-          <xsl:with-param name="rType" select="premis:relatedObjectIdentifierType"/>
-        </xsl:call-template>
-      </xsl:for-each>
-
-      <!-- add files to a representation -->
-      <xsl:for-each select="//premis:object[@xsi:type='representation' and
-                            premis:objectIdentifier/premis:objectIdentifierType=$rType and
-                            premis:objectIdentifier/premis:objectIdentifierValue=$rValue
-                            ]/premis:relationship[premis:relationshipSubType='includes']/premis:relatedObjectIdentification">
-
-        <xsl:call-template name="representation_files">
-          <xsl:with-param name="oValue" select="premis:relatedObjectIdentifierValue"/>
-          <xsl:with-param name="oType" select="premis:relatedObjectIdentifierType"/>
-        </xsl:call-template>
-      </xsl:for-each>
-    
-    </div>
-       
-  </xsl:template>
- 
   
   <!-- list all files structurally included by a representation -->
   <xsl:template name="representation_files">
@@ -179,19 +129,6 @@
 
   </xsl:template>
 
-	
-  <!-- make a flat structMap for all files -->
-  <xsl:template match="premis:premis/premis:object[@xsi:type='file']" mode="filep">
-
-  <fptr>
-    <!-- ID -->
-    <xsl:attribute name="FILEID">
-      <xsl:text>file-</xsl:text><xsl:value-of select="position()" />
-    </xsl:attribute>
-  </fptr>
-
-  </xsl:template>
-
   <!-- mets mdWrap/xmlData bucket -->
   <xsl:template name="mdwrap-xmldata-bucket">
     <xsl:param name="contents"/>
@@ -208,4 +145,96 @@
     </mdWrap>
   </xsl:template>
 
+
+
+  <!-- Create a structMap for files not in a representation -->
+  <xsl:template name="orphaned-file-map">
+
+    <!-- start at a given position -->
+    <xsl:param name="position">1</xsl:param>
+    
+    <!-- have we seen any orphaned nodes yet? -->
+    <xsl:param name="orphans">false</xsl:param>
+    
+    <xsl:if test="$position &lt; count(//premis:object[@xsi:type='file'])+1">
+      
+      <!-- loop through the files; compare the one at the right position -->
+      <xsl:for-each select="//premis:object[@xsi:type='file']">
+        <xsl:if test="position()=$position">
+
+          <xsl:variable name="ftype">
+            <xsl:value-of select="premis:objectIdentifier/premis:objectIdentifierType"/>					
+          </xsl:variable>          
+          <xsl:variable name="fvalue">
+            <xsl:value-of select="premis:objectIdentifier/premis:objectIdentifierValue"/>
+          </xsl:variable>      
+  
+          <xsl:choose>
+
+            <!-- recurse if this node isn't an orphan -->
+            <xsl:when test="//premis:object[@xsi:type='representation' and 
+                    premis:relationship/premis:relationshipType='structural' and
+                    premis:relationship/premis:relationshipSubType='includes' and
+                    premis:relationship//premis:relatedObjectIdentifierValue=$fvalue and
+                    premis:relationship//premis:relatedObjectIdentifierType=$ftype]">
+
+              <xsl:call-template name="orphaned-file-map">
+                <xsl:with-param name="position" select="$position+1"/>
+                <xsl:with-param name="orphans" select="$orphans"/>
+              </xsl:call-template>
+
+            </xsl:when>
+
+            <!-- orphan file -->
+            <xsl:otherwise>
+
+              <xsl:choose>
+ 
+                <!-- create a structMap if this is our first sighting -->
+                <xsl:when test="$orphans='false'">
+ 
+                  <structMap LABEL="ORPHANED_FILES">
+                    <div>
+                      <fptr>
+                        <xsl:attribute name="FILEID">
+                          <xsl:text>file-</xsl:text><xsl:value-of select="$position" />
+                        </xsl:attribute>
+                      </fptr>
+
+                      <xsl:call-template name="orphaned-file-map">
+                        <xsl:with-param name="position" select="$position+1"/>
+                        <xsl:with-param name="orphans" select="true()"/>
+                      </xsl:call-template>
+ 
+                    </div>
+                  </structMap>
+ 
+                </xsl:when>
+ 
+                <!-- just create a fptr if we've seen other orphans -->
+                <xsl:otherwise>
+
+                  <fptr>
+                    <xsl:attribute name="FILEID">
+                      <xsl:text>file-</xsl:text><xsl:value-of select="$position" />
+                    </xsl:attribute>
+                  </fptr>
+
+                  <xsl:call-template name="orphaned-file-map">
+                    <xsl:with-param name="position" select="$position+1"/>
+                    <xsl:with-param name="orphans" select="$orphans"/>
+                  </xsl:call-template>
+                </xsl:otherwise>
+              </xsl:choose>
+            
+            </xsl:otherwise>
+          </xsl:choose>
+
+        </xsl:if>
+      </xsl:for-each>
+
+    </xsl:if>
+  
+  </xsl:template>
+         
 </xsl:stylesheet>
