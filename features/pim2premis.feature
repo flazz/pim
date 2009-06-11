@@ -6,13 +6,6 @@ Feature: PiM to PREMIS Conversion
     Given a PREMIS-in-METS document
     When I convert it
     Then a PREMIS document should be returned
-    And it should reference a stylesheet
-
-  Scenario: Convert PREMIS-in-METS with multiple structure maps to PREMIS
-    Given a PREMIS-in-METS document
-    And it has multiple structure maps
-    When I convert it
-    Then a choice of potential structural representations will be returned
 
   Scenario: Convert PREMIS-in-METS with a PREMIS container to PREMIS
     Given a PREMIS-in-METS document with PREMIS embedded as a container
