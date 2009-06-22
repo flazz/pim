@@ -26,24 +26,24 @@
       
       <!-- OWNERID -->
       <xsl:attribute name="OWNERID">
-        <xsl:value-of select="premis:objectIdentifier/premis:objectIdentifierValue"/>
+        <xsl:value-of select="normalize-space(premis:objectIdentifier/premis:objectIdentifierValue)"/>
       </xsl:attribute>
 
       <!-- size -->
       <xsl:if test="premis:objectCharacteristics/premis:size">
         <xsl:attribute name="SIZE">
-          <xsl:value-of select="premis:objectCharacteristics/premis:size"/>
+          <xsl:value-of select="normalize-space(premis:objectCharacteristics/premis:size)"/>
         </xsl:attribute>
       </xsl:if>
 
       <!-- checksum if it exists-->
       <xsl:if test="premis:objectCharacteristics/premis:fixity">
         <xsl:attribute name="CHECKSUM">
-          <xsl:value-of select="premis:objectCharacteristics/premis:fixity[1]/premis:messageDigest"/>
+          <xsl:value-of select="normalize-space(premis:objectCharacteristics/premis:fixity[1]/premis:messageDigest)"/>
         </xsl:attribute>
         <xsl:if test="contains('HAVAL MD5 SHA-1 SHA-256 SHA-384 SHA-512 TIGER WHIRLPOOL', premis:objectCharacteristics/premis:fixity[1]/premis:messageDigestAlgorithm)">
           <xsl:attribute name="CHECKSUMTYPE">
-            <xsl:value-of select="premis:objectCharacteristics/premis:fixity[1]/premis:messageDigestAlgorithm"/>
+            <xsl:value-of select="normalize-space(premis:objectCharacteristics/premis:fixity[1]/premis:messageDigestAlgorithm)"/>
           </xsl:attribute>
         </xsl:if>
       </xsl:if>
@@ -54,7 +54,7 @@
           <xsl:choose>
             <xsl:when test="contains('ARK URN URL PURL HANDLE DOI', premis:storage/premis:contentLocation/premis:contentLocationType)">
               <xsl:attribute name="LOCTYPE">
-                <xsl:value-of select="premis:storage/premis:contentLocation/premis:contentLocationType"/>
+                <xsl:value-of select="normalize-space(premis:storage/premis:contentLocation/premis:contentLocationType)"/>
               </xsl:attribute>
             </xsl:when>
             <xsl:otherwise>
@@ -62,13 +62,13 @@
                 <xsl:text>OTHER</xsl:text>
               </xsl:attribute>
               <xsl:attribute name="OTHERLOCTYPE">
-                <xsl:value-of select="premis:storage/premis:contentLocation/premis:contentLocationType"/>
+                <xsl:value-of select="normalize-space(premis:storage/premis:contentLocation/premis:contentLocationType)"/>
               </xsl:attribute>
             </xsl:otherwise>
           </xsl:choose>
           
           <xsl:attribute name="xlink:href">
-            <xsl:value-of select="premis:storage/premis:contentLocation/premis:contentLocationValue"/>
+            <xsl:value-of select="normalize-space(premis:storage/premis:contentLocation/premis:contentLocationValue)"/>
           </xsl:attribute>
         </FLocat>
       </xsl:if>
@@ -80,15 +80,15 @@
   <xsl:template match="premis:premis/premis:object[@xsi:type='representation']">
 
     <xsl:variable name="otype">
-      <xsl:value-of select="premis:objectIdentifier/premis:objectIdentifierType"/>					
+      <xsl:value-of select="normalize-space(premis:objectIdentifier/premis:objectIdentifierType)"/>					
     </xsl:variable>          
     <xsl:variable name="ovalue">
-      <xsl:value-of select="premis:objectIdentifier/premis:objectIdentifierValue"/>
+      <xsl:value-of select="normalize-space(premis:objectIdentifier/premis:objectIdentifierValue)"/>
     </xsl:variable>
     
     <!-- only make a structMap if this representation has files -->
-    <xsl:if test="premis:relationship[premis:relationshipType='structural' and 
-                                      premis:relationshipSubType='includes']">
+    <xsl:if test="premis:relationship[normalize-space(premis:relationshipType)='structural' and 
+                                      normalize-space(premis:relationshipSubType)='includes']">
     <structMap>
       
       <xsl:attribute name="ADMID">
@@ -98,10 +98,10 @@
       <div>
 
         <!-- add files to a representation -->
-        <xsl:for-each select="premis:relationship[premis:relationshipSubType='includes']/premis:relatedObjectIdentification">
+        <xsl:for-each select="premis:relationship[normalize-space(premis:relationshipSubType)='includes']/premis:relatedObjectIdentification">
           <xsl:call-template name="representation_files">
-            <xsl:with-param name="oValue" select="premis:relatedObjectIdentifierValue"/>
-            <xsl:with-param name="oType" select="premis:relatedObjectIdentifierType"/>
+            <xsl:with-param name="oValue" select="normalize-space(premis:relatedObjectIdentifierValue)"/>
+            <xsl:with-param name="oType" select="normalize-space(premis:relatedObjectIdentifierType)"/>
           </xsl:call-template>   
         </xsl:for-each>
     
@@ -117,8 +117,8 @@
     <xsl:param name="oValue"/>
     
     <xsl:for-each select="//premis:object[@xsi:type='file']">
-      <xsl:if test="premis:objectIdentifier/premis:objectIdentifierValue=$oValue and
-                   premis:objectIdentifier/premis:objectIdentifierType=$oType">
+      <xsl:if test="normalize-space(premis:objectIdentifier/premis:objectIdentifierValue)=$oValue and
+                   normalize-space(premis:objectIdentifier/premis:objectIdentifierType)=$oType">
         <fptr>
           <xsl:attribute name="FILEID">
             <xsl:text>file-</xsl:text><xsl:value-of select="position()" />
@@ -163,20 +163,20 @@
         <xsl:if test="position()=$position">
 
           <xsl:variable name="ftype">
-            <xsl:value-of select="premis:objectIdentifier/premis:objectIdentifierType"/>					
+            <xsl:value-of select="normalize-space(premis:objectIdentifier/premis:objectIdentifierType)"/>					
           </xsl:variable>          
           <xsl:variable name="fvalue">
-            <xsl:value-of select="premis:objectIdentifier/premis:objectIdentifierValue"/>
+            <xsl:value-of select="normalize-space(premis:objectIdentifier/premis:objectIdentifierValue)"/>
           </xsl:variable>      
   
           <xsl:choose>
 
             <!-- recurse if this node isn't an orphan -->
             <xsl:when test="//premis:object[@xsi:type='representation' and 
-                    premis:relationship/premis:relationshipType='structural' and
-                    premis:relationship/premis:relationshipSubType='includes' and
-                    premis:relationship//premis:relatedObjectIdentifierValue=$fvalue and
-                    premis:relationship//premis:relatedObjectIdentifierType=$ftype]">
+                    normalize-space(premis:relationship/premis:relationshipType)='structural' and
+                    normalize-space(premis:relationship/premis:relationshipSubType)='includes' and
+                    normalize-space(premis:relationship//premis:relatedObjectIdentifierValue)=$fvalue and
+                    normalize-space(premis:relationship//premis:relatedObjectIdentifierType)=$ftype]">
 
               <xsl:call-template name="orphaned-file-map">
                 <xsl:with-param name="position" select="$position+1"/>

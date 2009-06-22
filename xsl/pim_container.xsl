@@ -27,11 +27,12 @@
         </fileGrp>
       </fileSec>
 
-      <xsl:if test="premis:premis/premis:object[@xsi:type='representation' and premis:relationship/premis:relationshipType='structural']">
+      <xsl:if test="premis:premis/premis:object[@xsi:type='representation' and 
+                    normalize-space(premis:relationship/premis:relationshipType)='structural']">
       
       <!-- structural representations -->
       <xsl:apply-templates select="premis:premis/premis:object[@xsi:type='representation' and 
-                                   premis:relationship/premis:relationshipType='structural']"/>
+                                   normalize-space(premis:relationship/premis:relationshipType)='structural']"/>
       
       </xsl:if>
       
