@@ -2,15 +2,28 @@ gem 'libxml-ruby', '>= 1.1.3'
 
 require 'libxml'
 require 'stron'
+require 'rjb'
 
 include LibXML
 
 module Pim
 
-  class Validation
+class Validation
 
     def initialize src
       @src = src
+
+      # setup rjb validator
+      jar_file = File.join(File.dirname(__FILE__), '..', 'ext', 'xmlvalidator.jar')
+      ENV['CLASSPATH'] = if ENV['CLASSPATH']
+        "#{jar_file}:#{ENV['CLASSPATH']}"
+      else
+        jar_file
+      end
+      
+      @j_File = Rjb.import 'java.io.File'
+      @j_Validator = Rjb.import 'edu.fcla.da.xml.Validator'
+      @jvalidator = @j_Validator.new
     end
 
     def formedness
@@ -26,28 +39,23 @@ module Pim
     end
 
     def validity
-      output = nil
-      Tempfile.open 'xml' do |tio|
-        tio.write @src
-        tio.flush
-        jarfile = File.join(File.dirname(__FILE__), '..', 'ext', 'xmlvalidator.jar')
-        output = `java -Dfile=#{tio.path} -jar #{jarfile}`
+
+      tio = Tempfile.open 'xml'
+      tio.write @src
+      tio.flush
+      tio.close
+      
+      # java code
+      jfile = @j_File.new tio.path
+      jchecker = @jvalidator.validate jfile
+      errors = (0...jchecker.getErrors.size).map do |n|
+        e = jchecker.getErrors.elementAt(n)
+        { :line => e.getLineNumber, :message => e.getMessage }
       end
+      
+      tio.unlink
 
-      if output =~ /Warnings: \d+\n.*?Errors: \d+\n(.*?)Fatal Errors: \d+\n.*?/m
-        error_text = $1
-
-        errors = error_text.split("\n").map do |e|
-          parts = e.split ": ", 3
-          { :line => parts[0], :message => parts[2] }
-        end
-
-        errors.empty? ? nil : errors
-
-      else
-        raise "invalid output while validating"
-      end
-
+      errors.empty? ? nil : errors
     end
 
     def conforms_to_bp
@@ -71,7 +79,7 @@ module Pim
 
       results
     end
-    
+
   end
-  
+
 end
