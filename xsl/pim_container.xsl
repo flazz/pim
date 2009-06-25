@@ -32,7 +32,9 @@
       
       <!-- structural representations -->
       <xsl:apply-templates select="premis:premis/premis:object[@xsi:type='representation' and 
-                                   normalize-space(premis:relationship/premis:relationshipType)='structural']"/>
+                                   normalize-space(premis:relationship/premis:relationshipType)='structural']">
+        <xsl:with-param name='container' select="true()"/>
+      </xsl:apply-templates>                             
       
       </xsl:if>
       
@@ -46,6 +48,11 @@
   <!-- copy the entire premis container into a digiprovMD -->
   <xsl:template match="premis:premis">
     <digiprovMD xmlns="http://www.loc.gov/METS/">
+      
+      <xsl:attribute name="ID">
+        <xsl:text>DPMD1</xsl:text>
+      </xsl:attribute>
+      
       <mdWrap MDTYPE="PREMIS">
         <xmlData>
           <xsl:copy-of select="."/>
