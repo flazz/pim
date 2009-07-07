@@ -162,11 +162,6 @@ Then /^it should have a single PREMIS container within a METS digiprovMD section
   doc.find_first('//mets:digiprovMD//premis:premis', XMLNS).should_not be_nil
 end
 
-Then /^it should have a stylesheet link$/ do
-  doc = LibXML::XML::Parser.string(last_response.body).parse
-  doc.find_first("//processing-instruction()[name()='xml-stylesheet']").should_not be_nil
-end
-
 # bucket specific
 Given /^I want PREMIS elements sorted into specific METS buckets$/ do
   @use_premis_container = nil

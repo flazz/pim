@@ -11,8 +11,6 @@
 	
   <xsl:template match="/">
 
-    <xsl:processing-instruction name="xml-stylesheet">href="/pim2html.xsl" type="text/xsl"</xsl:processing-instruction>  
-  
     <mets xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/version18/mets.xsd 
                               info:lc/xmlns/premis-v2 http://www.loc.gov/standards/premis/premis.xsd 
                               http://www.loc.gov/mix/v10 http://www.loc.gov/standards/mix/mix10/mix10.xsd">
