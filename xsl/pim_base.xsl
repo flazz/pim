@@ -78,6 +78,7 @@
 
   <!-- make a structMap for every structural representation with files -->
   <xsl:template match="premis:premis/premis:object[@xsi:type='representation']">
+    <xsl:param name="container"/>
 
     <xsl:variable name="otype">
       <xsl:value-of select="normalize-space(premis:objectIdentifier/premis:objectIdentifierType)"/>					
@@ -90,13 +91,15 @@
     <xsl:if test="premis:relationship[normalize-space(premis:relationshipType)='structural' and 
                                       normalize-space(premis:relationshipSubType)='includes']">
     <structMap>
-      
-      <xsl:attribute name="ADMID">
-        <xsl:text>representation-</xsl:text><xsl:value-of select="position()"/>
-      </xsl:attribute>    
     
       <div>
-
+        
+        <xsl:if test="not($container)">
+          <xsl:attribute name="ADMID">
+            <xsl:text>representation-</xsl:text><xsl:value-of select="position()"/>
+          </xsl:attribute>     
+        </xsl:if>
+        
         <!-- add files to a representation -->
         <xsl:for-each select="premis:relationship[normalize-space(premis:relationshipSubType)='includes']/premis:relatedObjectIdentification">
           <xsl:call-template name="representation_files">

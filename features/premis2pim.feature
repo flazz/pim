@@ -5,7 +5,6 @@ Feature: PREMIS to PiM Conversion
     Given a PREMIS document
     When I convert it
     Then a METS document should be returned
-    And it should have a stylesheet link
 
   Scenario: Convert PREMIS with structural representations to METS
     Given a PREMIS document

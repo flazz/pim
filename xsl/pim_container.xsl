@@ -11,7 +11,6 @@
   <xsl:output method="xml" indent="yes"/>
 
   <xsl:template match="/">
-    <xsl:processing-instruction name="xml-stylesheet">href="/pim2html.xsl" type="text/xsl"</xsl:processing-instruction>
     
     <mets xmlns="http://www.loc.gov/METS/" xmlns:xlink="http://www.w3.org/1999/xlink"
           xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/version18/mets.xsd 
@@ -32,7 +31,9 @@
       
       <!-- structural representations -->
       <xsl:apply-templates select="premis:premis/premis:object[@xsi:type='representation' and 
-                                   normalize-space(premis:relationship/premis:relationshipType)='structural']"/>
+                                   normalize-space(premis:relationship/premis:relationshipType)='structural']">
+        <xsl:with-param name='container' select="true()"/>
+      </xsl:apply-templates>                             
       
       </xsl:if>
       
@@ -46,6 +47,11 @@
   <!-- copy the entire premis container into a digiprovMD -->
   <xsl:template match="premis:premis">
     <digiprovMD xmlns="http://www.loc.gov/METS/">
+      
+      <xsl:attribute name="ID">
+        <xsl:text>DPMD1</xsl:text>
+      </xsl:attribute>
+      
       <mdWrap MDTYPE="PREMIS">
         <xmlData>
           <xsl:copy-of select="."/>
