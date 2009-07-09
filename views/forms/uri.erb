@@ -1,4 +1,4 @@
-<form method="get" action="<%= action %>">
+<form method="get" action="<%= h action %>">
 
   <label for="document">Address:</label>
   <input name="document" id="uri" type="text" size="45"/>
@@ -13,7 +13,7 @@
   <br/>
 
   <button class="fg-button ui-state-default ui-corner-all" type="submit">
-    <%= submit_text %>
+    <%= h submit_text %>
   </button>
 
 </form>

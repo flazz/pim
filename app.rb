@@ -5,6 +5,7 @@ require 'cgi'
 $:.unshift File.join(File.dirname(__FILE__), 'lib')
 require 'validation'
 require 'xslt'
+include ERB::Util
 
 XML::Error.set_handler(&XML::Error::QUIET_HANDLER)
 

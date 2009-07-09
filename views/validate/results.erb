@@ -3,7 +3,7 @@
 <% if @results[:formedness] %>
 
 <h2>document is ill-formed</h2>
-<code><%= @results[:formedness] %></code>
+<code><%= h(@results[:formedness]) %></code>
 
 
 <% else %>
@@ -17,7 +17,7 @@
   <% @results[:validity].each do |e| %>
   <li>
     <code>
-      <%= "line %s: %s " % [ e[:line], e[:message] ]%>
+      <%= h("line %s: %s " % [ e[:line], e[:message] ] ) %>
     </code>
   </li>
   <% end %>
@@ -33,7 +33,7 @@
   <% @results[:conforms_to_bp].each do |e| %>
   <li>
     <code>
-      <%= "line %s: %s " % [ e[:line], e[:message] ]%>
+      <%= h("line %s: %s " % [ e[:line], e[:message] ])%>
     </code>
   </li>
   <% end %>
