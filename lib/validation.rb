@@ -26,20 +26,8 @@ class Validation
       @jvalidator = @j_Validator.new
     end
 
-    def formedness
-
-      begin
-        parser = XML::Parser.string @src
-        parser.parse
-        nil                     # XXX this is a little unconventional
-      rescue => e
-        e.message
-      end
-
-    end
-
     def validity
-
+      
       tio = Tempfile.open 'xml'
       tio.write @src
       tio.flush
@@ -48,14 +36,28 @@ class Validation
       # java code
       jfile = @j_File.new tio.path
       jchecker = @jvalidator.validate jfile
-      errors = (0...jchecker.getErrors.size).map do |n|
-        e = jchecker.getErrors.elementAt(n)
-        { :line => e.getLineNumber, :message => e.getMessage }
-      end
+      
+      # formedness errors
+      fatals = if jchecker.getFatals.size > 0
+                 (0...jchecker.getFatals.size).map do |n|
+                   f = jchecker.getFatals.elementAt(n)
+                   { :line => f.getLineNumber, :message => f.getMessage, 
+                     :column => f.getColumnNumber }
+                 end
+               end
+
+      # validation errors
+      errors = if jchecker.getErrors.size > 0
+                 (0...jchecker.getErrors.size).map do |n|
+                    e = jchecker.getErrors.elementAt(n)
+                    { :line => e.getLineNumber, :message => e.getMessage,
+                      :column => e.getColumnNumber }
+                 end
+               end
       
       tio.unlink
 
-      errors.empty? ? nil : errors
+     [fatals, errors]
     end
 
     def conforms_to_bp
@@ -66,15 +68,10 @@ class Validation
 
     def results
       results = {}
-      results[:formedness] = formedness
+      results[:formedness], results[:validity] = validity
 
-      if results[:formedness].nil?
-        results[:validity] = validity
-
-        if results[:validity].nil?
-          results[:conforms_to_bp] = conforms_to_bp
-        end
-
+      if results[:validity].nil? and results[:formedness].nil?
+        results[:conforms_to_bp] = conforms_to_bp
       end
 
       results

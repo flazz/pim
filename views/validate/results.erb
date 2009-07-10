@@ -3,8 +3,15 @@
 <% if @results[:formedness] %>
 
 <h2>document is ill-formed</h2>
-<code><%= h(@results[:formedness]) %></code>
-
+<ul>
+  <% @results[:formedness].each do |e| %>
+  <li>
+    <code>
+      <%= h("line %s, column %s: %s " % [e[:line], e[:column], e[:message]] ) %>
+    </code>
+  </li>
+  <% end %>
+</ul>
 
 <% else %>
 
@@ -17,7 +24,7 @@
   <% @results[:validity].each do |e| %>
   <li>
     <code>
-      <%= h("line %s: %s " % [ e[:line], e[:message] ] ) %>
+      <%= h("line %s, column %s: %s " % [e[:line], e[:column], e[:message]] ) %>
     </code>
   </li>
   <% end %>
