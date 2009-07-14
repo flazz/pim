@@ -15,7 +15,7 @@
     <script type="text/javascript" src="/js/local.js"></script>
     <link rel="stylesheet" href="/css/local.css" type="text/css" media="screen, projection"/>
 
-    <title><%= h(@title || "App Title") %></title>
+    <title><%= ERB::Util::h(@title || "App Title") %></title>
   </head>
 
   <body>

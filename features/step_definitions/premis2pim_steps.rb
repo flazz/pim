@@ -9,7 +9,8 @@ Given /^a PREMIS document$/ do
   @doc = <<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <premis xmlns="info:lc/xmlns/premis-v2"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0">
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0"
+        xsi:schemaLocation="info:lc/xmlns/premis-v2 http://www.loc.gov/standards/premis/premis.xsd">
 
   <!-- Representation object -->
   <object xsi:type="representation">
@@ -135,6 +136,7 @@ Given /^a PREMIS document$/ do
         <rightsStatementIdentifierType>URI</rightsStatementIdentifierType>
         <rightsStatementIdentifierValue>info:fcla/rights/rights1</rightsStatementIdentifierValue>
       </rightsStatementIdentifier>
+      <rightsBasis>copyright</rightsBasis>
     </rightsStatement>
   </rights>
 

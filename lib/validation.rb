@@ -21,7 +21,8 @@ class Validation
         jar_file
       end
       
-      @j_File = Rjb.import 'java.io.File'
+      # can probably make this a class variable
+      @j_File = Rjb.import 'java.io.File' 
       @j_Validator = Rjb.import 'edu.fcla.da.xml.Validator'
       @jvalidator = @j_Validator.new
     end

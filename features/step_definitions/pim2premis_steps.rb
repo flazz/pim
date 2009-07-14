@@ -23,7 +23,7 @@ Given /^a PREMIS\-in\-METS document with PREMIS embedded as a container$/ do
 <?xml-stylesheet href="/pim2html.xsl" type="text/xsl"?>
 <mets xmlns="http://www.loc.gov/METS/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:premis="info:lc/xmlns/premis-v2" xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/version18/mets.xsd            info:lc/xmlns/premis-v2 http://www.loc.gov/standards/premis/premis.xsd">
   <amdSec ID="PREMIS_AMD">
-    <digiprovMD>
+    <digiprovMD ID="dp-XX">
       <mdWrap MDTYPE="PREMIS">
         <xmlData>
           <premis xmlns="info:lc/xmlns/premis-v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0">
@@ -138,7 +138,6 @@ Given /^a PREMIS\-in\-METS document with PREMIS embedded as a container$/ do
         <rightsStatementIdentifierType>URI</rightsStatementIdentifierType>
         <rightsStatementIdentifierValue>info:fcla/rights/rights1</rightsStatementIdentifierValue>
       </rightsStatementIdentifier>
-      
       <rightsBasis>copyright</rightsBasis>
       <copyrightInformation>
         <copyrightStatus>publicdomain</copyrightStatus>
@@ -162,7 +161,7 @@ Given /^a PREMIS\-in\-METS document with PREMIS embedded as a container$/ do
       <file ID="file-2" OWNERID="F20090127_AAAAAC"/>
     </fileGrp>
   </fileSec>
-  <structMap ADMID="representation-1">
+  <structMap ID="representation-1">
     <div>
       <fptr FILEID="file-1"/>
       <fptr FILEID="file-2"/>
@@ -334,8 +333,8 @@ Given /^a PREMIS\-in\-METS document with PREMIS embedded as buckets$/ do
       <file ID="file-2" ADMID="object-2" OWNERID="F20090127_AAAAAC"/>
     </fileGrp>
   </fileSec>
-  <structMap ADMID="representation-1">
-    <div>
+  <structMap>
+    <div ADMID="representation-1">
       <fptr FILEID="file-1"/>
       <fptr FILEID="file-2"/>
     </div>
