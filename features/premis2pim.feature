@@ -1,7 +1,7 @@
 Feature: PREMIS to PiM Conversion
   A PREMIS document should be converted to a METS document containing PREMIS XML
 
-  Scenario: Convert PREMIS to METS for view in a browser
+  Scenario: Convert PREMIS to METS
     Given a PREMIS document
     When I convert it
     Then a METS document should be returned

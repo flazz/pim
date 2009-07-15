@@ -42,7 +42,8 @@ class Validation
       fatals = if jchecker.getFatals.size > 0
                  (0...jchecker.getFatals.size).map do |n|
                    f = jchecker.getFatals.elementAt(n)
-                   { :line => f.getLineNumber, :message => f.getMessage, 
+                   { :line => f.getLineNumber, 
+                     :message => f.getMessage, 
                      :column => f.getColumnNumber }
                  end
                end
@@ -51,7 +52,8 @@ class Validation
       errors = if jchecker.getErrors.size > 0
                  (0...jchecker.getErrors.size).map do |n|
                     e = jchecker.getErrors.elementAt(n)
-                    { :line => e.getLineNumber, :message => e.getMessage,
+                    { :line => e.getLineNumber, 
+                      :message => e.getMessage,
                       :column => e.getColumnNumber }
                  end
                end

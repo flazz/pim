@@ -20,9 +20,14 @@ module Pim
         view = "forms/#{type.id2name}".intern
         erb view, :layout => false, :locals => options
       end
-
+      
+      # Common handler for conversion results
       def handle_conversion src
-                
+        
+        # validate incoming src, for now 400 if bad
+        v = Validation.new(src).validity
+        halt 400, "Validation errors exist" unless v.compact.empty?
+        
         @title = "Conversion Results"
         doc = XML::Parser.string(src).parse
         
