@@ -8,7 +8,7 @@ include LibXML
 
 module Pim
 
-class Validation
+  class Validation
 
     def initialize src
       @src = src

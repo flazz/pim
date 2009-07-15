@@ -6,11 +6,13 @@ Feature: PiM to PREMIS Conversion
     Given a PREMIS-in-METS document with PREMIS embedded as a container
     When I convert it
     Then a PREMIS document should be returned
-
+    And it should be valid
+    
   Scenario: Convert PREMIS-in-METS with PREMIS buckets to PREMIS
     Given a PREMIS-in-METS document with PREMIS embedded as buckets
     When I convert it
     Then a PREMIS document should be returned
+    And it should be valid
 
   Scenario: Reject an invalid PREMIS-in-METS document
     Given an invalid PREMIS-in-METS document
