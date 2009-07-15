@@ -26,7 +26,12 @@ module Pim
         
         # validate incoming src, for now 400 if bad
         v = Validation.new(src).validity
-        halt 400, "Validation errors exist" unless v.compact.empty?
+        unless v.compact.empty?
+          @title = "Cannot convert: Invalid"
+          @results = Validation.new(src).results
+          body = erb(:'validate/results') 
+          halt 400, body
+        end
         
         @title = "Conversion Results"
         doc = XML::Parser.string(src).parse
