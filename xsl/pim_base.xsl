@@ -157,7 +157,7 @@
     <xsl:param name="position">1</xsl:param>
     
     <!-- have we seen any orphaned nodes yet? -->
-    <xsl:param name="orphans">false</xsl:param>
+    <xsl:param name="orphans"/>
     
     <xsl:if test="$position &lt; count(//premis:object[@xsi:type='file'])+1">
       
@@ -183,7 +183,9 @@
 
               <xsl:call-template name="orphaned-file-map">
                 <xsl:with-param name="position" select="$position+1"/>
-                <xsl:with-param name="orphans" select="$orphans"/>
+                <xsl:if test="$orphans">
+                  <xsl:with-param name="orphans" select="$orphans"/>
+                </xsl:if>
               </xsl:call-template>
 
             </xsl:when>
@@ -194,7 +196,7 @@
               <xsl:choose>
  
                 <!-- create a structMap if this is our first sighting -->
-                <xsl:when test="$orphans='false'">
+                <xsl:when test="not($orphans)">
  
                   <structMap LABEL="ORPHANED_FILES">
                     <div>
