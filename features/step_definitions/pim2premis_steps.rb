@@ -343,7 +343,7 @@ Given /^an invalid PREMIS\-in\-METS document$/ do
     @doc = <<XML
   <mets xmlns="http://www.loc.gov/METS/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:premis="info:lc/xmlns/premis-v2" xmlns:xlink="http://www.w3.org/1999/xlink" xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/version18/mets.xsd                                info:lc/xmlns/premis-v2 http://www.loc.gov/standards/premis/premis.xsd                                http://www.loc.gov/mix/v10 http://www.loc.gov/standards/mix/mix10/mix10.xsd">
     <amdSec>
-      <techMD ID="tmd1">
+      <techMD ID="object-1">
         <mdWrap MDTYPE="PREMISSSSSSS"> <!-- invalid MDTYPE -->
           <xmlData>
             <object xmlns="info:lc/xmlns/premis-v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="file">
@@ -512,6 +512,9 @@ end
 
 Then /^some validation errors should be returned$/ do
   last_response.body.should contain('PREMISSSSSSS')
+  last_response.body.should have_selector('div#flash') do |tag|
+    tag.should contain('Cannot convert: validation errors exist')
+  end
 end
 
 Then /^the status should be 400$/ do

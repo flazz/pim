@@ -21,13 +21,17 @@
   <body>
 
     <div class="container">
-
+          
       <div>
         <h1>
           <img class = "logo" src="/images/lc-logo-small.png"/>
           <%= @heading || "PiM Toolbox" %>
         </h1>
       </div>
+      
+      <% if @flash %>
+        <div id="flash"><%= @flash %></div>
+      <% end %>
 
       <div>
         <%= yield %>

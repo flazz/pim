@@ -27,7 +27,7 @@ module Pim
         # validate incoming src, for now 400 if bad
         v = Validation.new(src).validity
         unless v.compact.empty?
-          @title = "Cannot convert: Invalid"
+          @flash = "Cannot convert: validation errors exist"
           @results = Validation.new(src).results
           body = erb(:'validate/results') 
           halt 400, body
