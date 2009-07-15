@@ -32,8 +32,7 @@
       <xsl:if test="premis:premis/premis:object[@xsi:type='representation' and 
                     normalize-space(premis:relationship/premis:relationshipType)='structural']">
 
-      <xsl:apply-templates select="premis:premis/premis:object[@xsi:type='representation' and 
-                                   normalize-space(premis:relationship/premis:relationshipType)='structural']"/>
+      <xsl:apply-templates select="premis:premis/premis:object[@xsi:type='representation']"/>
       </xsl:if>
       
       

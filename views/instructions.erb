@@ -1,0 +1,11 @@
+<% if @type == 'convert' %>
+  <b>Accepts either:</b>
+  <p>1) an XML document conforming to the PREMIS schema and creates a
+        METS document with embedded PREMIS elements.</p>
+  <p>2) an XML document conforming to the METS schema and creates a PREMIS
+        document from any embedded PREMIS.</p>
+  <br/>
+<% else %>
+  <p>Takes a METS document containing PREMIS elements and validates it according 
+     to the PREMIS in METS Best Practice Guidelines.</p>
+<% end %>
