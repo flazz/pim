@@ -7,7 +7,8 @@ require 'rjb'
 include LibXML
 
 module Pim
-
+  #{ }"line %s, column %s: %s " % [e[:line], e[:column], e[:message]]
+  
   class Validation
 
     def initialize src
@@ -38,27 +39,28 @@ module Pim
       jfile = @j_File.new tio.path
       jchecker = @jvalidator.validate jfile
       
+      tio.unlink
+      
       # formedness errors
-      fatals = if jchecker.getFatals.size > 0
-                 (0...jchecker.getFatals.size).map do |n|
-                   f = jchecker.getFatals.elementAt(n)
-                   { :line => f.getLineNumber, 
-                     :message => f.getMessage, 
-                     :column => f.getColumnNumber }
-                 end
-               end
+      fatals = (0...jchecker.getFatals.size).map do |n|
+                  f = jchecker.getFatals.elementAt(n)
+                  { :line => f.getLineNumber, 
+                    :message => f.getMessage, 
+                    :column => f.getColumnNumber }
+                  end
 
       # validation errors
-      errors = if jchecker.getErrors.size > 0
+      errors = if fatals.empty?
+        
                  (0...jchecker.getErrors.size).map do |n|
                     e = jchecker.getErrors.elementAt(n)
                     { :line => e.getLineNumber, 
                       :message => e.getMessage,
                       :column => e.getColumnNumber }
                  end
+                 
                end
       
-      tio.unlink
 
      [fatals, errors]
     end
@@ -71,12 +73,9 @@ module Pim
 
     def results
       results = {}
-      results[:formedness], results[:validity] = validity
-
-      if results[:validity].nil? and results[:formedness].nil?
-        results[:conforms_to_bp] = conforms_to_bp
-      end
-
+      results[:fatals], results[:errors] = validity
+      results[:best_practice] = conforms_to_bp if results[:fatals].empty? and results[:errors].empty?
+      
       results
     end
 

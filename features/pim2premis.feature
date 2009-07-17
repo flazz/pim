@@ -19,6 +19,3 @@ Feature: PiM to PREMIS Conversion
     When I convert it
     Then some validation errors should be returned
     And the status should be 400
-  
-  
-  

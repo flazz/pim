@@ -1,7 +1,5 @@
-gem 'rack-test', '~>0.3.0'
+require 'spec'
 require 'rack/test'
-
-gem 'webrat', '~>0.4.2'
 require 'webrat'
 
 # setup the app
@@ -12,29 +10,33 @@ $:.unshift File.join(File.dirname(__FILE__), '../../lib')
 require 'validation'
 
 Pim::App.app_file = app_file
-
+ 
 Webrat.configure do |config|
-  config.mode = :sinatra
+  config.mode = :rack
 end
-
-require 'spec/expectations'
 
 Pim::App.set :environment, :test
 
-require 'nokogiri'
-
 World do
-  
+    
   def app
-    Pim::App
+    
+    @app = Rack::Builder.new do
+      run Pim::App
+    end
+    
   end
   
-  def fixture_xml name
-    file = File.join(File.dirname(__FILE__), '..', 'fixtures', name)
+  def fixture_file name
+    File.join(File.dirname(__FILE__), '..', 'fixtures', name)
+  end
+  
+  def fixture_data name
+    file = fixture_file name
     open(file) { |io| io.read }
   end
   
-  include Rack::Test::Methods  
+  include Rack::Test::Methods
   include Webrat::Methods
-  include Webrat::Matchers  
+  include Webrat::Matchers
 end

@@ -1,56 +1,55 @@
 <h1>Results</h1>
 
-<% if @results[:formedness] %>
-
-<h2>document is ill-formed</h2>
-<ul>
-  <% @results[:formedness].each do |e| %>
-  <li>
-    <code>
-      <%= ERB::Util::h("line %s, column %s: %s " % [e[:line], e[:column], e[:message]] ) %>
-    </code>
-  </li>
-  <% end %>
-</ul>
-
-<% else %>
-
+<!-- fatal errors (well formed-ness) -->
+<% if @results[:fatals].empty? %>
 <h2>document is well-formed</h2>
-
-<% if @results[:validity] %>
-<h2>document is invalid</h2>
-
+<% else %>
+<h2>document is not well-formed</h2>
 <ul>
-  <% @results[:validity].each do |e| %>
+  <% @results[:fatals].each do |fatal| %>
   <li>
     <code>
-      <%= ERB::Util::h("line %s, column %s: %s " % [e[:line], e[:column], e[:message]] ) %>
+      <%= ERB::Util::h(fatal) %>
     </code>
   </li>
   <% end %>
 </ul>
+<% end %>
 
-<% else %>
+<!-- normal errors -->
+<% if @results[:errors].nil? %>
+<h2 class="disabled">validity (not performed)</h2>
+<% elsif @results[:errors].empty? %>
 <h2>document is valid</h2>
 
-<% if !@results[:conforms_to_bp].empty? %>
-<h2>document violates PREMIS in METS best practice</h2>
-
+<% else %>
+<h2>document is invalid</h2>
 <ul>
-  <% @results[:conforms_to_bp].each do |e| %>
+  <% @results[:errors].each do |error| %>
   <li>
     <code>
-      <%= ERB::Util::h("line %s: %s " % [ e[:line], e[:message] ])%>
+      <%= ERB::Util::h(error) %>
     </code>
   </li>
   <% end %>
 </ul>
+<% end %>
 
-<% else %>
+<!-- deviations from best practice -->
+<% if @results[:best_practice].nil? %>
+<h2 class="disabled">PREMIS in METS best practice conformance (not performed)</h2>
+<% elsif @results[:best_practice].empty? %>
 <h2>document conforms to PREMIS in METS best practice</h2>
-<% end %>
-
-<% end %>
-
+<% else %>
+<h2>document does not conform to PREMIS in METS best practice</h2>
+<ul>
+  <% @results[:best_practice].each do |deviation| %>
+  <li>
+    <code>
+      <%= ERB::Util::h(deviation) %>
+    </code>
+  </li>
+  <% end %>
+</ul>
 <% end %>
 

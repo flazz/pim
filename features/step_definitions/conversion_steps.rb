@@ -4,7 +4,7 @@ XMLNS = {
 }
 
 Given /^a PREMIS document$/ do
-  @doc = fixture_xml 'simple_premis.xml'
+  @doc = fixture_data 'simple_premis.xml'
 end
 
 Given /^I want a premis container$/ do
@@ -64,15 +64,15 @@ Then /^a PREMIS document should be returned$/ do
 end
 
 Given /^a PREMIS\-in\-METS document with PREMIS embedded as a container$/ do  
-  @doc = fixture_xml 'pim_container.xml'
+  @doc = fixture_data 'pim_container.xml'
 end
 
 Given /^a PREMIS\-in\-METS document with PREMIS embedded as buckets$/ do
-  @doc = fixture_xml 'pim_buckets.xml'
+  @doc = fixture_data 'pim_buckets.xml'
 end
 
 Given /^an invalid PREMIS\-in\-METS document$/ do
-  @doc = fixture_xml 'pim_invalid.xml'
+  @doc = fixture_data 'pim_invalid.xml'
 end
 
 Then /^some validation errors should be returned$/ do
@@ -88,11 +88,11 @@ end
 
 Then /^it should be valid$/ do
   r = Pim::Validation.new(last_response.body).results
-  r[:formedness].should be_nil
-  r[:validity].should be_nil
+  r[:fatals].should be_empty
+  r[:errors].should be_empty
 end
 
 Then /^it should conform to PiM BP$/ do
   r = Pim::Validation.new(last_response.body).results
-  r[:conforms_to_bp].should be_empty
+  r[:best_practice].should be_empty
 end

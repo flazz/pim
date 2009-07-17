@@ -9,6 +9,6 @@ Feature: PREMIS in METS conformance
     And it should contain <quantity> pim best practices violations
 
     Examples:
-        | state   | quantity |
-        | valid   | no       |
-        | invalid | some     |
+        | state          | quantity |
+        | conforming     | no       |
+        | non-conforming | some     |
