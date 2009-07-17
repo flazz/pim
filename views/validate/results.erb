@@ -18,7 +18,7 @@
 
 <!-- normal errors -->
 <% if @results[:errors].nil? %>
-<h2 class="disabled">validity (not performed)</h2>
+<h2 class="disabled ui-state-disabled">validity (not performed)</h2>
 <% elsif @results[:errors].empty? %>
 <h2>document is valid</h2>
 
@@ -37,7 +37,7 @@
 
 <!-- deviations from best practice -->
 <% if @results[:best_practice].nil? %>
-<h2 class="disabled">PREMIS in METS best practice conformance (not performed)</h2>
+<h2 class="disabled ui-state-disabled">PREMIS in METS best practice conformance (not performed)</h2>
 <% elsif @results[:best_practice].empty? %>
 <h2>document conforms to PREMIS in METS best practice</h2>
 <% else %>
