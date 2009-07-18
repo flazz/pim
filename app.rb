@@ -61,6 +61,11 @@ module Pim
       erb :index
     end
 
+    # index
+    get '/resources' do
+      erb :resources
+    end
+
     # validate PiM
     get '/validate' do
       @title = "PREMIS in METS Validator"
