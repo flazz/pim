@@ -9,12 +9,17 @@
 <br/>
   
 <p><strong>Accepts either:</strong></p>
-<p>1) an XML document conforming to the PREMIS schema and creates a
-      METS document with embedded PREMIS elements.</p>
-<p>2) an XML document conforming to the METS schema and creates a PREMIS
-      document from any embedded PREMIS.</p>
-<br/>
 
+      <ol class="spiel">
+        <li>
+          an XML document conforming to the PREMIS schema and creates a METS document with embedded
+          PREMIS elements.
+        </li>
+        <li>
+          an XML document conforming to the METS schema and creates a PREMIS document from any embedded
+          PREMIS.
+        </li>
+      </ol>
 
 <% options = { :action => '/convert/results', :submit_text => 'Convert' } %>
 <% options[:use_premis_container] = true %>

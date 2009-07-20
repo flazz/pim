@@ -144,7 +144,7 @@ h1, h2, h3, h4, h5, h6, p, form {
 	color:#EE8907;
 	font-weight:bold;
 	text-decoration:none;
-	padding:0px 40px;
+	//padding:0px 40px;
 }
 
 #leftbar a:hover {
@@ -153,7 +153,7 @@ h1, h2, h3, h4, h5, h6, p, form {
 	color:#000;
 	font-weight:bold;
 	text-decoration:none;
-	padding:0px 40px;
+	//padding:0px 40px;
 }
 
 #rightbar {
@@ -261,7 +261,7 @@ h1, h2, h3, h4, h5, h6, p, form {
 	padding-top:67px;
 }
 
-#inputmenu li{
+#inputmenu li {
 	float:left;
 	list-style-type:none;
 	width:129px;
@@ -272,9 +272,12 @@ h1, h2, h3, h4, h5, h6, p, form {
 	padding-top:4px;
 }
 
-form {
-	margin-top:2em;
-	margin-left:5em;
+div.form-container {
+	margin-left:4em;
+}
+
+.form-container form {
+	margin-top:1em;
 }
 
 label {
@@ -320,4 +323,16 @@ label {
 	font-weight:normal;
 	text-decoration:underline;
 	padding: 0px;
+}
+
+ol.spiel {
+	margin-left:1em;
+}
+
+.spiel li {
+	font-family:"Trebuchet MS";
+	font-size:11px;
+	color:#797B7A;
+	font-weight:normal;
+	text-decoration:none;
 }
