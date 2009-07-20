@@ -1,21 +1,17 @@
-<%= erb :instructions, :layout=> false %>
-
 <form method="post" action="<%= action %>">
 
   <label for="document">Enter XML Document:</label>
   <br/>
-  <textarea id="directinput" rows="12" cols="80" name="document"></textarea>
+  <textarea id="directinput" rows="12" cols="76" name="document"></textarea>
 
   <% if locals[:use_premis_container] %>
-  <input type="checkbox" name="use-premis-container">Use PREMIS container</input>
+  <br/>
+  <%= erb :'forms/premis_container_option', :layout => false, :locals => options %>
   <% end %>
 
   <br/>
   <br/>
-
-  <button class="fg-button ui-state-default ui-corner-all" type="submit">
-    <%= ERB::Util::h submit_text %>
-  </button>
+  <input type="submit" value="<%= ERB::Util::h submit_text %>" />
 
   <br/>
 

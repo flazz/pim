@@ -1,27 +1,29 @@
-<div id="tabs">
-<% @type = 'convert' %>
-  <ul>
-    <li><a href="#tab-1"><span>URI</span></a></li>
-    <li><a href="#tab-2"><span>File Upload</span></a></li>
-    <li><a href="#tab-3"><span>Direct Input</span></a></li>
-  </ul>
+<h2>Convert: 
+  <span id="inputchoice"> &nbsp;
+    <a href="#" id="choice-uri" class="active">uri</a> | 
+    <a href="#" id="choice-file">file upload</a> | 
+    <a href="#" id="choice-direct">direct input</a>
+  </span>
+</h2>
 
-  <% options = { :action => '/convert/results', :submit_text => 'Convert' } %>
-  <% options[:use_premis_container] = true %>
-  <div id="tab-1">
-    <h2>Convert by URI</h2>
-    <%= input_form :uri, options %>
-  </div>
+<br/>
 
-  <div id="tab-2">
-    <h2>Convert by File Upload</h2>
-    <%= input_form :file_upload, options %>
-  </div>
+<p>
+  Takes a METS document containing PREMIS elements and validates it according 
+  to the PREMIS in METS Best Practice Guidelines.
+</p>
 
-  <div id="tab-3">
-    <h2>Convert by Direct Input</h2>
-    <%= input_form :direct_input, options %>
-  </div>
+<% options = { :action => '/convert/results', :submit_text => 'Convert' } %>
+<% options[:use_premis_container] = true %>
 
+<div id="input-uri" class="form-container">
+  <%= input_form :uri, options %>
 </div>
 
+<div id="input-file" class="form-container" style="display:none;">
+  <%= input_form :file_upload, options %>
+</div>
+
+<div id="input-direct" class="form-container" style="display:none;">
+  <%= input_form :direct_input, options %>
+</div>

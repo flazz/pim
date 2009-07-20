@@ -1,7 +1,7 @@
 html, body {
 	margin: 0px;
 	padding:0px;
-	background-image:url(../images/bg.gif);
+	background-image:url(images/bg.gif);
 }
 
 h1, h2, h3, h4, h5, h6, p, form {
@@ -18,7 +18,7 @@ h1, h2, h3, h4, h5, h6, p, form {
 #content {
 	width:778px;
 	margin:0px auto;
-	background-image:url(../images/bg_header_top.gif);
+	background-image:url(images/bg_header_top.gif);
 	background-repeat:repeat-x;
 	background-position:top;
 }
@@ -84,7 +84,7 @@ h1, h2, h3, h4, h5, h6, p, form {
 }
 
 #mainimg {
-	background-image:url(../images/main_img.jpg);
+	background-image:url(images/main_img.jpg);
 	background-repeat:no-repeat;
 	height:132px;
 	text-align:right;
@@ -115,8 +115,8 @@ h1, h2, h3, h4, h5, h6, p, form {
 
 #leftbar {
 	float:left;
-	width:539px;
-	border-right:1px solid #BCBDBC;
+	width:776px;
+	//border-right:1px solid #BCBDBC;
 }
 
 #leftbar h2{
@@ -217,8 +217,7 @@ h1, h2, h3, h4, h5, h6, p, form {
 	color:#fff;
 	font-weight:normal;
 	text-decoration:none;
-	padding:0px 40px;
-	
+	padding:0px 40px;	
 }
 
 #validtext {
@@ -253,4 +252,72 @@ h1, h2, h3, h4, h5, h6, p, form {
 	color:#fff;
 	font-weight:normal;
 	text-decoration:none;
+}
+
+// form stuff
+
+#inputmenu ul {
+	margin:0px; 
+	padding-top:67px;
+}
+
+#inputmenu li{
+	float:left;
+	list-style-type:none;
+	width:129px;
+	height:25px;
+	text-align:center;
+	background-color:#F4A80A;
+	border-left:1px solid #FFF;
+	padding-top:4px;
+}
+
+form {
+	margin-top:2em;
+	margin-left:5em;
+}
+
+label {
+	font-family:"Trebuchet MS";
+	font-size:11px;
+	color:#797B7A;
+	font-weight:normal;
+	text-decoration:none;
+	text-align:right;
+}
+
+#inputchoice a.active {
+	font-family:"Trebuchet MS";
+	font-size:26px;
+	color:#9BBE00;
+	font-weight:normal;
+	text-decoration:none;
+	padding: 0px;
+}
+
+#inputchoice a.active:hover {
+	font-family:"Trebuchet MS";
+	font-size:26px;
+	color:#9BBE00;
+	font-weight:normal;
+	text-decoration:underline;
+	padding: 0px;
+}
+
+#inputchoice a {
+	font-family:"Trebuchet MS";
+	font-size:26px;
+	color:#797B7A;
+	font-weight:normal;
+	text-decoration:none;
+	padding: 0px;
+}
+
+#inputchoice a:hover {
+	font-family:"Trebuchet MS";
+	font-size:26px;
+	color:#797B7A;
+	font-weight:normal;
+	text-decoration:underline;
+	padding: 0px;
 }

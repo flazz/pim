@@ -1,5 +1,3 @@
-<%= erb :instructions, :layout=> false %>
-
 <form method="get" action="<%= ERB::Util::h action %>">
 
   <label for="document">Address:</label>
@@ -8,14 +6,13 @@
   <br/>
 
   <% if locals[:use_premis_container] %>
-  <input type="checkbox" name="use-premis-container">Use PREMIS container</input>
+  <br/>
+  <%= erb :'forms/premis_container_option', :layout => false, :locals => options %>
   <% end %>
 
   <br/>
   <br/>
 
-  <button class="fg-button ui-state-default ui-corner-all" type="submit">
-    <%= ERB::Util::h submit_text %>
-  </button>
+  <input type="submit" value="<%= ERB::Util::h submit_text %>" />
 
 </form>

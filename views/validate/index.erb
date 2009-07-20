@@ -1,26 +1,28 @@
-<div id="tabs">
+<h2>Validate :
+  <span id="inputchoice"> &nbsp;
+    <a href="#" id="choice-uri" class="active">uri</a> | 
+    <a href="#" id="choice-file">file upload</a> | 
+    <a href="#" id="choice-direct">direct input</a>
+  </span>
+</h2>
 
-  <ul>
-    <li><a href="#tab-1"><span>URI</span></a></li>
-    <li><a href="#tab-2"><span>File Upload</span></a></li>
-    <li><a href="#tab-3"><span>Direct Input</span></a></li>
-  </ul>
+<br/>
 
-  <% options = { :action => '/validate/results', :submit_text => 'Validate' } %>
-  <div id="tab-1">
-    <h3>Validate by URI</h3>
-    <%= input_form :uri, options %>
-  </div>
+<p>
+  Takes a METS document containing PREMIS elements and validates it according 
+  to the PREMIS in METS Best Practice Guidelines.
+</p>
 
-  <div id="tab-2">
-    <h3>Validate by File Upload</h3>
-    <%= input_form :file_upload, options %>
-  </div>
+<% options = { :action => '/validate/results', :submit_text => 'Validate' } %>
 
-  <div id="tab-3">
-    <h3>Validate by Direct Input</h3>
-    <%= input_form :direct_input, options %>
-  </div>
-
+<div id="input-uri" class="form-container">
+  <%= input_form :uri, options %>
 </div>
 
+<div id="input-file" class="form-container" style="display:none;">
+  <%= input_form :file_upload, options %>
+</div>
+
+<div id="input-direct" class="form-container" style="display:none;">
+  <%= input_form :direct_input, options %>
+</div>
