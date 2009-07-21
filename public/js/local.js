@@ -3,10 +3,10 @@ $(document).ready(function() {
 	$("#inputchoice a").click(function() {
 		
 		var old_choice = $("#inputchoice a.active");
-		var old_pane = choice_to_pane(old_choice);
+		var old_pane = $(old_choice.attr("href"));
 		
 		var new_choice = $(this);
-		var new_pane = choice_to_pane(new_choice);
+		var new_pane = $(new_choice.attr("href"));
 
 		old_choice.removeClass("active");
 		new_choice.addClass("active");
@@ -17,24 +17,3 @@ $(document).ready(function() {
 				
 	});
 });
-
-function choice_to_pane(choice) {
-
-	var choice_id = choice.attr("id");
-	var pane_id;
-	switch (choice_id) {
-		case "choice-uri": 
-		pane_id = "#input-uri"; 
-		break;
-		
-		case "choice-file": 
-		pane_id = "#input-file"; 
-		break;
-		
-		case "choice-direct": 
-		pane_id = "#input-direct"; 
-		break;
-	}
-	
-	return $(pane_id);
-}
