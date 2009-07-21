@@ -10,13 +10,14 @@
     <link rel="stylesheet" href="/css/ui.css" type="text/css" media="screen, projection"/>
     <title>PREMIS in METS Toolbox</title>
   </head>
+  
   <body>
     <div id="wrapper">
       <div id="content">
         <div id="header">
           <div id="logo">
             <h1>loc.gov</h1>
-            <h4>loc punchline here!</h4>
+            <h4>preservation for the nation!</h4>
           </div>
           <div id="links">
             <ul>
@@ -31,41 +32,25 @@
           <h3>PREMIS:METS</h3>
           <h4>conversion &amp; validation tools</h4>
         </div>
+        
         <div id="contentarea">
-          <div id="leftbar">
-
             <% if @flash %>
-            <div class="ui-widget">
-              <div class="ui-state-error ui-corner-all">
-                <span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
-                <%= @flash %>
-              </div>
+            <div class="flash">
+              <%= @flash %>
             </div>
             <% end %>
 
             <%= yield %>
-          </div>
-          
-          <!-- <div id="rightbar">
-            <h2>latest news</h2>
-            <p><span class="orangetext">12/08/2006</span><br />
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Utid anisl nec leo congue fringilla. <br />
-              <br />
-              <span class="orangetext">10/08/2006</span><br />
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Utid anisl nec leo congue fringilla. <br />
-              <br />
-              <span class="orangetext">28/07/2006</span><br />
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Utid anisl nec leo congue fringilla. </p>
-            </div>
-          </div> -->
-          
-          <div id="bottom">
-            <div id="email"><a href="mailto:pimtools@loc.gov">pimtools@loc.gov</a></div>
-            <div id="validtext">
-              <p>Valid <a href="http://validator.w3.org/check?uri=referer">XHTML</a> | <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a></p>
-            </div>          
-          </div>
         </div>
+        
+        <div id="bottom">
+          <div id="email"><a href="mailto:pimtools@loc.gov">pimtools@loc.gov</a></div>
+          <div id="validtext">
+            <p>Valid <a href="http://validator.w3.org/check?uri=referer">XHTML</a> | <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a></p>
+          </div>          
+        </div>
+          
+
       </div>
     </body>
     </html>
