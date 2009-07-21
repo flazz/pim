@@ -112,14 +112,11 @@ h1, h2, h3, h4, h5, h6, p, form {
 #contentarea {
 	clear:both;
 	padding:25px 0px;
+	//width:776px;
+	//min-height:400px;
 }
 
-#leftbar {
-	float:left;
-	width:776px;
-}
-
-#leftbar h1{
+#contentarea h1{
 	font-family:"Trebuchet MS";
 	font-size:32px;
 	color:#EE8907;
@@ -129,7 +126,7 @@ h1, h2, h3, h4, h5, h6, p, form {
 	padding-bottom:1em;
 }
 
-#leftbar h2{
+#contentarea h2{
 	font-family:"Trebuchet MS";
 	font-size:24px;
 	color:#EE8907;
@@ -139,11 +136,11 @@ h1, h2, h3, h4, h5, h6, p, form {
 	padding-bottom:5px;
 }
 
-#leftbar h2.notperformed {
+#contentarea h2.notperformed {
 	color:#809CAB;
 }
 
-#leftbar p{
+#contentarea p{
 	font-family:"Trebuchet MS";
 	font-size:11px;
 	color:#797B7A;
@@ -152,7 +149,7 @@ h1, h2, h3, h4, h5, h6, p, form {
 	padding:0px 40px;
 }
 
-#leftbar a {
+#contentarea a {
 	font-family:"Trebuchet MS";
 	font-size:11px;
 	color:#EE8907;
@@ -161,37 +158,13 @@ h1, h2, h3, h4, h5, h6, p, form {
 	//padding:0px 40px;
 }
 
-#leftbar a:hover {
+#contentarea a:hover {
 	font-family:"Trebuchet MS";
 	font-size:11px;
 	color:#EE8907;
 	font-weight:normal;
 	text-decoration:underline;
 	//padding:0px 40px;
-}
-
-#rightbar {
-	float:left;
-	width:237px;
-}
-
-#rightbar h2{
-	font-family:"Trebuchet MS";
-	font-size:26px;
-	color:#797B7A;
-	font-weight:normal;
-	text-decoration:none;
-	padding-left:25px;
-	padding-bottom:5px;
-}
-
-#rightbar p{
-	font-family:"Trebuchet MS";
-	font-size:11px;
-	color:#797B7A;
-	font-weight:normal;
-	text-decoration:none;
-	padding:0px 25px;
 }
 
 .orangetext {
