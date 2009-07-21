@@ -1,4 +1,7 @@
 $(document).ready(function() {
+	
+	$("#inputchoice a:contains('uri')").addClass("active")
+	
 
 	$("#inputchoice a").click(function() {
 		
