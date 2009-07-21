@@ -8,9 +8,9 @@ $(document).ready(function() {
 		var new_choice = $(this);
 		var new_pane = choice_to_pane(new_choice);
 
-		new_choice.animate( { color: '#9BBE00' }, 500).addClass("active");
-		old_choice.animate( { color: '#797B7A' }, 500).removeClass("active");
-
+		old_choice.removeClass("active");
+		new_choice.addClass("active");
+		
 		old_pane.fadeOut("fast", function () {
 			new_pane.fadeIn("fast");
 		});

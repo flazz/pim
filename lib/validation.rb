@@ -7,8 +7,7 @@ require 'rjb'
 include LibXML
 
 module Pim
-  #{ }"line %s, column %s: %s " % [e[:line], e[:column], e[:message]]
-  
+    
   class Validation
 
     def initialize src
@@ -60,7 +59,6 @@ module Pim
                  end
                  
                end
-      
 
      [fatals, errors]
     end
@@ -75,7 +73,6 @@ module Pim
       results = {}
       results[:fatals], results[:errors] = validity
       results[:best_practice] = conforms_to_bp if results[:fatals].empty? and results[:errors].empty?
-      
       results
     end
 

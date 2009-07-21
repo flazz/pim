@@ -1,15 +1,16 @@
-<h1>Results</h1>
+<h1>Validation Results</h1>
 
 <!-- fatal errors (well formed-ness) -->
 <% if @results[:fatals].empty? %>
-<h2>document is well-formed</h2>
+<h2>Document is well-formed</h2>
 <% else %>
-<h2>document is not well-formed</h2>
+<h2>Document is not well-formed:</h2>
 <ul>
   <% @results[:fatals].each do |fatal| %>
   <li>
     <code>
-      <%= ERB::Util::h(fatal) %>
+      line <%= ERB::Util::h(fatal[:line]) %>, column <%= ERB::Util::h(fatal[:column]) %>:
+      <%= ERB::Util::h(fatal[:message]) %>
     </code>
   </li>
   <% end %>
@@ -18,17 +19,20 @@
 
 <!-- normal errors -->
 <% if @results[:errors].nil? %>
-<h2 class="disabled ui-state-disabled">validity (not performed)</h2>
+<h2 class="notperformed">Validation</h2>
+<p>(not performed)</p>
+<br/>
 <% elsif @results[:errors].empty? %>
-<h2>document is valid</h2>
+<h2>Document is valid</h2>
 
 <% else %>
-<h2>document is invalid</h2>
+<h2>Document is invalid:</h2>
 <ul>
   <% @results[:errors].each do |error| %>
   <li>
     <code>
-      <%= ERB::Util::h(error) %>
+      line <%= ERB::Util::h(error[:line]) %>, column <%= ERB::Util::h(error[:column]) %>:
+      <%= ERB::Util::h(error[:message]) %>
     </code>
   </li>
   <% end %>
@@ -37,16 +41,20 @@
 
 <!-- deviations from best practice -->
 <% if @results[:best_practice].nil? %>
-<h2 class="disabled ui-state-disabled">PREMIS in METS best practice conformance (not performed)</h2>
+<h2 class="notperformed">PREMIS in METS best practice conformance</h2>
+<p>(not performed)</p>
+<br/>
 <% elsif @results[:best_practice].empty? %>
-<h2>document conforms to PREMIS in METS best practice</h2>
+<h2>Document conforms to PREMIS in METS best practice</h2>
 <% else %>
-<h2>document does not conform to PREMIS in METS best practice</h2>
+<h2>Document does not conform to PREMIS in METS best practice:</h2>
 <ul>
   <% @results[:best_practice].each do |deviation| %>
   <li>
     <code>
-      <%= ERB::Util::h(deviation) %>
+      line <%= ERB::Util::h(deviation[:line]) %>,
+      <%= ERB::Util::h(deviation[:type]) %> <%= ERB::Util::h(deviation[:name]) %>:
+      <%= ERB::Util::h(deviation[:message]) %>
     </code>
   </li>
   <% end %>
