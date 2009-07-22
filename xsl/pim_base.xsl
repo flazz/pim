@@ -181,12 +181,18 @@
                     normalize-space(premis:relationship//premis:relatedObjectIdentifierValue)=$fvalue and
                     normalize-space(premis:relationship//premis:relatedObjectIdentifierType)=$ftype]">
 
-              <xsl:call-template name="orphaned-file-map">
-                <xsl:with-param name="position" select="$position+1"/>
-                <xsl:if test="$orphans">
+              <xsl:if test="$orphans">
+                <xsl:call-template name="orphaned-file-map">
+                  <xsl:with-param name="position" select="$position+1"/>
                   <xsl:with-param name="orphans" select="$orphans"/>
-                </xsl:if>
-              </xsl:call-template>
+                </xsl:call-template>
+              </xsl:if>
+              <xsl:if test="not($orphans)">
+                <xsl:call-template name="orphaned-file-map">
+                  <xsl:with-param name="position" select="$position+1"/>
+                </xsl:call-template>
+              </xsl:if>
+              
 
             </xsl:when>
 

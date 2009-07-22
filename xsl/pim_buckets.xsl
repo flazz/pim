@@ -88,22 +88,33 @@
         <xsl:text>rights-</xsl:text><xsl:value-of select="position()" />
       </xsl:with-param>
       
-      <xsl:with-param name="relatedAgents">
-        <!-- is this object linked to by a rights statement? -->
-        <xsl:variable name="aType">
-          <xsl:value-of select="normalize-space(premis:rightsStatement//premis:linkingAgentIdentifierType)"/>
-        </xsl:variable>
-        <xsl:variable name="aValue">
-          <xsl:value-of select="normalize-space(premis:rightsStatement//premis:linkingAgentIdentifierValue)"/>
-        </xsl:variable>
-        <xsl:for-each select="/premis:premis/premis:agent">
-          <xsl:if test="normalize-space(premis:agentIdentifier/premis:agentIdentifierType)=$aType and 
-                        normalize-space(premis:agentIdentifier/premis:agentIdentifierValue)=$aValue">
-            <xsl:text> </xsl:text>
-            <xsl:text>agent-</xsl:text><xsl:value-of select="position()" />
-          </xsl:if>
-        </xsl:for-each>
       
+      <!-- agents linked to by this rights statement -->
+      <xsl:with-param name="relatedAgents">
+        <xsl:for-each select="premis:rightsStatement/premis:linkingAgentIdentifier">
+          <xsl:call-template name="linking_agents">
+            <xsl:with-param name="atype">
+              <xsl:value-of select="normalize-space(premis:linkingAgentIdentifierType)"/>
+            </xsl:with-param>
+            <xsl:with-param name="avalue">
+              <xsl:value-of select="normalize-space(premis:linkingAgentIdentifierValue)"/>
+            </xsl:with-param>
+          </xsl:call-template>
+        </xsl:for-each>
+      </xsl:with-param>
+
+      <!-- objects linked to by this rights statement -->
+      <xsl:with-param name="relatedObjects">
+        <xsl:for-each select="premis:rightsStatement/premis:linkingObjectIdentifier">
+          <xsl:call-template name="linking_objects">
+            <xsl:with-param name="otype">
+              <xsl:value-of select="normalize-space(premis:linkingObjectIdentifierType)"/>
+            </xsl:with-param>
+            <xsl:with-param name="ovalue">
+              <xsl:value-of select="normalize-space(premis:linkingObjectIdentifierValue)"/>
+            </xsl:with-param>
+          </xsl:call-template>
+        </xsl:for-each>
       </xsl:with-param>
 
     </xsl:call-template>
@@ -124,128 +135,34 @@
       
       <xsl:with-param name="relatedObjects">
 
-        <!-- objects of this event -->
+        <!-- objects linked to this event -->
         <xsl:for-each select="premis:linkingObjectIdentifier">
-          <xsl:variable name="oType">
-            <xsl:value-of select="normalize-space(premis:linkingObjectIdentifierType)"/>
-          </xsl:variable>
-          <xsl:variable name="oValue">
-            <xsl:value-of select="normalize-space(premis:linkingObjectIdentifierValue)"/>
-          </xsl:variable>
-          <xsl:for-each select="/premis:premis/premis:object[@xsi:type='file']">
-            <xsl:if test="normalize-space(premis:objectIdentifier/premis:objectIdentifierType)=$oType and 
-                          normalize-space(premis:objectIdentifier/premis:objectIdentifierValue)=$oValue">
-              <xsl:text> </xsl:text>
-              <xsl:text>object-</xsl:text><xsl:value-of select="position()" />
-            </xsl:if>
-          </xsl:for-each>
-          <xsl:for-each select="/premis:premis/premis:object[@xsi:type='representation']">
-            <xsl:if test="normalize-space(premis:objectIdentifier/premis:objectIdentifierType)=$oType and 
-                          normalize-space(premis:objectIdentifier/premis:objectIdentifierValue)=$oValue">
-              <xsl:text> </xsl:text>
-              <xsl:text>representation-</xsl:text><xsl:value-of select="position()" />
-            </xsl:if>
-          </xsl:for-each>
+          <xsl:call-template name="linking_objects">
+            <xsl:with-param name="otype">
+              <xsl:value-of select="normalize-space(premis:linkingObjectIdentifierType)"/>
+            </xsl:with-param>
+            <xsl:with-param name="ovalue">
+              <xsl:value-of select="normalize-space(premis:linkingObjectIdentifierValue)"/>
+            </xsl:with-param>
+          </xsl:call-template>
         </xsl:for-each>
-          
-          <!-- file objects with relationships that match this event -->
-          <xsl:variable name="eType">
-            <xsl:value-of select="normalize-space(premis:eventIdentifier/premis:eventIdentifierType)"/>
-          </xsl:variable>
-          <xsl:variable name="eValue">
-            <xsl:value-of select="normalize-space(premis:eventIdentifier/premis:eventIdentifierValue)"/>
-          </xsl:variable>
-          <xsl:for-each select="/premis:premis/premis:object[@xsi:type='file']">
-            <xsl:if test="normalize-space(premis:relationship//premis:relatedEventIdentifierType)=$eType and 
-                          normalize-space(premis:relationship//premis:relatedEventIdentifierValue)=$eValue">
-              <xsl:text> </xsl:text>
-              <xsl:text>object-</xsl:text><xsl:value-of select="position()" />
-              
-              <xsl:call-template name="relationship_linking">
-                <xsl:with-param name="otype">
-                  <xsl:value-of select="normalize-space(premis:relationship//premis:relatedObjectIdentifierType)"/>
-                </xsl:with-param>
-                <xsl:with-param name="ovalue">
-                  <xsl:value-of select="normalize-space(premis:relationship//premis:relatedObjectIdentifierValue)"/>
-                </xsl:with-param>
-              </xsl:call-template>
-            </xsl:if>
-            
-            <!-- file objects with linkingEventIdentifiers -->
-            <xsl:if test="normalize-space(premis:linkingEventIdentifier/premis:linkingEventIdentifierType)=$eType and 
-                          normalize-space(premis:linkingEventIdentifier/premis:linkingEventIdentifierValue)=$eValue">
-              <xsl:text> </xsl:text>
-              <xsl:text>object-</xsl:text><xsl:value-of select="position()" />
-            </xsl:if>
-
-          </xsl:for-each>
-
-          <!-- representaiton objects with relationships that match this event -->
-          <xsl:for-each select="/premis:premis/premis:object[@xsi:type='representation']">
-            <xsl:if test="normalize-space(premis:relationship//premis:relatedEventIdentifierType)=$eType and 
-                          normalize-space(premis:relationship//premis:relatedEventIdentifierValue)=$eValue">
-              <xsl:text> </xsl:text>
-              <xsl:text>representation-</xsl:text><xsl:value-of select="position()" />
-              <xsl:call-template name="relationship_linking">
-                <xsl:with-param name="otype">
-                  <xsl:value-of select="normalize-space(premis:relationship//premis:relatedObjectIdentifierType)"/>
-                </xsl:with-param>
-                <xsl:with-param name="ovalue">
-                  <xsl:value-of select="normalize-space(premis:relationship//premis:relatedObjectIdentifierValue)"/>
-                </xsl:with-param>
-              </xsl:call-template>
-            </xsl:if>
-
-            <!-- representation objects with matching linkingEventIdentifiers  -->
-            <xsl:if test="normalize-space(premis:linkingEventIdentifier/premis:linkingEventIdentifierType)=$eType and 
-                          normalize-space(premis:linkingEventIdentifier/premis:linkingEventIdentifierValue)=$eValue">
-              <xsl:text> </xsl:text>
-              <xsl:text>representation-</xsl:text><xsl:value-of select="position()" />
-            </xsl:if>
-          </xsl:for-each>
-
-          <!-- bitstream objects with relationships that match this event -->
-          <xsl:for-each select="/premis:premis/premis:object[@xsi:type='bitstream']">
-            <xsl:if test="normalize-space(premis:relationship//premis:relatedEventIdentifierType)=$eType and 
-                          normalize-space(premis:relationship//premis:relatedEventIdentifierValue)=$eValue">
-              <xsl:text> </xsl:text>
-              <xsl:text>bitstream-</xsl:text><xsl:value-of select="position()" />
-              <xsl:call-template name="relationship_linking">
-                <xsl:with-param name="otype">
-                  <xsl:value-of select="normalize-space(premis:relationship//premis:relatedObjectIdentifierType)"/>
-                </xsl:with-param>
-                <xsl:with-param name="ovalue">
-                  <xsl:value-of select="normalize-space(premis:relationship//premis:relatedObjectIdentifierValue)"/>
-                </xsl:with-param>
-              </xsl:call-template>
-            </xsl:if>
-
-            <!-- bitstream objects with matching linkingEventIdentifiers  -->
-            <xsl:if test="normalize-space(premis:linkingEventIdentifier/premis:linkingEventIdentifierType)=$eType and 
-                          normalize-space(premis:linkingEventIdentifier/premis:linkingEventIdentifierValue)=$eValue">
-              <xsl:text> </xsl:text>
-              <xsl:text>bitstream-</xsl:text><xsl:value-of select="position()" />
-            </xsl:if>
-          </xsl:for-each>
-
+      
       </xsl:with-param>
         
       <!-- agents related to this event -->
       <xsl:with-param name="relatedAgents">
-        <xsl:variable name="aType">
-          <xsl:value-of select="normalize-space(premis:linkingAgentIdentifier/premis:linkingAgentIdentifierType)"/>
-        </xsl:variable>
-        <xsl:variable name="aValue">
-          <xsl:value-of select="normalize-space(premis:linkingAgentIdentifier/premis:linkingAgentIdentifierValue)"/>
-        </xsl:variable>
-          
-        <xsl:for-each select="/premis:premis/premis:agent">
-          <xsl:if test="normalize-space(premis:agentIdentifier/premis:agentIdentifierType)=$aType and 
-                        normalize-space(premis:agentIdentifier/premis:agentIdentifierValue)=$aValue">
-            <xsl:text>agent-</xsl:text><xsl:value-of select="position()" />
-          </xsl:if>
+        <xsl:for-each select="premis:linkingAgentIdentifier">
+          <xsl:call-template name="linking_agents">
+            <xsl:with-param name="atype">
+              <xsl:value-of select="normalize-space(premis:linkingAgentIdentifierType)"/>
+            </xsl:with-param>
+            <xsl:with-param name="avalue">
+              <xsl:value-of select="normalize-space(premis:linkingAgentIdentifierValue)"/>
+            </xsl:with-param>
+          </xsl:call-template>
         </xsl:for-each>
       </xsl:with-param>
+      
     </xsl:call-template>
 
   </xsl:template>
@@ -272,15 +189,9 @@
       <xsl:attribute name="ID">
         <xsl:value-of select="$identifier"/>
       </xsl:attribute>
-      <xsl:if test="string-length(normalize-space(concat($relatedAgents, $relatedObjects))) != 0">
-        <xsl:variable name="agents">
-          <xsl:value-of select="normalize-space($relatedAgents)"/>
-        </xsl:variable>
-        <xsl:variable name="objects">
-          <xsl:value-of select='normalize-space($relatedObjects)'/>
-        </xsl:variable>
+      <xsl:if test="normalize-space(concat($relatedAgents, $relatedObjects)) != ''">
         <xsl:attribute name="ADMID">
-          <xsl:value-of select="concat($agents, ' ', $objects)"/>
+          <xsl:value-of select="normalize-space(concat($relatedAgents, $relatedObjects))"/>
         </xsl:attribute>
       </xsl:if>
         
@@ -308,43 +219,66 @@
         
         <!-- rights related to this object -->
         <xsl:for-each select="premis:linkingRightsStatementIdentifier">
-          <xsl:variable name="rType">
-            <xsl:value-of select="normalize-space(premis:linkingRightsStatementIdentifierType)"/>
-          </xsl:variable>
-          <xsl:variable name="rValue">
-            <xsl:value-of select="normalize-space(premis:linkingRightsStatementIdentifierValue)"/>
-          </xsl:variable>
-          <xsl:for-each select="/premis:premis/premis:rights">
-            <xsl:if test="normalize-space(premis:rightsStatement//premis:rightsStatementIdentifierType)=$rType and 
-                          normalize-space(premis:rightsStatement//premis:rightsStatementIdentifierValue)=$rValue">
-              <xsl:text> </xsl:text>
-              <xsl:text>rights-</xsl:text><xsl:value-of select="position()" />
-            </xsl:if>
-          </xsl:for-each>
+          <xsl:call-template name="linking_rights">
+            <xsl:with-param name="rtype">
+              <xsl:value-of select="normalize-space(premis:linkingRightsStatementIdentifierType)"/>
+            </xsl:with-param>
+            <xsl:with-param name="rvalue">
+              <xsl:value-of select="normalize-space(premis:linkingRightsStatementIdentifierValue)"/>
+            </xsl:with-param>
+          </xsl:call-template>
         </xsl:for-each>
-        
-        <!-- is this object linked to by a rights statement? -->
-        <xsl:variable name="oType">
-          <xsl:value-of select="normalize-space(premis:objectIdentifier/premis:objectIdentifierType)"/>
-        </xsl:variable>
-        <xsl:variable name="oValue">
-          <xsl:value-of select="normalize-space(premis:objectIdentifier/premis:objectIdentifierValue)"/>
-        </xsl:variable>
-        <xsl:for-each select="/premis:premis/premis:rights">
-          <xsl:if test="normalize-space(premis:rightsStatement//premis:linkingObjectIdentifierType)=$oType and 
-                        normalize-space(premis:rightsStatement//premis:linkingObjectIdentifierValue)=$oValue">
-            <xsl:text> </xsl:text>
-            <xsl:text>rights-</xsl:text><xsl:value-of select="position()" />
-          </xsl:if>
-        </xsl:for-each>
+    
       </xsl:variable>
       
-      <xsl:if test="normalize-space($relatedRights) != ''">
-        <xsl:variable name="rights">
-          <xsl:value-of select='normalize-space($relatedRights)'/>
-        </xsl:variable>
+      <xsl:variable name="relatedObjects">
+        
+        <!-- objects with relationships to this object -->
+        <xsl:for-each select="premis:relationship/premis:relatedObjectIdentification">
+          <xsl:call-template name="linking_objects">
+            <xsl:with-param name="otype">
+              <xsl:value-of select="normalize-space(premis:relatedObjectIdentifierType)"/>
+            </xsl:with-param>
+            <xsl:with-param name="ovalue">
+              <xsl:value-of select="normalize-space(premis:relatedObjectIdentifierValue)"/>
+            </xsl:with-param>
+          </xsl:call-template>
+        </xsl:for-each>
+    
+      </xsl:variable>
+
+      <xsl:variable name="relatedEvents">
+        
+        <!-- relationship events or events linked to this object -->
+        <xsl:for-each select="premis:relationship/premis:relatedEventIdentification">
+          <xsl:call-template name="linking_events">
+            <xsl:with-param name="etype">
+              <xsl:value-of select="normalize-space(premis:relatedEventIdentifierType)"/>
+            </xsl:with-param>
+            <xsl:with-param name="evalue">
+              <xsl:value-of select="normalize-space(premis:relatedEventIdentifierValue)"/>
+            </xsl:with-param>
+          </xsl:call-template>
+        </xsl:for-each>
+        
+        <xsl:for-each select="premis:linkingEventIdentifier">
+          <xsl:call-template name="linking_events">
+            <xsl:with-param name="etype">
+              <xsl:value-of select="normalize-space(premis:linkingEventIdentifierType)"/>
+            </xsl:with-param>
+            <xsl:with-param name="evalue">
+              <xsl:value-of select="normalize-space(premis:linkingEventIdentifierValue)"/>
+            </xsl:with-param>
+          </xsl:call-template>
+        </xsl:for-each>
+    
+      </xsl:variable>
+
+
+      <!-- if this element links to other PREMIS elements, create an ADMID -->
+      <xsl:if test="normalize-space(concat($relatedRights, $relatedObjects, $relatedEvents)) != ''">
         <xsl:attribute name="ADMID">
-          <xsl:value-of select="$rights"/>
+          <xsl:value-of select="normalize-space(concat($relatedRights, $relatedObjects, $relatedEvents))"/>
         </xsl:attribute>
       </xsl:if>
 
@@ -362,17 +296,15 @@
     <xsl:param name="contents"/>
     <xsl:param name="identifier"/>
     <xsl:param name="relatedAgents"/>
+    <xsl:param name="relatedObjects"/>
     
     <rightsMD>
       <xsl:attribute name="ID">
         <xsl:value-of select="$identifier"/>
       </xsl:attribute>
-      <xsl:if test="normalize-space($relatedAgents) != ''">
-        <xsl:variable name="agents">
-          <xsl:value-of select='normalize-space($relatedAgents)'/>
-        </xsl:variable>
+      <xsl:if test="normalize-space(concat($relatedObjects, $relatedAgents)) != ''">
         <xsl:attribute name="ADMID">
-          <xsl:value-of select="$agents"/>
+          <xsl:value-of select="normalize-space(concat($relatedAgents, $relatedObjects))"/>
         </xsl:attribute>
       </xsl:if>
       <xsl:call-template name="mdwrap-xmldata-bucket">
@@ -384,8 +316,8 @@
     </rightsMD>
   </xsl:template>
 
-  <!-- list linking objects that match the identifier type and value -->
-  <xsl:template name="relationship_linking">
+  <!-- objects that match the identifier type and value -->
+  <xsl:template name="linking_objects">
     <xsl:param name="otype"/>
     <xsl:param name="ovalue"/>
 
@@ -416,6 +348,51 @@
        </xsl:if>
      </xsl:for-each>    
   
+  </xsl:template>
+
+  <!-- agents that match the identifier type and value -->
+  <xsl:template name="linking_agents">
+    <xsl:param name="atype"/>
+    <xsl:param name="avalue"/>
+
+     <xsl:for-each select="/premis:premis/premis:agent">
+       <xsl:if test="normalize-space(premis:agentIdentifier/premis:agentIdentifierType)=$atype and
+                     normalize-space(premis:agentIdentifier/premis:agentIdentifierValue)=$avalue">
+         <xsl:text> </xsl:text>
+         <xsl:text>agent-</xsl:text><xsl:value-of select="position()" />
+       </xsl:if>
+     </xsl:for-each>
+       
+  </xsl:template>
+
+  <!-- rights that match the identifier type and value -->
+  <xsl:template name="linking_rights">
+    <xsl:param name="rtype"/>
+    <xsl:param name="rvalue"/>
+
+     <xsl:for-each select="/premis:premis/premis:rights">
+       <xsl:if test="normalize-space(premis:rightsStatement/premis:rightsStatementIdentifier/premis:rightsStatementIdentifierType)=$rtype and
+                     normalize-space(premis:rightsStatement/premis:rightsStatementIdentifier/premis:rightsStatementIdentifierValue)=$rvalue">
+         <xsl:text> </xsl:text>
+         <xsl:text>rights-</xsl:text><xsl:value-of select="position()" />
+       </xsl:if>
+     </xsl:for-each>
+       
+  </xsl:template>
+
+  <!-- list linking events that match the identifier type and value -->
+  <xsl:template name="linking_events">
+    <xsl:param name="etype"/>
+    <xsl:param name="evalue"/>
+
+     <xsl:for-each select="/premis:premis/premis:event">
+       <xsl:if test="normalize-space(premis:eventIdentifier/premis:eventIdentifierType)=$etype and
+                     normalize-space(premis:eventIdentifier/premis:eventIdentifierValue)=$evalue">
+         <xsl:text> </xsl:text>
+         <xsl:text>event-</xsl:text><xsl:value-of select="position()" />
+       </xsl:if>
+     </xsl:for-each>
+       
   </xsl:template>
 	
 </xsl:stylesheet>
