@@ -163,24 +163,12 @@ Then /^it should contain (some|no) validation errors$/ do |quantity|
 
   case quantity
   when 'no'
-
-    last_response.body.should have_selector('h2') do |tag|
-      tag.should contain('document is valid')
-    end
-
-    last_response.body.should_not have_selector('ul li') do |tag|
-      tag.should contain('objectIdentifier')
-    end
-
+    last_response.body.should have_selector('h2', :content => 'Document is valid')
+    last_response.body.should_not have_selector('ul li', :content => 'objectIdentifier')
+    
   when 'some'
-
-    last_response.body.should have_selector('h2') do |tag|
-      tag.should contain('document is invalid')
-    end
-
-    last_response.body.should have_selector('ul li') do |tag|
-      tag.should contain('objectIdentifier')
-    end
+    last_response.body.should have_selector('h2', :content => 'Document is invalid')
+    last_response.body.should have_selector('ul li', :content => 'objectIdentifier')
 
   end
 
