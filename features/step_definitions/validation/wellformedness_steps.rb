@@ -24,10 +24,10 @@ Then /^it should contain (no|some) formedness errors$/ do |quantity|
 
   case quantity
   when 'no'
-    last_response.body.should have_selector('h2', :content => 'document is well-formed')
+    last_response.body.should have_selector('h2', :content => 'Document is well-formed')
     
   when 'some'
-    last_response.body.should have_selector('h2', :content => 'document is not well-formed')
+    last_response.body.should have_selector('h2', :content => 'Document is not well-formed:')
     last_response.body.should have_selector('code')
     
   end
