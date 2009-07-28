@@ -3,9 +3,11 @@ Given /^a document is not well formed$/ do
 end
 
 Then /^all headings except well formedness are visually disabled$/ do
-  last_response.should match_selector('h2:not(.disabled)', :content  => 'document is not well-formed')
-  last_response.should match_selector('h2.disabled', :content  => 'validity (not performed)')
-  last_response.should match_selector('h2.disabled', :content  => 'PREMIS in METS best practice conformance (not performed)')
+  last_response.should match_selector('h2:not(.notperformed)', :content  => 'Document is not well-formed:')
+  last_response.should match_selector('h2.notperformed', :content  => 'Validation')
+  last_response.should match_selector('h2.notperformed + p', :content  => '(not performed)')
+  last_response.should match_selector('h2.notperformed', :content  => 'PREMIS in METS best practice conformance')
+  last_response.should match_selector('h2.notperformed + p', :content  => '(not performed)')
 end
 
 Given /^a document is not valid$/ do
@@ -13,9 +15,10 @@ Given /^a document is not valid$/ do
 end
 
 Then /^only best practice heading is visually disabled$/ do
-  last_response.should match_selector('h2:not(.disabled)', :content  => 'document is well-formed')
-  last_response.should match_selector('h2:not(.disabled)', :content  => 'document is invalid')
-  last_response.should match_selector('h2.disabled', :content  => 'PREMIS in METS best practice conformance (not performed)')  
+  last_response.should match_selector('h2:not(.notperformed)', :content  => 'Document is well-formed')
+  last_response.should match_selector('h2:not(.notperformed)', :content  => 'Document is invalid')
+  last_response.should match_selector('h2.notperformed', :content  => 'PREMIS in METS best practice conformance')
+  last_response.should match_selector('h2.notperformed + p', :content => '(not performed)')
 end
 
 Given /^a valid xml document$/ do
@@ -23,7 +26,7 @@ Given /^a valid xml document$/ do
 end
 
 Then /^nothing is visually disabled$/ do
-  last_response.should match_selector('h2:not(.disabled)', :content  => 'document is well-formed')
-  last_response.should match_selector('h2:not(.disabled)', :content  => 'document is valid')
-  last_response.should match_selector('h2:not(.disabled)', :content  => 'document conforms to PREMIS in METS best practice')  
+  last_response.should match_selector('h2:not(.notperformed)', :content  => 'Document is well-formed')
+  last_response.should match_selector('h2:not(.notperformed)', :content  => 'Document is valid')
+  last_response.should match_selector('h2:not(.notperformed)', :content  => 'Document conforms to PREMIS in METS best practice')  
 end
