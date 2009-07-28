@@ -15,10 +15,10 @@ Then /^it should contain (no|some) pim best practices violations$/ do |amount|
   case amount
 
   when 'no'
-    last_response.should have_selector('h2', :content => "document conforms to PREMIS in METS best practice")
+    last_response.should have_selector('h2', :content => "Document conforms to PREMIS in METS best practice")
 
   when 'some'
-    last_response.should have_selector('h2', :content => "document does not conform to PREMIS in METS best practice")
+    last_response.should have_selector('h2', :content => "Document does not conform to PREMIS in METS best practice")
     last_response.should have_selector('ul li code')
   end
 end
