@@ -342,7 +342,10 @@ dl.resources {
 	padding: 0;
 }
 
-ul.resources {list-style-type:square;}
+ul.resources {
+	list-style-type:square;
+}
+
 .resources li
 {
 	color:#797B7A;
@@ -350,4 +353,13 @@ ul.resources {list-style-type:square;}
 	font-size:11px;
 	margin: 0 0 1em 0;
 	padding: 0;
+}
+
+#flash {
+	font-family:"Trebuchet MS";
+	color:red;
+	background-color:white;
+	border:thin red dotted;
+	padding:1ex;
+	margin-bottom:1em;
 }
