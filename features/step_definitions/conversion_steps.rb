@@ -77,9 +77,7 @@ end
 
 Then /^some validation errors should be returned$/ do
   last_response.body.should contain('PREMISSSSSSS')
-  last_response.body.should have_selector('div#flash') do |tag|
-    tag.should contain('Cannot convert: validation errors exist')
-  end
+  last_response.body.should have_selector('div#flash', :content => 'Cannot convert: validation errors exist')
 end
 
 Then /^the status should be (\d{3})$/ do |n|
