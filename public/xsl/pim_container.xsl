@@ -6,7 +6,7 @@
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 version="1.0">
   
-  <xsl:import href="xsl/pim_base.xsl"/>
+  <xsl:import href="pim_base.xsl"/>
   
   <xsl:output method="xml" indent="yes"/>
 

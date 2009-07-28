@@ -1,10 +1,4 @@
-<h2>Validate :
-  <span id="inputchoice"> &nbsp;
-    <a href="#input-uri">uri</a> | 
-    <a href="#input-file">file upload</a> | 
-    <a href="#input-direct">direct input</a>
-  </span>
-</h2>
+<h2>Validate : <%= erb :inputlinks, :layout => false %></h2>
 
 <br/>
 
@@ -13,16 +7,6 @@
   to the PREMIS in METS Best Practice Guidelines.
 </p>
 
-<% options = { :action => '/validate/results', :submit_text => 'Validate' } %>
-
-<div id="input-uri" class="form-container">
-  <%= input_form :uri, options %>
-</div>
-
-<div id="input-file" class="form-container" style="display:none;">
-  <%= input_form :file_upload, options %>
-</div>
-
-<div id="input-direct" class="form-container" style="display:none;">
-  <%= input_form :direct_input, options %>
-</div>
+<%= erb :inputforms, 
+        :layout => false, 
+        :locals => { :action => '/validate/results', :submit_text => 'Validate' } %>

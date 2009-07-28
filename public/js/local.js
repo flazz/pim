@@ -1,8 +1,11 @@
 $(document).ready(function() {
 	
+	// initial state for js enabled browsers
 	$("#inputchoice a:contains('uri')").addClass("active")
+	$("#input-file").hide();
+	$("#input-direct").hide();
 	
-
+	// select the visible input form
 	$("#inputchoice a").click(function() {
 		
 		var old_choice = $("#inputchoice a.active");

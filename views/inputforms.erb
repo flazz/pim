@@ -1,0 +1,45 @@
+<div id="input-uri" class="form-container">
+  <form method="get" action="<%= ERB::Util::h action %>">
+    <label for="document">Address:</label>
+    <input name="document" id="uri" type="text" size="45"/>
+    <br/>
+    <% if locals[:use_premis_container] %>
+    <br/>
+    <%= erb :'premis_container_option', :layout => false, :locals => options %>
+    <% end %>
+    <br/>
+    <br/>
+    <input type="submit" value="<%= ERB::Util::h submit_text %>" />
+  </form>
+</div>
+
+<div id="input-file" class="form-container">
+  <form method="post" action="<%= ERB::Util::h action %>" enctype="multipart/form-data">
+    <label for="document">File:</label>
+    <input name="document" id="uploadfile" size="30" type="file"/>
+    <br/>
+    <% if locals[:use_premis_container] %>
+    <br/>
+    <%= erb :'premis_container_option', :layout => false, :locals => options %>
+    <% end %>
+    <br/>
+    <br/>
+    <input type="submit" value="<%= ERB::Util::h submit_text %>" />
+  </form>
+</div>
+
+<div id="input-direct" class="form-container">
+  <form method="post" action="<%= action %>">
+    <label for="document">Enter XML Document:</label>
+    <br/>
+    <textarea id="directinput" rows="12" cols="76" name="document"></textarea>
+    <% if locals[:use_premis_container] %>
+    <br/>
+    <%= erb :'premis_container_option', :layout => false, :locals => options %>
+    <% end %>
+    <br/>
+    <br/>
+    <input type="submit" value="<%= ERB::Util::h submit_text %>" />
+    <br/>
+  </form>
+</div>

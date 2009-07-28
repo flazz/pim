@@ -8,10 +8,18 @@ module Pim
   
   # transformations
   def load_xslt name
-    transform = File.join(File.dirname(__FILE__), '..', 'xsl', name)
-    doc = XML::Parser.file(transform).parse
-    XSLT::Stylesheet.new doc
+    # transform = File.join(File.dirname(__FILE__), '..', 'public', 'xsl', name)
+    # # doc = XML::Parser.file(transform).parse
+    # doc = XML::Document.file transform, :base_uri => "/xsl"
+    # XSLT::Stylesheet.new doc
+    
+    Dir.chdir(File.join(File.dirname(__FILE__), '..', 'public', 'xsl')) do
+      doc = XML::Document.file name
+      XSLT::Stylesheet.new doc
+    end
+    
   end
+  
   module_function :load_xslt
   
   PREMIS_TO_PIM_CONTAINER_XSLT = load_xslt "pim_container.xsl"

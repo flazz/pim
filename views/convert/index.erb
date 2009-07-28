@@ -1,37 +1,21 @@
-<h2>Convert: 
-  <span id="inputchoice"> &nbsp;
-    <a href="#input-uri">uri</a> | 
-    <a href="#input-file">file upload</a> | 
-    <a href="#input-direct">direct input</a>
-  </span>
-</h2>
+<h2>Convert: <%= erb :inputlinks, :layout => false %></h2>
 
 <br/>
   
 <p><strong>Accepts either:</strong></p>
+<ol class="spiel">
+  <li>
+    an XML document conforming to the PREMIS schema and creates a METS document with embedded
+    PREMIS elements.
+  </li>
+  <li>
+    an XML document conforming to the METS schema and creates a PREMIS document from any embedded
+    PREMIS.
+  </li>
+</ol>
 
-      <ol class="spiel">
-        <li>
-          an XML document conforming to the PREMIS schema and creates a METS document with embedded
-          PREMIS elements.
-        </li>
-        <li>
-          an XML document conforming to the METS schema and creates a PREMIS document from any embedded
-          PREMIS.
-        </li>
-      </ol>
-
-<% options = { :action => '/convert/results', :submit_text => 'Convert' } %>
-<% options[:use_premis_container] = true %>
-
-<div id="input-uri" class="form-container">
-  <%= input_form :uri, options %>
-</div>
-
-<div id="input-file" class="form-container" style="display:none;">
-  <%= input_form :file_upload, options %>
-</div>
-
-<div id="input-direct" class="form-container" style="display:none;">
-  <%= input_form :direct_input, options %>
-</div>
+<%= erb :inputforms, 
+        :layout => false, 
+        :locals => { :action => '/convert/results', 
+                     :submit_text => 'Convert',
+                     :use_premis_container => true } %>

@@ -9,7 +9,7 @@ module Pim
 
   # schematron
   def load_stron name
-    schema = File.join(File.dirname(__FILE__), '..', 'schema', name)
+    schema = File.join(File.dirname(__FILE__), '..', 'public', 'schema', name)
     XML.default_line_numbers = true
     doc = XML::Parser.file(schema).parse
     Schematron::Schema.new doc

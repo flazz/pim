@@ -111,9 +111,7 @@ h1, h2, h3, h4, h5, h6, p, form {
 
 #contentarea {
 	clear:both;
-	padding:25px 0px;
-	//width:776px;
-	//min-height:400px;
+	padding:25px 40px;
 }
 
 #contentarea h1{
@@ -122,7 +120,6 @@ h1, h2, h3, h4, h5, h6, p, form {
 	color:#EE8907;
 	font-weight:bold;
 	text-decoration:none;
-	padding-left:40px;
 	padding-bottom:1em;
 }
 
@@ -132,7 +129,6 @@ h1, h2, h3, h4, h5, h6, p, form {
 	color:#EE8907;
 	font-weight:normal;
 	text-decoration:none;
-	padding-left:40px;
 	padding-bottom:5px;
 }
 
@@ -146,7 +142,7 @@ h1, h2, h3, h4, h5, h6, p, form {
 	color:#797B7A;
 	font-weight:normal;
 	text-decoration:none;
-	padding:0px 40px;
+	margin-right:5em;
 }
 
 #contentarea a {
@@ -324,4 +320,34 @@ ol.spiel {
 	text-decoration:none;
 }
 
+dl.resources {
+	margin: 0;
+	padding: 0;
+}
 
+.resources dt {
+	font-family:"Trebuchet MS";
+	font-size:11px;
+	margin: 0;
+	padding: 0;
+	font-weight: bold;
+}
+
+.resources dd
+{
+	color:#797B7A;
+	font-family:"Trebuchet MS";
+	font-size:11px;
+	margin: 0 0 1em 0;
+	padding: 0;
+}
+
+ul.resources {list-style-type:square;}
+.resources li
+{
+	color:#797B7A;
+	font-family:"Trebuchet MS";
+	font-size:11px;
+	margin: 0 0 1em 0;
+	padding: 0;
+}

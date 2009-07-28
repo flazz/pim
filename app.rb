@@ -14,12 +14,6 @@ module Pim
   class App < Sinatra::Default
 
     helpers do
-
-      # common interface to the input forms
-      def input_form type, options={}
-        view = "forms/#{type.id2name}".intern
-        erb view, :layout => false, :locals => options
-      end
       
       # Common handler for conversion results
       def handle_conversion src
@@ -33,7 +27,6 @@ module Pim
           halt 400, body
         end
         
-        @title = "Conversion Results"
         doc = XML::Parser.string(src).parse
         
         case doc.root.namespaces.namespace.to_s
@@ -61,20 +54,13 @@ module Pim
       erb :index
     end
 
-    # index
-    get '/resources' do
-      erb :resources
-    end
-
     # validate PiM
     get '/validate' do
-      @title = "PREMIS in METS Validator"
       erb :'validate/index'
     end
 
     get '/validate/results' do
       halt 400, "query parameter document is required" unless params['document']
-      @title = "Validation Results"
       url = CGI::unescape params['document']
 
       src = begin
@@ -89,7 +75,6 @@ module Pim
 
     post '/validate/results' do
       halt 400, "query parameter document is required" unless params['document']
-      @title = "Validation Results"
 
       src = case params['document']
             when Hash
@@ -104,7 +89,6 @@ module Pim
 
     # convert PREMIS to PiM
     get '/convert' do
-      @title = "PREMIS in METS Converter"
       erb :'convert/index'
     end
 
@@ -134,6 +118,10 @@ module Pim
       handle_conversion src
     end
 
+    get '/resources/?' do
+      erb :resources
+    end
+    
   end
 
 end
