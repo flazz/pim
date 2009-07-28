@@ -1,11 +1,6 @@
 Feature: PREMIS to PiM Conversion
   A PREMIS document should be converted to a METS document containing PREMIS XML
 
-  Scenario: Convert PREMIS with structural representations to METS
-    Given a PREMIS document
-    When I convert it
-    Then a choice of potential representations will be returned
-
   Scenario: Convert PREMIS to METS with a PREMIS container
     Given a PREMIS document
     And I want a premis container

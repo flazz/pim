@@ -1,7 +1,8 @@
 html, body {
 	margin: 0px;
 	padding:0px;
-	background-image:url(images/bg.gif);
+	background-image:url(../images/bg.gif);
+	font-family: "Trebuchet MS", sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6, p, form {
@@ -18,7 +19,7 @@ h1, h2, h3, h4, h5, h6, p, form {
 #content {
 	width:778px;
 	margin:0px auto;
-	background-image:url(images/bg_header_top.gif);
+	background-image:url(../images/bg_header_top.gif);
 	background-repeat:repeat-x;
 	background-position:top;
 }
@@ -33,7 +34,6 @@ h1, h2, h3, h4, h5, h6, p, form {
 }
 
 #logo h1{
-	font-family:"Trebuchet MS";
 	font-size:26px;
 	color:#F76B0C;
 	font-weight:normal;
@@ -43,7 +43,6 @@ h1, h2, h3, h4, h5, h6, p, form {
 }
 
 #logo h4 {
-	font-family:"Trebuchet MS";
 	font-size:11px;
 	color:#808080;
 	font-weight:normal;
@@ -62,14 +61,12 @@ h1, h2, h3, h4, h5, h6, p, form {
 	width:129px;
 	height:25px;
 	text-align:center;
-	//background-color:#F76B0C;
 	background-color:#F4A80A;
 	border-left:1px solid #FFF;
 	padding-top:4px;
 }
 
 #links a{
-	font-family:"Trebuchet MS";
 	font-size:11px;
 	color:#fff;
 	font-weight:normal;
@@ -77,7 +74,6 @@ h1, h2, h3, h4, h5, h6, p, form {
 }
 
 #links a:hover{
-	font-family:"Trebuchet MS";
 	font-size:11px;
 	color:#fff;
 	font-weight:normal;
@@ -85,14 +81,13 @@ h1, h2, h3, h4, h5, h6, p, form {
 }
 
 #mainimg {
-	background-image:url(images/main.png);
+	background-image:url(../images/main.png);
 	background-repeat:no-repeat;
 	height:132px;
 	text-align:right;
 }
 
 #mainimg h3 {
-	font-family:"Trebuchet MS";
 	font-size:48px;
 	color:#fff;
 	font-weight:normal;
@@ -101,7 +96,6 @@ h1, h2, h3, h4, h5, h6, p, form {
 }
 
 #mainimg h4 {
-	font-family:"Trebuchet MS";
 	font-size:18px;
 	color:#fff;
 	font-weight:normal;
@@ -115,7 +109,6 @@ h1, h2, h3, h4, h5, h6, p, form {
 }
 
 #contentarea h1{
-	font-family:"Trebuchet MS";
 	font-size:32px;
 	color:#EE8907;
 	font-weight:bold;
@@ -124,7 +117,6 @@ h1, h2, h3, h4, h5, h6, p, form {
 }
 
 #contentarea h2{
-	font-family:"Trebuchet MS";
 	font-size:24px;
 	color:#EE8907;
 	font-weight:normal;
@@ -137,7 +129,6 @@ h1, h2, h3, h4, h5, h6, p, form {
 }
 
 #contentarea p{
-	font-family:"Trebuchet MS";
 	font-size:11px;
 	color:#797B7A;
 	font-weight:normal;
@@ -146,25 +137,20 @@ h1, h2, h3, h4, h5, h6, p, form {
 }
 
 #contentarea a {
-	font-family:"Trebuchet MS";
 	font-size:11px;
 	color:#EE8907;
 	font-weight:normal;
 	text-decoration:none;
-	//padding:0px 40px;
 }
 
 #contentarea a:hover {
-	font-family:"Trebuchet MS";
 	font-size:11px;
 	color:#EE8907;
 	font-weight:normal;
 	text-decoration:underline;
-	//padding:0px 40px;
 }
 
 .orangetext {
-	font-family:"Trebuchet MS";
 	font-size:11px;
 	color:#EE8907;
 	font-weight:bold;
@@ -186,7 +172,6 @@ h1, h2, h3, h4, h5, h6, p, form {
 }
 
 #email a{
-	font-family:"Trebuchet MS";
 	font-size:11px;
 	color:#fff;
 	font-weight:normal;
@@ -195,7 +180,6 @@ h1, h2, h3, h4, h5, h6, p, form {
 }
 
 #email a:hover{
-	font-family:"Trebuchet MS";
 	font-size:11px;
 	color:#fff;
 	font-weight:normal;
@@ -212,7 +196,6 @@ h1, h2, h3, h4, h5, h6, p, form {
 }
 
 #validtext p{
-	font-family:"Trebuchet MS";
 	font-size:11px;
 	color:#fff;
 	font-weight:normal;
@@ -222,7 +205,6 @@ h1, h2, h3, h4, h5, h6, p, form {
 }
 
 #validtext a{
-	font-family:"Trebuchet MS";
 	font-size:11px;
 	color:#fff;
 	font-weight:normal;
@@ -230,7 +212,6 @@ h1, h2, h3, h4, h5, h6, p, form {
 }
 
 #validtext a:hover{
-	font-family:"Trebuchet MS";
 	font-size:11px;
 	color:#fff;
 	font-weight:normal;
@@ -264,7 +245,6 @@ div.form-container {
 }
 
 label {
-	font-family:"Trebuchet MS";
 	font-size:11px;
 	color:#797B7A;
 	font-weight:normal;
@@ -273,7 +253,6 @@ label {
 }
 
 #inputchoice a.active {
-	font-family:"Trebuchet MS";
 	font-size:26px;
 	color:#009FF8;
 	font-weight:normal;
@@ -282,7 +261,6 @@ label {
 }
 
 #inputchoice a.active:hover {
-	font-family:"Trebuchet MS";
 	font-size:26px;
 	color:#009FF8;
 	font-weight:normal;
@@ -291,7 +269,6 @@ label {
 }
 
 #inputchoice a {
-	font-family:"Trebuchet MS";
 	font-size:26px;
 	color:#797B7A;
 	font-weight:normal;
@@ -300,7 +277,6 @@ label {
 }
 
 #inputchoice a:hover {
-	font-family:"Trebuchet MS";
 	font-size:26px;
 	color:#797B7A;
 	font-weight:normal;
@@ -313,7 +289,6 @@ ol.spiel {
 }
 
 .spiel li {
-	font-family:"Trebuchet MS";
 	font-size:11px;
 	color:#797B7A;
 	font-weight:normal;
@@ -326,17 +301,14 @@ dl.resources {
 }
 
 .resources dt {
-	font-family:"Trebuchet MS";
 	font-size:11px;
 	margin: 0;
 	padding: 0;
 	font-weight: bold;
 }
 
-.resources dd
-{
+.resources dd {
 	color:#797B7A;
-	font-family:"Trebuchet MS";
 	font-size:11px;
 	margin: 0 0 1em 0;
 	padding: 0;
@@ -349,14 +321,12 @@ ul.resources {
 .resources li
 {
 	color:#797B7A;
-	font-family:"Trebuchet MS";
 	font-size:11px;
 	margin: 0 0 1em 0;
 	padding: 0;
 }
 
 #flash {
-	font-family:"Trebuchet MS";
 	color:red;
 	background-color:white;
 	border:thin red dotted;
