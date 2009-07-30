@@ -1,7 +1,7 @@
 gem 'schematron', '>= 0.0.2'
 
 require 'libxml'
-require '../schematron/lib/schematron'
+require 'schematron'
 
 include LibXML
 
