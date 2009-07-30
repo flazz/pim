@@ -28,6 +28,7 @@ module Pim
         end
         
         doc = XML::Parser.string(src).parse
+        Pim.cleanup! doc
         
         case doc.root.namespaces.namespace.to_s
         when 'info:lc/xmlns/premis-v2'
