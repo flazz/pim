@@ -1,4 +1,4 @@
-gem 'schematron', '>= 0.0.2'
+gem 'schematron', '>= 0.1.0'
 
 require 'libxml'
 require 'schematron'
