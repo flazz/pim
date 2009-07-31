@@ -47,11 +47,18 @@
 <% elsif @results[:best_practice].empty? %>
 <h2>Document conforms to PREMIS in METS best practice</h2>
 <% else %>
+
+<% if @results[:best_practice].reject { |r| r[:rule_type] == 'report'}.length == 0 %>
+<h2>Document conforms to PREMIS in METS best practice</h2>
+<% else %>
 <h2>Document does not conform to PREMIS in METS best practice:</h2>
+<% end %>
+
 <ul>
   <% @results[:best_practice].each do |deviation| %>
   <li>
     <code>
+      <% if deviation[:rule_type] == 'report' %>WARNING: <% end %>    
       line <%= ERB::Util::h(deviation[:line]) %>,
       <%= ERB::Util::h(deviation[:type]) %> <%= ERB::Util::h(deviation[:name]) %>:
       <%= ERB::Util::h(deviation[:message]) %>

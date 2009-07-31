@@ -92,5 +92,7 @@ end
 
 Then /^it should conform to PiM BP$/ do
   r = Pim::Validation.new(last_response.body).results
-  r[:best_practice].should be_empty
+  unless r[:best_practice].empty?
+    r[:best_practice].each { |e| e[:rule_type].should == 'report' }
+  end
 end
