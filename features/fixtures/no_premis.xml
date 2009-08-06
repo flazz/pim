@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mets xmlns="http://www.loc.gov/METS/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:premis="info:lc/xmlns/premis-v2" xmlns:xlink="http://www.w3.org/1999/xlink" xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/version18/mets.xsd                                info:lc/xmlns/premis-v2 http://www.loc.gov/standards/premis/premis.xsd                                http://www.loc.gov/mix/v10 http://www.loc.gov/standards/mix/mix10/mix10.xsd">
+
+  <fileSec>
+    <fileGrp>
+
+      <file ID="file-1" OWNERID="F20090127_AAAAAA" SIZE="49236" CHECKSUM="34bcb73f6ea7c852989b5dd108060c1bda989ddb" CHECKSUMTYPE="SHA-1">
+        <FLocat LOCTYPE="OTHER" OTHERLOCTYPE="EXT3" xlink:href="foo/bar/baz.jpg"/>
+      </file>
+      <file ID="file-2" OWNERID="F20090127_AAAAAC"/>
+    </fileGrp>
+  </fileSec>
+  <structMap LABEL="ORPHANED_FILES">
+    <div>
+      <fptr FILEID="file-1"/>
+
+      <fptr FILEID="file-2"/>
+    </div>
+  </structMap>
+</mets>
