@@ -19,14 +19,14 @@
       <assert test="count(//mets:xmlData/pre:object) + 
                     count(//mets:xmlData/pre:agent) + 
                     count(//mets:xmlData/pre:rights) + 
-                    count(//mets:xmlData/pre:events) > 0 or
+                    count(//mets:xmlData/pre:event) > 0 or
                     count(//mets:xmlData/pre:premis) = 1" see="bp-1a bp-1b">
         There must be PREMIS elements inside the METS container.
       </assert>
     </rule>
     
     <rule context="//mets:xmlData/pre:object | //mets:xmlData/pre:agent |
-                   //mets:xmlData/pre:rights | //mets:xmlData/pre:events">
+                   //mets:xmlData/pre:rights | //mets:xmlData/pre:event">
       <assert test="not(//pre:premis)" see="bp-3">
         If there are multiple PREMIS sections, there should not be a PREMIS root 
         node. Otherwise, all PREMIS elements must be inside the PREMIS root node.
@@ -83,7 +83,7 @@
 	    PREMIS agents must be contained in a METS rightsMD if given in a rights 
 	    context, or in a METS digiprovMD if given in an event context 
       </assert> 
-      <assert test="count(sibling) = 0" see="bp-2">
+      <assert test="count(parent::node()/pre:agent) = 1" see="bp-2">
         Each PREMIS agent should be in its own digiprovMD or rightsMD section
       </assert>
     </rule>
@@ -98,19 +98,19 @@
       <assert test="not(//pre:*[contains(concat(' ', @RelEventXmlID, ' '), $mets_id)])" see="bp-6a">
         PREMIS attribute RelEventXmlID should not link to a METS element.
       </assert>
-      <assert test="not(//pre:*[contains(concat(' ', /@RelObjectXmlID, ' '), $mets_id)])" see="bp-6a">
+      <assert test="not(//pre:*[contains(concat(' ', @RelObjectXmlID, ' '), $mets_id)])" see="bp-6a">
         PREMIS attribute RelObjectXmlID should not link to a METS element.
       </assert>
-      <assert test="not(//pre:*[contains(concat(' ', /@LinkObjectXmlID, ' '), $mets_id)])" see="bp-6a">
+      <assert test="not(//pre:*[contains(concat(' ', @LinkObjectXmlID, ' '), $mets_id)])" see="bp-6a">
         PREMIS attribute LinkObjectXmlID should not link to a METS element.
       </assert>
       <assert test="not(//pre:*[contains(concat(' ', @LinkEventXmlID, ' '), $mets_id)])" see="bp-6a">
         PREMIS attribute LinkEventXmlID should not link to a METS element.
       </assert>
-      <assert test="not(//pre:*[contains(concat(' ', /@LinkAgentXmlID, ' '), $mets_id)])" see="bp-6a">
+      <assert test="not(//pre:*[contains(concat(' ', @LinkAgentXmlID, ' '), $mets_id)])" see="bp-6a">
         PREMIS attribute LinkAgentXmlID should not link to a METS element.
       </assert>
-      <assert test="not(//pre:*[contains(concat(' ', /@LinkPermissionStatementXmlID, ' '), $mets_id)])" see="bp-6a">
+      <assert test="not(//pre:*[contains(concat(' ', @LinkPermissionStatementXmlID, ' '), $mets_id)])" see="bp-6a">
         PREMIS attribute LinkPermissionStatementXmlID should not link to a METS element.
       </assert>
     </rule>
