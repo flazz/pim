@@ -43,3 +43,10 @@ Feature: PREMIS to PiM Conversion
     | an event      | an agent                                |
     | rights        | an agent                                |
     | rights        | an object                               |
+
+  Scenario: Convert PREMIS to PiM when a PREMIS ID conflicts
+    Given a PREMIS document with a PREMIS object with xmlID 'object-1'
+    And I want PREMIS elements sorted into specific METS buckets
+    When I convert it
+    Then a METS document should be returned
+    And all the PREMIS xmlIDs and IDRefs should be prefixed with 'premis_'

@@ -160,3 +160,37 @@ Then /^it should have rights METS bucket with an ADMID reference to an object ME
   admid.should include('representation-1')
 end
 
+Given /^a PREMIS document with a PREMIS object with xmlID 'object\-1'$/ do
+  @doc = fixture_data 'pim_ids.xml'
+end
+
+Then /^all the PREMIS xmlIDs and IDRefs should be prefixed with 'premis_'$/ do
+  doc = LibXML::XML::Parser.string(last_response.body).parse
+  
+  # Check all PREMIS xmlIDs
+  xmlids = doc.find('//premis:*/@xmlID', XMLNS)
+  xmlids.each { |xmlid| xmlid.value.should match(/^premis_/) }
+  
+  # Check all PREMIS IDRefs
+  doc.find('//premis:*/@LinkAgentXmlID', XMLNS).each do |idref|
+    idref.value.should match(/^premis_/)
+  end
+  doc.find('//premis:*/@RelEventXmlID', XMLNS).each do |idref|
+    idref.value.should match(/^premis_/)
+  end  
+  doc.find('//premis:*/@RelObjectXmlID', XMLNS).each do |idref|
+    idref.value.should match(/^premis_/)
+  end
+  doc.find('//premis:*/@LinkObjectXmlID', XMLNS).each do |idref|
+    idref.value.should match(/^premis_/)
+  end 
+  doc.find('//premis:*/@LinkEventXmlID', XMLNS).each do |idref|
+    idref.value.should match(/^premis_/)
+  end
+  doc.find('//premis:*/@LinkPermissionStatementXmlID', XMLNS).each do |idref|
+    idref.value.should match(/^premis_/)
+  end   
+
+end
+
+
