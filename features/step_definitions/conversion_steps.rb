@@ -96,3 +96,67 @@ Then /^it should conform to PiM BP$/ do
     r[:best_practice].each { |e| e[:rule_type].should == 'report' }
   end
 end
+
+
+# Checking conversion ID/ADMID linking
+
+Given /^a PREMIS document with an object linking to an event$/ do
+  @doc = fixture_data 'pim_links.xml'
+end
+
+Then /^it should have an object METS bucket with an ADMID reference to an event METS bucket$/ do
+  doc = LibXML::XML::Parser.string(last_response.body).parse
+  doc.find_first('//mets:techMD[@ID="bitstream-1"]/@ADMID', XMLNS).value.should include 'event-2'
+end
+
+Given /^a PREMIS document with an object linking to an object \(and event\) in a relationship$/ do
+  @doc = fixture_data 'pim_links.xml'
+end
+
+Then /^it should have an object METS bucket with an ADMID reference to an object \(and event\) in a relationship METS bucket$/ do
+  doc = LibXML::XML::Parser.string(last_response.body).parse
+  admid = doc.find_first('//mets:techMD[@ID="bitstream-1"]/@ADMID', XMLNS).value
+  admid.should include('object-2')
+  admid.should include('event-1')
+end
+
+Given /^a PREMIS document with an event linking to an object$/ do
+  @doc = fixture_data 'pim_links.xml'
+end
+
+Then /^it should have an event METS bucket with an ADMID reference to an object METS bucket$/ do
+  doc = LibXML::XML::Parser.string(last_response.body).parse
+  admid = doc.find_first('//mets:digiprovMD[@ID="event-1"]/@ADMID', XMLNS).value
+  admid.should include('object-2')
+end
+
+Given /^a PREMIS document with an event linking to an agent$/ do
+  @doc = fixture_data 'pim_links.xml'
+end
+
+Then /^it should have an event METS bucket with an ADMID reference to an agent METS bucket$/ do
+  doc = LibXML::XML::Parser.string(last_response.body).parse
+  admid = doc.find_first('//mets:digiprovMD[@ID="event-1"]/@ADMID', XMLNS).value
+  admid.should include('agent-1')
+end
+
+Given /^a PREMIS document with rights linking to an agent$/ do
+  @doc = fixture_data 'pim_links.xml'
+end
+
+Then /^it should have rights METS bucket with an ADMID reference to an agent METS bucket$/ do
+  doc = LibXML::XML::Parser.string(last_response.body).parse
+  admid = doc.find_first('//mets:rightsMD[@ID="rights-1"]/@ADMID', XMLNS).value
+  admid.should include('agent-1')
+end
+
+Given /^a PREMIS document with rights linking to an object$/ do
+  @doc = fixture_data 'pim_links.xml'
+end
+
+Then /^it should have rights METS bucket with an ADMID reference to an object METS bucket$/ do
+  doc = LibXML::XML::Parser.string(last_response.body).parse
+  admid = doc.find_first('//mets:rightsMD[@ID="rights-1"]/@ADMID', XMLNS).value
+  admid.should include('representation-1')
+end
+

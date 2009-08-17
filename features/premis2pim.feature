@@ -25,3 +25,21 @@ Feature: PREMIS to PiM Conversion
             | events         | digiprovMD  |
             | agents         | digiprovMD  |
             | rights         | rightsMD    |
+            
+  Scenario Outline: Convert PREMIS to METS buckets with ADMID linking
+    Given a PREMIS document with <first element> linking to <second element>
+    And I want PREMIS elements sorted into specific METS buckets
+    When I convert it
+    Then a METS document should be returned
+    And it should be valid
+    And it should conform to PiM BP
+    And it should have <first element> METS bucket with an ADMID reference to <second element> METS bucket
+    
+  Examples: linking IDs/ADMIDs
+    | first element | second element                          |
+    | an object     | an event                                | 
+    | an object     | an object (and event) in a relationship |
+    | an event      | an object                               |
+    | an event      | an agent                                |
+    | rights        | an agent                                |
+    | rights        | an object                               |
