@@ -44,9 +44,27 @@ Feature: PREMIS to PiM Conversion
     | rights        | an agent                                |
     | rights        | an object                               |
 
-  Scenario: Convert PREMIS to PiM when a PREMIS ID conflicts
-    Given a PREMIS document with a PREMIS object with xmlID 'object-1'
+  Scenario Outline: Convert PREMIS to PiM with potential PREMIS xmlID conflicts
+    Given a PREMIS document with a PREMIS object with xmlID <xmlID>
     And I want PREMIS elements sorted into specific METS buckets
     When I convert it
     Then a METS document should be returned
     And all the PREMIS xmlIDs and IDRefs should be prefixed with 'premis_'
+
+    Examples: Conflicting xmlIDs
+      | xmlID            |
+      | object-1         |
+      | agent-1          |
+      | event-1          |
+      | representation-1 |
+      | bitstream-1      |
+      | DPMD1            |
+      | PREMIS_AMD       |
+
+  Scenario: Convert PREMIS to PiM container when a PREMIS ID conflicts
+    Given a PREMIS document with a PREMIS file object with xmlID 'DPMD1'
+    And I want a premis container
+    When I convert it
+    Then a METS document should be returned
+    And all the PREMIS xmlIDs and IDRefs should be prefixed with 'premis_'
+        

@@ -106,7 +106,7 @@ end
 
 Then /^it should have an object METS bucket with an ADMID reference to an event METS bucket$/ do
   doc = LibXML::XML::Parser.string(last_response.body).parse
-  doc.find_first('//mets:techMD[@ID="bitstream-1"]/@ADMID', XMLNS).value.should include 'event-2'
+  doc.find_first('//mets:techMD[@ID="bitstream-1"]/@ADMID', XMLNS).value.should include('event-2')
 end
 
 Given /^a PREMIS document with an object linking to an object \(and event\) in a relationship$/ do
@@ -160,8 +160,10 @@ Then /^it should have rights METS bucket with an ADMID reference to an object ME
   admid.should include('representation-1')
 end
 
-Given /^a PREMIS document with a PREMIS object with xmlID 'object\-1'$/ do
-  @doc = fixture_data 'pim_ids.xml'
+Given /^a PREMIS document with a PREMIS object with xmlID (.*)$/ do |xmlID|
+  doc = LibXML::XML::Parser.string(fixture_data('pim_ids.xml')).parse  
+  doc.find_first("//premis:*[@xmlID='object-1']", XMLNS)['xmlID'] = xmlID
+  @doc = doc.to_s
 end
 
 Then /^all the PREMIS xmlIDs and IDRefs should be prefixed with 'premis_'$/ do
@@ -191,6 +193,12 @@ Then /^all the PREMIS xmlIDs and IDRefs should be prefixed with 'premis_'$/ do
     idref.value.should match(/^premis_/)
   end   
 
+end
+
+Given /^a PREMIS document with a PREMIS file object with xmlID 'DPMD1'$/ do
+  doc = LibXML::XML::Parser.string(fixture_data('pim_ids.xml')).parse  
+  doc.find_first("//premis:*[@xmlID='object-1']", XMLNS)['xmlID'] = 'DPMD1'
+  @doc = doc.to_s
 end
 
 

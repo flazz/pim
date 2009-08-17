@@ -29,7 +29,9 @@ module Pim
                 xml.find("//pre:*[starts-with(@xmlID, 'object-')]", ns).to_a +
                 xml.find("//pre:*[starts-with(@xmlID, 'event-')]", ns).to_a +
                 xml.find("//pre:*[starts-with(@xmlID, 'bitstream-')]", ns).to_a +
-                xml.find("//pre:*[starts-with(@xmlID, 'representation-')]", ns).to_a
+                xml.find("//pre:*[starts-with(@xmlID, 'representation-')]", ns).to_a +
+                xml.find("//pre:*[@xmlID='DPMD1']", ns).to_a +
+                xml.find("//pre:*[@xmlID='PREMIS_AMD']", ns).to_a
                             
     unless conflicts.empty?
       
