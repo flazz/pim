@@ -255,6 +255,14 @@ label {
 	text-align:right;
 }
 
+label.describe {
+    width: 4em;
+    float: left;
+    margin-right: 0.5em;
+    display: block;
+}
+
+
 #inputchoice a.active {
 	font-size:26px;
 	color:#009FF8;
