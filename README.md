@@ -1,12 +1,8 @@
-PIM: Conversion & Validation tools for PREMIS in METS
-=====================================================
-Web based tools to:
-
+PIM: Conversion, Validation & Description tools for PREMIS
+==========================================================
 * convert between PREMIS and PREMIS embedded in METS
 * validate PREMIS embedded in METS against [guidelines](http://www.loc.gov/standards/premis/guidelines-premismets.pdf)
-* describe a file in PREMIS
-
----
+* describe and characterize files' formats in PREMIS with extensions schema
 
 Quickstart
 ----------
