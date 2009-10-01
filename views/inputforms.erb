@@ -3,9 +3,15 @@
     <label for="document">Address:</label>
     <input name="document" id="uri" type="text" size="45"/>
     <br/>
+
     <% if locals[:use_premis_container] %>
     <br/>
     <%= erb :'premis_container_option', :layout => false, :locals => options %>
+    <% end %>
+
+    <% if locals[:describe] %>
+    <br/>
+    <%= erb :'description_input', :layout => false, :locals => options %>
     <% end %>
     <br/>
     <br/>
@@ -18,10 +24,17 @@
     <label for="document">File:</label>
     <input name="document" id="uploadfile" size="30" type="file"/>
     <br/>
+
     <% if locals[:use_premis_container] %>
     <br/>
     <%= erb :'premis_container_option', :layout => false, :locals => options %>
     <% end %>
+    
+    <% if locals[:describe] %>
+    <br/>
+    <%= erb :'description_input', :layout => false, :locals => options %>
+    <% end %>    
+
     <br/>
     <br/>
     <input type="submit" value="<%= ERB::Util::h submit_text %>" />
