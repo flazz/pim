@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'open-uri'
 require 'cgi'
+require 'net/http'
 
 $:.unshift File.join(File.dirname(__FILE__), 'lib')
 require 'validation'
@@ -47,7 +48,49 @@ module Pim
           halt 400, 'document must either be premis or mets'
         end
       end
+      
+      # Check that a parameter is defined
+      def check_parameter(*parameter)
+        parameter.each do |p| 
+          halt 400, "query parameter #{p} is required" unless params[p]
+        end
+      end
+      
+      # Check that a parameter is not an empty string
+      def check_parameter_value(*parameter)
+        parameter.each do |p|
+          if p.is_a? String and params[p].strip.empty?
+            halt 400, "query parameter #{p} should not be empty"
+          end
+        end
+      end
 
+      # Update identifiers from XML provided by the description service
+      def update_identifiers(src)
+        
+        # Check ieid information
+        if params['ieid_type'].nil? ^ params['ieid_value'].nil?
+          halt 400, "both parameters ieid_type and ieid_value must be provided"
+        end
+        
+        doc = XML::Parser.string(src).parse
+        Pim.modify_object_id!(doc, params['id_type'], params['id_value'])
+
+        # Update ieid if it exists
+        if params['ieid_type'] and params['ieid_value']
+          if params['ieid_type'].strip.empty? ^ params['ieid_value'].strip.empty?
+            halt 400, "both parameters ieid_type and ieid_value must be provided" 
+          else
+            unless params['ieid_type'].strip.empty?
+              Pim.add_ieid!(doc, params['ieid_type'], params['ieid_value'])
+            end
+          end          
+        end
+
+        content_type 'application/xml', :charset => 'utf-8'
+        doc.to_s
+      end
+      
     end
 
     # index
@@ -61,7 +104,7 @@ module Pim
     end
 
     get '/validate/results' do
-      halt 400, "query parameter document is required" unless params['document']
+      check_parameter 'document'
       url = CGI::unescape params['document']
 
       src = begin
@@ -75,7 +118,7 @@ module Pim
     end
 
     post '/validate/results' do
-      halt 400, "query parameter document is required" unless params['document']
+      check_parameter 'document'
 
       src = case params['document']
             when Hash
@@ -94,7 +137,7 @@ module Pim
     end
 
     get '/convert/results' do
-      halt 400, "query parameter document is required" unless params['document']
+      check_parameter 'document'
       url = params['document']
 
       src = begin
@@ -107,7 +150,7 @@ module Pim
     end
 
     post '/convert/results' do
-      halt 400, "query parameter document is required" unless params['document']
+      check_parameter 'document'
       
       src = case params['document']
             when Hash
@@ -121,6 +164,54 @@ module Pim
 
     get '/resources/?' do
       erb :resources
+    end
+    
+    # Describe a file in PREMIS
+    get '/describe' do
+      erb :'describe/index'
+    end
+    
+    get '/describe/results' do
+      check_parameter 'document', 'id_type', 'id_value'
+      check_parameter_value 'id_type', 'id_value'
+
+      url = CGI::unescape params['document']
+
+      src = begin
+              open(url) { |f| f.read }
+            rescue => e
+              halt 400, "cannot get url: #{url}, #{e.message}"
+            end
+
+      ext = params['document'].split('/').last.split('.').last
+            
+      r = Net::HTTP.post_form(URI.parse('http://description.fcla.edu/description'),
+                          { 'document' => src, 'extension' => ext })
+
+      case r
+      when Net::HTTPSuccess
+        update_identifiers(r.body)
+      else
+        r.error!
+      end      
+
+    end
+    
+    post '/describe/results' do
+      check_parameter 'document', 'id_type', 'id_value'
+      check_parameter_value 'id_type', 'id_value'
+
+      src = params['document'][:tempfile].read
+      ext = params['document'][:filename].split('.').last
+      r = Net::HTTP.post_form(URI.parse('http://description.fcla.edu/description'),
+                          { 'document' => src, 'extension' => ext })
+      case r
+      when Net::HTTPSuccess
+        update_identifiers(r.body)        
+      else
+        r.error!
+      end
+
     end
     
   end

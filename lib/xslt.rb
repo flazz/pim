@@ -55,9 +55,40 @@ module Pim
     
     xml
   end
+
+  def modify_object_id!(xml, type, value)
+    ns = { 'pre' => 'info:lc/xmlns/premis-v2' }
+    
+    types = ['objectIdentifierType', 'linkingObjectIdentifierType',
+             'relatedObjectIdentifierType'].inject([]) do |list, t|
+               list + xml.find("//pre:#{t}", ns).to_a
+            end
+    values = ['objectIdentifierValue', 'linkingObjectIdentifierValue',
+              'relatedObjectIdentifierValue'].inject([]) do |list, v|
+               list + xml.find("//pre:#{v}", ns).to_a
+             end
+    
+    types.each { |t| t.content = type }
+    values.each { |v| v.content = value }
+        
+  end
   
-  module_function :load_xslt
-  module_function :cleanup!
+  def add_ieid!(xml, type, value)
+    ns = { 'pre' => 'info:lc/xmlns/premis-v2' }
+
+    object = xml.find("//pre:object", ns).first
+
+    ieid_type = XML::Node.new("linkingIntellectualEntityIdentifierType", type)
+    ieid_value = XML::Node.new("linkingIntellectualEntityIdentifierValue", value)
+    ieid = XML::Node.new("linkingIntellectualEntityIdentifier")
+
+    ieid << ieid_type
+    ieid << ieid_value
+       
+    object << ieid
+  end
+  
+  module_function :load_xslt, :cleanup!, :modify_object_id!, :add_ieid!
   
   PREMIS_TO_PIM_CONTAINER_XSLT = load_xslt "pim_container.xsl"
   PREMIS_TO_PIM_BUCKETS_XSLT = load_xslt "pim_buckets.xsl"
