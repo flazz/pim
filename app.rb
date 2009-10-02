@@ -59,14 +59,15 @@ module Pim
       # Check that a parameter is not an empty string
       def check_parameter_value(*parameter)
         parameter.each do |p|
-          if p.is_a? String and params[p].strip.empty?
+          v = params[p]
+          if v.is_a? String and v.strip.empty?
             halt 400, "query parameter #{p} should not be empty"
           end
         end
       end
 
       # Update identifiers from XML provided by the description service
-      def update_identifiers(src)
+      def update_identifiers(src, o_name)
         
         # Check ieid information
         if params['ieid_type'].nil? ^ params['ieid_value'].nil?
@@ -86,6 +87,9 @@ module Pim
             end
           end          
         end
+
+        # Update originalName
+        Pim::modify_original_name! doc, o_name
 
         content_type 'application/xml', :charset => 'utf-8'
         doc.to_s
@@ -126,7 +130,7 @@ module Pim
             when String
               params['document']
             end
-
+      check_parameter_value 'document'
       @results = Validation.new(src).results
       erb :'validate/results'
     end
@@ -190,7 +194,8 @@ module Pim
 
       case r
       when Net::HTTPSuccess
-        update_identifiers(r.body)
+        o_name = params[:document]
+        update_identifiers(r.body, o_name)
       else
         r.error!
       end      
@@ -207,7 +212,8 @@ module Pim
                           { 'document' => src, 'extension' => ext })
       case r
       when Net::HTTPSuccess
-        update_identifiers(r.body)        
+        o_name = params['document'][:filename]
+        update_identifiers(r.body, o_name)
       else
         r.error!
       end
