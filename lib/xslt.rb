@@ -109,7 +109,11 @@ module Pim
     
   end
   
-  module_function :load_xslt, :cleanup!, :modify_object_id!, :add_ieid!, :modify_original_name!
+  def splice_schemalocation! doc
+    doc.root['xsi:schemaLocation'] = "info:lc/xmlns/premis-v2 http://www.loc.gov/standards/premis/premis.xsd"
+  end
+  
+  module_function :load_xslt, :cleanup!, :modify_object_id!, :add_ieid!, :modify_original_name!, :splice_schemalocation!
   
   PREMIS_TO_PIM_CONTAINER_XSLT = load_xslt "pim_container.xsl"
   PREMIS_TO_PIM_BUCKETS_XSLT = load_xslt "pim_buckets.xsl"

@@ -91,6 +91,8 @@ module Pim
         # Update originalName
         Pim::modify_original_name! doc, o_name
 
+        Pim::splice_schemalocation! doc
+
         content_type 'application/xml', :charset => 'utf-8'
         doc.to_s
       end
