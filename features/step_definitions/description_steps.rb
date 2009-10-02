@@ -2,10 +2,19 @@ NS = {
   'premis' => 'info:lc/xmlns/premis-v2'
 }
 
-Given /^I want to describe a file$/ do
+Given /^I want to describe a (file|url)$/ do |thing|
+  @thing = thing
 
   pic = File.join(File.dirname(__FILE__), '..', 'fixtures', "wip.png")
-  @file = Rack::Test::UploadedFile.new(pic, 'image/png', true)
+  
+  case thing
+  when "file"  
+    @file = Rack::Test::UploadedFile.new(pic, 'image/png', true)
+  when "url"
+    @url = "http://localhost:4000/wip.png"
+  end
+
+
 end
 
 Given /^I provide an object identifier and an ieid$/ do
@@ -17,13 +26,28 @@ Given /^I provide an object identifier and an ieid$/ do
 end
 
 When /^I press describe$/ do
-  post '/describe/results', { 'document' => @file, 
-                              'id_type' => @id_type,
-                              'id_value' => @id_value,
-                              'ieid_type' => @ieid_type,
-                              'ieid_value' => @ieid_value }
+  
+  
+  
+  case @thing
+  when 'file'
+    post '/describe/results', { 'document' => @file, 
+      'id_type' => @id_type,
+      'id_value' => @id_value,
+      'ieid_type' => @ieid_type,
+      'ieid_value' => @ieid_value 
+    }
+  when 'url'
+      get '/describe/results', { 'document' => @url, 
+        'id_type' => @id_type,
+        'id_value' => @id_value,
+        'ieid_type' => @ieid_type,
+        'ieid_value' => @ieid_value 
+      }
 
-end
+    end
+
+  end
 
 Then /^it should have an object with an object identifier that matches my input$/ do
   doc = LibXML::XML::Parser.string(last_response.body).parse
@@ -57,3 +81,12 @@ Given /^I don't provide the object identifier value$/ do
   @id_value = nil 
 end
 
+Then /^it should have an originalName that matches the upload filename or url$/ do
+    doc = LibXML::XML::Parser.string(last_response.body).parse
+    doc.find_first('//premis:originalName', NS).content.should == case @thing
+      when 'file'
+        "wip.png"
+      when 'url'
+        'http://localhost:4000/wip.png'
+      end
+end

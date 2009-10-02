@@ -1,6 +1,7 @@
 require 'spec'
 require 'rack/test'
 require 'webrat'
+require 'mock_server'
 
 # setup the app
 app_file = File.join(File.dirname(__FILE__), '../../app.rb')
@@ -39,4 +40,15 @@ World do
   include Rack::Test::Methods
   include Webrat::Methods
   include Webrat::Matchers
+end
+
+include MockServer::Methods
+
+mock_server do
+  
+  get "/wip.png" do
+    f = File.join File.dirname(__FILE__), '..', 'fixtures', "wip.png"
+    send_file f, :type => 'image/png'
+  end
+  
 end
