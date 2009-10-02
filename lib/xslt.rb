@@ -88,7 +88,28 @@ module Pim
     object << ieid
   end
   
-  module_function :load_xslt, :cleanup!, :modify_object_id!, :add_ieid!
+  def modify_original_name!(xml, name)
+    ns = { 'pre' => 'info:lc/xmlns/premis-v2' }
+    o_name = xml.find_first("//pre:object/pre:originalName", ns)
+    
+    if o_name
+      o_name.content = name
+    else
+      new_o_name = XML::Node.new "originalName", name
+      object = xml.find_first "pre:object", ns
+      insertion_point = object.find_first "pre:objectCharacteristics|pre:significantProperties|pre:preservationLevel|pre:objectIdentifier", ns
+      
+      if insertion_point
+        insertion_point.next = XML::Node.new "originalName"
+      else
+        object << new_o_name
+      end
+      
+    end
+    
+  end
+  
+  module_function :load_xslt, :cleanup!, :modify_object_id!, :add_ieid!, :modify_original_name!
   
   PREMIS_TO_PIM_CONTAINER_XSLT = load_xslt "pim_container.xsl"
   PREMIS_TO_PIM_BUCKETS_XSLT = load_xslt "pim_buckets.xsl"
