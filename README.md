@@ -7,6 +7,7 @@ PIM: Conversion, Validation & Description tools for PREMIS
 Quickstart
 ----------
     % git clone git://github.com/flazz/pim.git
+    $ rake features # run the tests, optional
     % cd pim
     % ruby app.rb
 
