@@ -59,6 +59,16 @@ module Pim
   def modify_object_id!(xml, type, value)
     ns = { 'pre' => 'info:lc/xmlns/premis-v2', 'xsi' => 'http://www.w3.org/2001/XMLSchema-instance' }
     
+    # hardcode hack to link from file to event, remove this when good
+    obj = xml.find_first("//pre:object[@xsi:type='file']", ns)
+    id = XML::Node.new 'linkingEventIdentifier'
+    id_type = XML::Node.new 'linkingEventIdentifierType', 'Temporary Local'
+    id << id_type
+    id_value = XML::Node.new 'linkingEventIdentifierValue', '1'
+    id << id_value
+    obj << id
+    
+    # update ids
     old_type = xml.find_first("//pre:object[@xsi:type='file']/pre:objectIdentifier/pre:objectIdentifierType", ns).content.strip
     old_value = xml.find_first("//pre:object[@xsi:type='file']/pre:objectIdentifier/pre:objectIdentifierValue", ns).content.strip
     
