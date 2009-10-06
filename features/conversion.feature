@@ -8,5 +8,8 @@ Feature: Conversion
   When I convert it
   Then a PREMIS document should be returned
   
-
+  Scenario: premis1.x
+  Given I provide PREMIS which is not version 2.0
+  When I convert it
+  Then I should get a message saying only PREMIS 2.0 is supported
   

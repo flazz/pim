@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<premis xmlns="http://www.loc.gov/standards/premis/v1" 
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.1" 
+        xsi:schemaLocation="http://www.loc.gov/standards/premis/v1 http://www.loc.gov/standards/premis/v1/PREMIS-v1-1.xsd" >
+
+    <!-- DAITSS events:  
+           CPD: Decrease preservation level
+           CPU: Increase preservation level
+           CV: Virus check
+           D: Disseminate
+           DEL: Deleted a previously ingested file
+           DLK: Downloaded link
+           FC: Fixity Check
+           I: Ingest
+           L: Localized
+           M: Migrated
+           N: Normalized
+           RM: Refreshed media
+           UNKNOWN: Unknown event type
+           VC: Verify checksum
+           WA: Withdraw by affiliate
+           WO: Withdraw by operator
+     -->
+
+  <object>
+    <objectIdentifier>
+      <objectIdentifierType>DAITSS</objectIdentifierType>
+      <objectIdentifierValue>
+        <!-- daitss:OID -->
+        E20081121_AAAAEW
+      </objectIdentifierValue>
+    </objectIdentifier>
+    <objectCategory>representation</objectCategory>
+  </object>
+  
+<!-- No package level events --> 
+
+</premis>

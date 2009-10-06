@@ -45,7 +45,7 @@ module Pim
           content_type 'application/xml', :charset => 'utf-8'
           PIM_TO_PREMIS_XSLT.apply(doc).to_s
         else
-          halt 400, 'document must either be premis or mets'
+          halt 400, 'document must either be PREMIS version 2.0 or METS'
         end
       end
       
@@ -111,7 +111,7 @@ module Pim
 
     get '/validate/results' do
       check_parameter 'document'
-      url = CGI::unescape params['document']
+      url = CGI::unescape params['document'].strip
 
       src = begin
               open(url) { |f| f.read }
@@ -144,7 +144,7 @@ module Pim
 
     get '/convert/results' do
       check_parameter 'document'
-      url = params['document']
+      url = params['document'].strip
 
       src = begin
               open(url) { |f| f.read }
@@ -181,7 +181,7 @@ module Pim
       check_parameter 'document', 'id_type', 'id_value'
       check_parameter_value 'id_type', 'id_value'
 
-      url = CGI::unescape params['document']
+      url = CGI::unescape params['document'].strip
 
       src = begin
               open(url) { |f| f.read }
