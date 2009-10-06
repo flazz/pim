@@ -45,7 +45,7 @@ module Pim
           content_type 'application/xml', :charset => 'utf-8'
           PIM_TO_PREMIS_XSLT.apply(doc).to_s
         else
-          halt 400, 'document must either be premis or mets'
+          halt 400, 'document must either be PREMIS version 2.0 or METS'
         end
       end
       

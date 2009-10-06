@@ -208,3 +208,13 @@ end
 Then /^I should not get a warning requiring a premis doc\.$/ do
   pending
 end
+
+Given /^I provide PREMIS which is not version 2\.0$/ do
+  @doc = fixture_data 'premis1.xml'
+end
+
+Then /^I should get a message saying only PREMIS 2\.0 is supported$/ do
+  last_response.body.should == "document must either be PREMIS version 2.0 or METS"
+  last_response.status.should == 400
+end
+
