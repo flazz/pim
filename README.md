@@ -32,7 +32,7 @@ Requirements
 
 License
 -------
-To be Determined...
+Public Domain
 
 Credits
 -------
