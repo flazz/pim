@@ -201,4 +201,10 @@ Given /^a PREMIS document with a PREMIS file object with xmlID 'DPMD1'$/ do
   @doc = doc.to_s
 end
 
+Given /^I give the url to louis 2\.0$/ do
+  @doc = fixture_data 'louis-2-0.xml'
+end
 
+Then /^I should not get a warning requiring a premis doc\.$/ do
+  pending
+end

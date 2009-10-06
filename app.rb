@@ -31,7 +31,7 @@ module Pim
         doc = XML::Parser.string(src).parse
         Pim.cleanup! doc
         
-        case doc.root.namespaces.namespace.to_s
+        case doc.root.namespaces.namespace.href
         when 'info:lc/xmlns/premis-v2'
           xform = if params['use-premis-container'] == "on"
                     PREMIS_TO_PIM_CONTAINER_XSLT
