@@ -27,8 +27,6 @@ end
 
 When /^I press describe$/ do
   
-  
-  
   case @thing
   when 'file'
     post '/describe/results', { 'document' => @file, 
@@ -90,3 +88,47 @@ Then /^it should have an originalName that matches the upload filename or url$/ 
         'http://localhost:4000/wip.png'
       end
 end
+
+Given /^I want to describe a pdf file$/ do
+  @thing = 'file'
+  f = File.join(File.dirname(__FILE__), '..', 'fixtures', "00001.pdf")
+  @file = Rack::Test::UploadedFile.new(f, 'application/pdf', true)
+  
+end
+
+Then /^The bitstream ids should be correct$/ do
+  
+  # one file object
+  doc = LibXML::XML::Parser.string(last_response.body).parse
+  file_objects = doc.find "//premis:object[@xsi:type='file']", NS
+  file_objects.should have_exactly(1).items
+  f_type = file_objects.first.find_first('premis:objectIdentifier/premis:objectIdentifierType', NS).content.strip
+  f_type.should_not be_empty
+  f_value = file_objects.first.find_first('premis:objectIdentifier/premis:objectIdentifierValue', NS).content.strip
+  f_value.should_not be_empty
+  
+  # should be identified
+  bs_objects = doc.find "//premis:object[@xsi:type='bitstream']", NS
+  bs_objects.should have_at_least(1).items
+  bs_ids = bs_objects.map do |bs_o|
+    b_type = bs_o.find_first('premis:objectIdentifier/premis:objectIdentifierType', NS).content.strip
+    b_type.should_not be_empty
+    b_value = bs_o.find_first('premis:objectIdentifier/premis:objectIdentifierValue', NS).content.strip
+    b_value.should_not be_empty
+    [b_type, b_value]
+  end
+
+  # should be no dups
+  bs_ids.size.should == bs_ids.uniq.size
+
+  # should start with the file they belong to
+  bs_ids.each do |type, value|
+    type.should == f_type
+    value.should =~ %r{^#{f_value}.+$}
+  end
+
+  # relationship ids should match links
+  file_links = doc.find "//premis:object[@xsi:type='file']/premis:relationship/premis:linkingObject", NS
+  file_links.should have(0).items
+end
+

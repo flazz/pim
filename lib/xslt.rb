@@ -57,19 +57,22 @@ module Pim
   end
 
   def modify_object_id!(xml, type, value)
-    ns = { 'pre' => 'info:lc/xmlns/premis-v2' }
+    ns = { 'pre' => 'info:lc/xmlns/premis-v2', 'xsi' => 'http://www.w3.org/2001/XMLSchema-instance' }
+    
+    old_type = xml.find_first("//pre:object[@xsi:type='file']/pre:objectIdentifier/pre:objectIdentifierType", ns).content.strip
+    old_value = xml.find_first("//pre:object[@xsi:type='file']/pre:objectIdentifier/pre:objectIdentifierValue", ns).content.strip
     
     types = ['objectIdentifierType', 'linkingObjectIdentifierType',
              'relatedObjectIdentifierType'].inject([]) do |list, t|
                list + xml.find("//pre:#{t}", ns).to_a
             end
+            
     values = ['objectIdentifierValue', 'linkingObjectIdentifierValue',
               'relatedObjectIdentifierValue'].inject([]) do |list, v|
                list + xml.find("//pre:#{v}", ns).to_a
              end
-    
-    types.each { |t| t.content = type }
-    values.each { |v| v.content = value }
+    types.each { |t| t.content = t.content.sub old_type, type }
+    values.each { |v| v.content = v.content.sub old_value, value }
         
   end
   

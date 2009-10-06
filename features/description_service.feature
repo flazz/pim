@@ -27,3 +27,9 @@ Feature: Description Service
       | object identifier type  |
       | object identifier value | 
     
+    Scenario: describe a pdf with bitstreams
+      Given I want to describe a pdf file
+      And I provide an object identifier and an ieid
+      When I press describe
+      Then a PREMIS document should be returned
+      And The bitstream ids should be correct
