@@ -1,11 +1,16 @@
 Feature: Validation Input
   Support a URL, file upload and direct input of XML
 
-  Scenario: Validate via URL
+  Scenario Outline: Validate via URL
     Given I navigate to the validation form page
-    And I enter a url to a PiM document
+    And I enter a <thing> to a PiM document
     When I validate the url
     Then a result document should be returned
+    
+    Examples:
+    	| thing                    |
+    	| url                      |
+    	| url with trailing spaces |
 
   Scenario: Validate a file upload
     Given I navigate to the validation form page

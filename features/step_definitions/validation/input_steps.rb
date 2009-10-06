@@ -35,3 +35,10 @@ When /^I validate (.*)$/ do |type|
         
   within(div) { click_button 'Validate' }
 end
+
+Given /^I enter a url with trailing spaces to a PiM document$/ do
+  @input_method = 'uri'
+  uri_field = field_with_id 'uri'
+  fill_in uri_field, :with => 'http://wiki.fcla.edu:8000/TIPR/uploads/3/fda_tipr.xml '  
+end
+
