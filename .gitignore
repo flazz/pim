@@ -1,1 +1,3 @@
 *.tmproj
+.bundle
+webrat.log
