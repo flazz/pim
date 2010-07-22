@@ -1,0 +1,95 @@
+--- 
+dependencies: 
+  libxml-ruby: 
+    group: 
+    - :default
+    version: ">= 0"
+  libxslt-ruby: 
+    group: 
+    - :default
+    version: ">= 0"
+  rspec: 
+    group: 
+    - :test
+    version: ">= 0"
+  thin: 
+    group: 
+    - :thin
+    version: ">= 0"
+  webrat: 
+    group: 
+    - :test
+    version: ">= 0"
+  sinatra: 
+    group: 
+    - :default
+    version: ">= 0"
+  cucumber: 
+    group: 
+    - :test
+    version: ">= 0"
+  rack-test: 
+    group: 
+    - :test
+    version: ">= 0"
+  mock-server: 
+    group: 
+    - :test
+    version: ">= 0"
+  rjb: 
+    group: 
+    - :default
+    version: ">= 0"
+  schematron: 
+    group: 
+    - :default
+    version: ">= 0"
+specs: 
+- builder: 
+    version: 2.1.2
+- diff-lcs: 
+    version: 1.1.2
+- trollop: 
+    version: 1.16.2
+- gherkin: 
+    version: 2.0.2
+- json_pure: 
+    version: 1.4.3
+- term-ansicolor: 
+    version: 1.0.5
+- cucumber: 
+    version: 0.8.3
+- daemons: 
+    version: 1.1.0
+- eventmachine: 
+    version: 0.12.10
+- libxml-ruby: 
+    version: 1.1.4
+- libxslt-ruby: 
+    version: 0.9.7
+- mock-server: 
+    version: "0.1"
+- nokogiri: 
+    version: 1.4.2
+- rack: 
+    version: 1.2.1
+- rack-test: 
+    version: 0.5.4
+- rjb: 
+    version: 1.2.5
+- rspec: 
+    version: 1.3.0
+- semver: 
+    version: 0.2.1
+- schematron: 
+    version: 1.1.1
+- sinatra: 
+    version: "1.0"
+- thin: 
+    version: 1.2.7
+- webrat: 
+    version: 0.7.1
+hash: 9e99cde38a86d11ab22aca31f40bd3b106dc2bef
+sources: 
+- Rubygems: 
+    uri: http://gemcutter.org
