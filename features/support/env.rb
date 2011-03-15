@@ -2,7 +2,7 @@ require 'rubygems'
 require 'bundler'
 Bundler.setup
 
-require 'spec'
+require 'rspec'
 require 'rack/test'
 require 'webrat'
 require 'mock_server'
