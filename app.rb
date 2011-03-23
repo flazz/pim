@@ -1,8 +1,9 @@
 require 'rubygems'
-require 'bundler'
-Bundler.setup
+require 'bundler/setup'
 
 require 'sinatra'
+require 'erb'
+
 require 'open-uri'
 require 'cgi'
 require 'net/http'

@@ -1,7 +1,7 @@
-<h2>Convert: <%= erb :inputlinks, :layout => false %></h2>
+<h2>Convert: <%= erb :inputlinks  %></h2>
 
 <br/>
-  
+
 <p><strong>Accepts either:</strong></p>
 <ol class="spiel">
   <li>
@@ -14,8 +14,7 @@
   </li>
 </ol>
 
-<%= erb :inputforms, 
-        :layout => false, 
-        :locals => { :action => '/convert/results', 
+<%= erb :inputforms,
+        :locals => { :action => '/convert/results',
                      :submit_text => 'Convert',
                      :use_premis_container => true } %>

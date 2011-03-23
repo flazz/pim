@@ -6,12 +6,12 @@
 
     <% if locals[:use_premis_container] %>
     <br/>
-    <%= erb :'premis_container_option', :layout => false, :locals => options %>
+    <%= erb :premis_container_option %>
     <% end %>
 
     <% if locals[:describe] %>
     <br/>
-    <%= erb :'description_input', :layout => false, :locals => options %>
+    <%= erb :description_input %>
     <% end %>
     <br/>
     <br/>
@@ -27,13 +27,13 @@
 
     <% if locals[:use_premis_container] %>
     <br/>
-    <%= erb :'premis_container_option', :layout => false, :locals => options %>
+    <%= erb :premis_container_option %>
     <% end %>
-    
+
     <% if locals[:describe] %>
     <br/>
-    <%= erb :'description_input', :layout => false, :locals => options %>
-    <% end %>    
+    <%= erb :description_input %>
+    <% end %>
 
     <br/>
     <br/>
@@ -48,7 +48,7 @@
     <textarea id="directinput" rows="12" cols="76" name="document"></textarea>
     <% if locals[:use_premis_container] %>
     <br/>
-    <%= erb :'premis_container_option', :layout => false, :locals => options %>
+    <%= erb :premis_container_option %>
     <% end %>
     <br/>
     <br/>

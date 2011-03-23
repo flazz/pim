@@ -1,11 +1,10 @@
-<h2>Describe: <%= erb :inputlinks, :layout => false, :locals => { :describe => true } %></h2>
+<h2>Describe: <%= erb :inputlinks, :locals => { :describe => true } %></h2>
 
 <br/>
-  
+
 <p>Generate PREMIS for an uploaded file.</p>
 
-<%= erb :inputforms, 
-        :layout => false, 
-        :locals => { :action => '/describe/results', 
+<%= erb :inputforms,
+        :locals => { :action => '/describe/results',
                      :submit_text => 'Describe',
                      :describe => true } %>
