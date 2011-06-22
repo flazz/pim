@@ -16,5 +16,5 @@ group :test do
 end
 
 group :thin do
-  gem 'thin'
+  gem 'thin', "~>1.2"
 end
