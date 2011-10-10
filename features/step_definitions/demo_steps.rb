@@ -1,8 +1,6 @@
-Given /^I navigate to the description form page$/ do
-  pending 'not really integrated into the description service'
-  visit '/'
-  click_link 'Describe'
-end
+#Given /^I navigate to the description form page$/ do
+#  pending 'express the regexp above with the code you wish you had'
+#end
 
 Given /^I select to upload the demo pdf$/ do
   uploadfile_field = field_with_id 'uploadfile'
