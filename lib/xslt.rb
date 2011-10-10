@@ -1,4 +1,4 @@
-gem 'libxslt-ruby', '>= 0.9.1'
+#gem 'libxslt-ruby', '>= 0.9.1'
 
 require 'libxslt'
 require 'libxml'
