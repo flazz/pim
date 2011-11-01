@@ -1,5 +1,3 @@
-#gem 'libxml-ruby', '>= 1.1.3'
-
 require 'libxml'
 require 'stron'
 require 'rjb'

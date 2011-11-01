@@ -3,9 +3,10 @@ source "http://rubygems.org"
 
 gem 'sinatra'
 gem 'rjb'
-gem 'libxml-ruby', ">= 2.2.2", :require => 'libxml'
-gem 'libxslt-ruby', ">= 1.0.7", :require => 'libxslt'
-gem 'schematron'
+gem 'libxml-ruby', :require => 'libxml'
+gem 'libxslt-ruby', '= 1.0.1', :require => 'libxslt'
+gem 'schematron', '= 0.1.1'
+
 
 
 group :test do
